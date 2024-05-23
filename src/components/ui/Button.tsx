@@ -33,6 +33,7 @@ const Button = ({className, ...props}: ButtonProps) => {
   return (
     <Pressable
       className={cn(buttonVariants({variant, size, className}))}
+      onPress={onPress}
       {...rest}
     >
       {children}
