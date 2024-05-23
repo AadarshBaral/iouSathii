@@ -10,12 +10,14 @@ import { Picker } from '@react-native-picker/picker';
 import { Typography } from '@/components/ui/Typography'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native'
+import GroupContextProvider, { group, person, useGroupCtx } from '@/context/GroupContext'
 
 interface IGroupInputElement {
     number: number;
     control: any, //TODO Find control type
     watch: any;
-    handleSubmit: any;
+    groupName: string;
+    handleSubmit: (newGroup: group) => void;
 }
 // Initial state setup using useState
 if (__DEV__) {
@@ -30,40 +32,27 @@ if (__DEV__) {
         errorWarn(...arg);
     };
 }
-const GroupInputElement = ({ number, control, handleSubmit }: IGroupInputElement) => {
-    const [group, setGroup] = useState({
-        groupName: '',
-        groupNumber: 0,
-        groupMembers: [
-            {
-                person: '',
-                total: 0
-            }
-        ]
-    });
-    const dataArray = Array.from({ length: number }, (v, k) => ({
-        id: `${k + 1}`, // Unique ID for each element
-        person: `P${k + 1}`,// Title for each item
-        total: `T${k + 1}`
-    }));
-    const handleGroupSubmit = async (data: any) => {
-        const groupMembers = [];
-        const groupNumber = parseInt(data.groupNumber, 10);
-        const groupName = data.groupname;
+const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupInputElement) => {
 
-        for (let i = 1; i <= groupNumber; i++) {
-            const personKey = `person-${i}-name`;
-            const totalKey = `person-${i}-total`;
-            if (data[personKey] && data[totalKey]) {
-                groupMembers.push({
-                    id: i,
-                    person: data[personKey],
-                    total: data[totalKey]
-                });
-            }
-        }
-        setGroup({ groupName, groupNumber, groupMembers })
+    const navigation = useNavigation();
+    const dataArray: person[] = Array.from({ length: number }, (v, k) => ({
+        id: `${k + 1}`, // Unique ID for each element
+        name: `P${k + 1}`,// Title for each item
+        total: 0
+    }));
+    const handleGroupSubmit = () => {
+        console.log(dataArray);
+        handleSubmit({
+            name: groupName,
+            people: dataArray
+        })
+        navigation.navigate('index' as never)
     };
+
+
+
+
+
     return (
         <View>
             <Typography className='text-xl mt-2' label={`${number} People`} />
@@ -76,6 +65,9 @@ const GroupInputElement = ({ number, control, handleSubmit }: IGroupInputElement
                             control={control}
                             name={`person-${item.id}-name`}
                             enterKeyHint="next"
+                            onChangeText={(v) => {
+                                item.name = v
+                            }}
                             autoCorrect={false}
                         />
                         <InputWithEye
@@ -83,32 +75,50 @@ const GroupInputElement = ({ number, control, handleSubmit }: IGroupInputElement
                             control={control}
                             name={`person-${item.id}-total`}
                             enterKeyHint="next"
+                            inputMode='numeric'
+                            onChangeText={(v) => {
+                                item.total = Number(v)
+                            }}
                             autoCorrect={false}
                         />
                     </View>
                 )}
                 keyExtractor={item => item.id}
             />
-            <Button onPressIn={handleSubmit(handleGroupSubmit)}><Typography className='text-xl text-white' label="Continue" /></Button>
+            <Button onPress={handleGroupSubmit}><Typography className='text-xl text-white' label="Continue" /></Button>
         </View>
     )
 }
-const AddGroup = () => {
+
+function AddGroup() {
+    return <AddGroupInner></AddGroupInner>
+}
+
+
+const AddGroupInner = () => {
+    const [groups, setGroups] = useGroupCtx();
+
+
+
+
+
     const navigation = useNavigation();
     useEffect(() => {
         navigation.setOptions({ headerShown: false });
     }, [navigation]);
     const [selectedNumber, setSelectedNumber] = useState(0);
+    const [groupName, setGroupName] = useState("");
     const [error, showError] = useState(false)
     const { control, handleSubmit, formState: { errors }, register, watch } = useForm()
     const handleNumber = (data: any) => {
         const parsedData = parseInt(watch("groupNumber"));
+        setGroupName(watch("groupname"))
         if (isNaN(parsedData)) {
             showError(true);
             console.log('Error: Input is not a number');
         } else {
             if (parsedData <= 10) {
-                setSelectedNumber(parseInt(watch('groupNumber')));
+                setSelectedNumber(parsedData);
                 showError(false);
             }
             else {
@@ -148,7 +158,9 @@ const AddGroup = () => {
                                 </Button>
                             </View>
                         </View>
-                        {(!error && selectedNumber !== 0) && <GroupInputElement handleSubmit={handleSubmit as never} watch={watch} control={control} number={selectedNumber} />}
+                        {(!error && selectedNumber !== 0) && <GroupInputElement groupName={groupName} handleSubmit={(newGroup) => {
+                            setGroups([...groups, newGroup]);
+                        }} watch={watch} control={control} number={selectedNumber} />}
 
                     </View>
                 </ScrollView>
