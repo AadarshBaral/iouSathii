@@ -14,6 +14,7 @@ import GroupCard from './GroupCard';
 import ScreenWrapper from '@/layout/SafreAreaInsets';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
+import GroupContextProvider, { useGroupCtx } from '@/context/GroupContext';
 
 if (__DEV__) {
   const ignoreWarns = ["VirtualizedLists should never be nested inside plain ScrollViews"];
@@ -30,26 +31,30 @@ if (__DEV__) {
 }
 const DueInfo = [
   {
-    userId :1,
+    userId: 1,
     name: 'Ramlal Karki',
     total: '20000',
     cardDecision: 'receive'
   },
-  {userId :1,
+  {
+    userId: 1,
     name: 'Ravi Lamichane',
     total: '20000',
     cardDecision: 'owe'
 
   },
   {
-    userId :1,
+    userId: 1,
     name: 'Rabindra Karki',
     total: '20000',
     cardDecision: 'receive'
 
   },
-
 ]
+
+
+
+
 const GroupInfo = [
   {
     id: 1,
@@ -68,18 +73,26 @@ const GroupInfo = [
     name: 'Pokhara Travel',
   }]
 
+
+
+
+
 const Index = () => {
-const navigation = useNavigation();
-console.log("in index")
+
+
+  const [groups, _] = useGroupCtx();
+
+  const navigation = useNavigation();
+  console.log("in index")
   // Load all groups from AsyncStorage
 
   return (
-   <ScreenWrapper>
-      <TitleBar  title="Home" image={"person.jpg"} />
-      <Pressable onPress={()=>navigation.navigate('addBill' as never)}  className='absolute bottom-10 right-10 z-20' >
-      <View  className='bg-slate-800 z-20 w-[70px] h-[70px] rounded-full flex justify-center items-center shadow-sm shadow-black'>
-      <AntDesign name="plus" size={42} color="white" />
-      </View>
+    <ScreenWrapper>
+      <TitleBar title="Home" image={"person.jpg"} />
+      <Pressable onPress={() => navigation.navigate('addBill' as never)} className='absolute bottom-10 right-10 z-20' >
+        <View className='bg-slate-800 z-20 w-[70px] h-[70px] rounded-full flex justify-center items-center shadow-sm shadow-black'>
+          <AntDesign name="plus" size={42} color="white" />
+        </View>
       </Pressable>
 
       <MoneyCard cardDecision='owe' total='12,231' />
@@ -92,24 +105,24 @@ console.log("in index")
           <FlatList bounces={false}
             ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
             data={DueInfo}
-            renderItem={({ item }) => <Pressable onPress={()=>navigation.navigate('dueDetail' as never)}><DueCard   name={item.name} total={item.total} cardDecision={item.cardDecision as "owe" | "receive"} /></Pressable> }
+            renderItem={({ item }) => <Pressable onPress={() => navigation.navigate('dueDetail' as never)}><DueCard name={item.name} total={item.total} cardDecision={item.cardDecision as "owe" | "receive"} /></Pressable>}
             keyExtractor={item => item.name}
           />
         </View>
-        <Pressable onPress={()=>navigation.navigate('addGroup' as never)}><GroupCard   name="+Add a group" /></Pressable>
+        <Pressable onPress={() => navigation.navigate('addGroup' as never)}><GroupCard name="+Add a group" /></Pressable>
         <Typography className='text-lg' variant={'h2'} label='Groups' />
         <View >
           <FlatList
             className='mt-1'
             bounces={false}
             ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-            data={GroupInfo}
-            renderItem={({ item }) => <Pressable onPress={()=>navigation.navigate('index' as never)}><GroupCard   name={item.name} /></Pressable>}
+            data={groups}
+            renderItem={({ item }) => <Pressable onPress={() => navigation.navigate('index' as never)}><GroupCard name={item.name} /></Pressable>}
             keyExtractor={(item, index) => index.toString()}
           />
         </View >
       </ScrollView>
-      </ScreenWrapper>
+    </ScreenWrapper>
   )
 }
 export default Index
