@@ -90,12 +90,8 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupI
     )
 }
 
-function AddGroup() {
-    return <AddGroupInner></AddGroupInner>
-}
 
-
-const AddGroupInner = () => {
+const AddGroup = () => {
     const [groups, setGroups] = useGroupCtx();
 
 

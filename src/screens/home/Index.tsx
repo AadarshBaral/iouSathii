@@ -74,19 +74,13 @@ const GroupInfo = [
   }]
 
 
-function Index() {
-  return <IndexInner></IndexInner>
-}
 
 
-const IndexInner = () => {
+
+const Index = () => {
 
 
-  const [groups, setGroups] = useGroupCtx();
-
-  console.log(groups)
-
-  
+  const [groups, _] = useGroupCtx();
 
   const navigation = useNavigation();
   console.log("in index")
