@@ -6,6 +6,8 @@ import { FireAuth } from '@/config/fireConfig';
 import { useEffect, useState } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
 
+
+
 const Navigation = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);  // State to handle loading
