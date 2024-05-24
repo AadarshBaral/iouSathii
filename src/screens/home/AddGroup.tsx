@@ -19,6 +19,7 @@ interface IGroupInputElement {
     groupName: string;
     handleSubmit: (newGroup: group) => void;
 }
+
 // Initial state setup using useState
 if (__DEV__) {
     const ignoreWarns = ["VirtualizedLists should never be nested inside plain ScrollViews"];
@@ -41,7 +42,7 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupI
         total: 0
     }));
     const handleGroupSubmit = () => {
-        console.log(dataArray);
+
         handleSubmit({
             name: groupName,
             people: dataArray

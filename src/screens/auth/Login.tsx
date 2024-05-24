@@ -30,6 +30,7 @@ const Login = () => {
         }
     }
 
+
     const navigation = useNavigation();
     useEffect(() => {
         navigation.setOptions({ headerShown: false });
@@ -89,10 +90,4 @@ const Login = () => {
         </ScrollView >
     )
 }
-
-
-
-
-
-
 export default Login

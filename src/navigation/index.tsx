@@ -9,7 +9,6 @@ import { User, onAuthStateChanged } from 'firebase/auth';
 const Navigation = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);  // State to handle loading
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(FireAuth, (user) => {
       setUser(user);

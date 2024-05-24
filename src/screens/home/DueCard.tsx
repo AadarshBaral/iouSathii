@@ -6,6 +6,7 @@ import { cn } from '@/utils/cn'
 export interface IdueCardProps extends IMoneyCardProps {
     name: string;
     purpose? :string;
+    cardDecision : "owe" | "receive";
 }
 export const indicatorColor: Record<string, string> = {
     orange: 'bg-[#BF6736]',
@@ -19,7 +20,7 @@ const DueCard = ({name,total, cardDecision}:IdueCardProps) => {
                 <View className={cn(indicatorColor[color],'w-4 h-4 rounded-full')}></View>
                 <Typography variant={"h2"} className='font-bold text-textDark text-lg' label={name} />
             </View>
-            <Typography variant={"h2"} className='font-bold' label={`Rs ${total}`}/>
+            <Typography variant={"h2"} className='font-bold' label={`Rs ${total+''}`}/>
         </View>
     )
 }

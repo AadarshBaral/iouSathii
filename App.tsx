@@ -1,11 +1,4 @@
 import Navigation from '@/navigation';
-<<<<<<< HEAD
-
-=======
-import * as Google from 'expo-auth-session/providers/google';
-import * as WebBrowser from 'expo-web-browser';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential } from 'firebase/auth';
->>>>>>> d1ecb240c2bb357bd0115fbc3dc5f447926ce01a
 import {
   useFonts,
   Poppins_100Thin,
@@ -21,6 +14,7 @@ import {
 import { useState } from 'react';
 import { ANDROID } from 'nativewind/dist/utils/selector';
 import GroupContextProvider from '@/context/GroupContext';
+import BillsContextProvider from '@/context/BillsContext';
 export default function App() {
   const [fontLoaded] = useFonts({
     Poppins_100Thin,
@@ -38,6 +32,8 @@ export default function App() {
   }
 
   return (
-    <GroupContextProvider><Navigation /></GroupContextProvider>
+    <BillsContextProvider>
+      <GroupContextProvider><Navigation /></GroupContextProvider>
+    </BillsContextProvider>
   );
 }
