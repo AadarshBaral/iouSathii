@@ -2,10 +2,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Pressable, StatusBar, Text, View } from 'react-native'
 import { ImageBackground, Image } from "expo-image";
 import { onboardingTabsMap } from "./colorMap";
-import { useNavigation } from "@react-navigation/native";
+import { CompositeScreenProps, useNavigation } from "@react-navigation/native";
 import { MaterialTopTabScreenProps } from "@react-navigation/material-top-tabs";
 import { Button } from "@/components/ui/Button";
-import { OnboardingTabs } from "@/navigation/BeforeAuth";
+import { AuthScreensParamList, OnboardingTabsParamList } from "@/navigation/BeforeAuth";
+import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { StackScreenProps } from "@react-navigation/stack";
 const onboarding1Img = require("../../../assets/onboard1.png")
 const onboarding2Img = require("../../../assets/onboard2.png")
 const onboarding3Img = require("../../../assets/onboard3.png")
@@ -13,10 +16,8 @@ const onboarding4Img = require("../../../assets/onboard4.png")
 
 
 
-
-
-
-export function Onboard1(props: MaterialTopTabScreenProps<OnboardingTabs>) {
+type Onboard1Props = CompositeScreenProps<MaterialTopTabScreenProps<OnboardingTabsParamList, 'onboard1'>, StackScreenProps<AuthScreensParamList>>
+export function Onboard1(props: Onboard1Props) {
     const { navigation } = props;
     const tabInfo = onboardingTabsMap[0];
     return <SafeAreaView style={
@@ -54,24 +55,25 @@ export function Onboard1(props: MaterialTopTabScreenProps<OnboardingTabs>) {
                 </Text>
             </View>
         </View>
-        <Button style={
-            {
-                position: "absolute",
-                bottom: 20,
-                backgroundColor: tabInfo.topColor
+        <View className="absolute top-[92%] flex w-full px-10 mt-5 h-full">
+            <Button style={
+                {
+                    bottom: 20,
+                    backgroundColor: tabInfo.topColor
+                }
             }
-        }
-            className="mt-4 py-0"
-            onPress={() => {
-                navigation.jumpTo("onboard2", {})
-            }}
-        >
-            <Text className="text-white text-lg font-poppins_semibold">Continue</Text>
-        </Button>
+                className="mt-4 py-0"
+                onPress={() => {
+                    navigation.jumpTo("onboard2", {})
+                }}
+            >
+                <Text className="text-white text-lg font-poppins_semibold">Continue</Text>
+            </Button>
+        </View>
     </SafeAreaView>
 }
-
-export function Onboard2(props: MaterialTopTabScreenProps<OnboardingTabs>) {
+type Onboard2Props = CompositeScreenProps<MaterialTopTabScreenProps<OnboardingTabsParamList, 'onboard2'>, StackScreenProps<AuthScreensParamList>>
+export function Onboard2(props: Onboard2Props) {
     const tabInfo = onboardingTabsMap[1];
     const { navigation } = props;
 
@@ -80,7 +82,6 @@ export function Onboard2(props: MaterialTopTabScreenProps<OnboardingTabs>) {
             backgroundColor: tabInfo.bottomColor
         }
     } className="h-full w-screen flex items-center">
-        <StatusBar backgroundColor="red"></StatusBar>
 
         <View style={{
             backgroundColor: tabInfo.topColor
@@ -106,31 +107,33 @@ export function Onboard2(props: MaterialTopTabScreenProps<OnboardingTabs>) {
             }} className="text-3xl text-center font-poppins_semibold">
                 Split Bills
             </Text>
-            <View className="mx-8 mt-4">
+            <View className=" mx-8 mt-4">
                 <Text className="text-xl  text-center text-[#a2b2b2] font-poppins_semibold">
                     Easily split money between your group members and know your share
 
                 </Text>
             </View>
         </View>
-        <Button style={
-            {
-                position: "absolute",
-                bottom: 20,
-                backgroundColor: tabInfo.topColor
+        <View className="absolute top-[92%] flex w-full px-10 mt-5 h-full">
+            <Button style={
+                {
+                    bottom: 20,
+                    backgroundColor: tabInfo.topColor
+                }
             }
-        }
-            className="mt-4 py-0"
-            onPress={() => {
-                navigation.jumpTo("onboard3", {})
-            }}
-        >
-            <Text className="text-white text-lg font-poppins_semibold">Continue</Text>
-        </Button>
+                className="mt-4 py-0"
+                onPress={() => {
+                    navigation.jumpTo("onboard3", {})
+                }}
+            >
+                <Text className="text-white text-lg font-poppins_semibold">Continue</Text>
+            </Button>
+        </View>
     </SafeAreaView>
 }
 
-export function Onboard3(props: MaterialTopTabScreenProps<OnboardingTabs>) {
+type Onboard3Props = CompositeScreenProps<MaterialTopTabScreenProps<OnboardingTabsParamList, 'onboard3'>, StackScreenProps<AuthScreensParamList>>
+export function Onboard3(props: Onboard3Props) {
     const tabInfo = onboardingTabsMap[2];
     const { navigation } = props;
 
@@ -169,24 +172,27 @@ export function Onboard3(props: MaterialTopTabScreenProps<OnboardingTabs>) {
                 </Text> */}
             </View>
         </View>
-        <Button style={
-            {
-                position: "absolute",
-                bottom: 20,
-                backgroundColor: tabInfo.topColor
+        <View className="absolute top-[90%] flex w-full px-10 mt-5 h-full">
+            <Button style={
+                {
+                    bottom: 20,
+                    backgroundColor: tabInfo.topColor
+                }
             }
-        }
-            className="mt-8 py-0"
-            onPress={() => {
-                navigation.jumpTo("onboard4", {})
-            }}
-        >
-            <Text className="text-white text-lg font-poppins_semibold">Continue</Text>
-        </Button>
+                className="mt-8"
+                onPress={() => {
+                    navigation.jumpTo("onboard4", {})
+                }}
+            >
+                <Text className="text-white text-lg font-poppins_semibold">Continue</Text>
+            </Button>
+        </View>
     </SafeAreaView>
 }
 
-export function Onboard4(props: MaterialTopTabScreenProps<OnboardingTabs>) {
+
+type Onboard4Props = CompositeScreenProps<MaterialTopTabScreenProps<OnboardingTabsParamList, 'onboard4'>, StackScreenProps<AuthScreensParamList>>
+export function Onboard4(props: Onboard4Props) {
     const tabInfo = onboardingTabsMap[3];
     const { navigation } = props;
 
@@ -211,32 +217,28 @@ export function Onboard4(props: MaterialTopTabScreenProps<OnboardingTabs>) {
             }} className="text-3xl text-center font-poppins_semibold">
                 And help you handle your money
             </Text>
-            {/* <View className="mx-8 mt-4">
-                <Text className="text-xl  text-center text-[#a2b2b2] font-poppins_semibold">
-                    (Or yourself if you owe them)
-                </Text>
 
-            </View> */}
         </View>
-        <View>
+        <View className="absolute top-[79%] w-full mt-5 px-10  flex flex-col  justify-end">
             <Button style={{
                 backgroundColor: tabInfo.topColor
             }}
                 onPress={() => {
-
-                    //@ts-ignore
                     navigation.navigate("Login", {})
                 }}
                 className="mt-4 py-0"
             >
-                <Text className="text-white" >Login</Text>
+                <Text className="text-white text-lg font-poppins_semibold" >Login</Text>
             </Button>
             <Button style={{
                 backgroundColor: tabInfo.topColor
             }}
+                onPress={() => {
+                    navigation.navigate("Register", {})
+                }}
                 className="mt-4"
             >
-                <Text className="text-white">Register</Text>
+                <Text className="text-white text-lg font-poppins_semibold">Register</Text>
             </Button>
         </View>
     </SafeAreaView>
