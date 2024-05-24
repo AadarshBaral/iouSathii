@@ -1,15 +1,16 @@
+// 1060811855340-u3blp7to0l0ekni5svo5khgji5ufvavs.apps.googleusercontent.com
+
 import { useForm } from "react-hook-form"
-import { View, Text, ScrollView, TextInput, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView, TextInput, ActivityIndicator, Platform } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import PageTitle from "@/components/ui/PageTitle"
 import { SafeAreaView } from "react-native-safe-area-context"
 import { Button } from "@/components/ui/Button"
 import { Typography } from "@/components/ui/Typography"
-import { Image } from "expo-image";
 import InputWithEye from "@/components/ui/InputWithEye"
 import { useNavigation } from "@react-navigation/native"
 import { AntDesign } from '@expo/vector-icons';
-import { FireAuth, provider } from "@/config/fireConfig"
+import { FireAuth } from "@/config/fireConfig"
 import { signInWithEmailAndPassword } from "firebase/auth"
 
 const Login = () => {
@@ -28,13 +29,7 @@ const Login = () => {
             setLoading(false)
         }
     }
-    // const signInWithGoogle = async () => {
-    //     try {
-    //         await signInWithPopup(auth, provider)
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // }
+
     const navigation = useNavigation();
     useEffect(() => {
         navigation.setOptions({ headerShown: false });
@@ -84,8 +79,7 @@ const Login = () => {
                         <View className="h-[2px] w-full bg-black" />
                     </View>
 
-                    <Button onPressIn={handleSubmit(handleRegister)} className="mt-4 flex flex-row justify-center" variant="primary" size="default">
-
+                    <Button onPress={()=>{console.log('in Progress')}} className="mt-4 flex flex-row justify-center" variant="primary" size="default">
                         <AntDesign className="text-center" name="google" size={28} color="white" />
                         <Typography label="Login With Google" className="text-white ml-2 text-lg text-center" variant={'p'} />
                     </Button>

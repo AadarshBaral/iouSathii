@@ -6,6 +6,10 @@ import { Timestamp } from 'firebase/firestore'
 // Your web app's Firebase configuration
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 import { isLoading } from "expo-font";
+
+
+
+
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAKThMdv5mG-OkaJrG8hlxNM0cEyEV9OVY",
@@ -25,3 +29,4 @@ export const FireAuth = initializeAuth(app, {
 });
 export const provider = new GoogleAuthProvider();
 export const db = getFirestore(app)
+

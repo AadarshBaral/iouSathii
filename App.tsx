@@ -1,7 +1,5 @@
 import Navigation from '@/navigation';
-import * as Google from 'expo-auth-session/providers/google';
-import * as WebBrowser from 'expo-web-browser';
-import { GoogleAuthProvider,onAuthStateChanged,signInWithCredential } from 'firebase/auth';
+
 import {
   useFonts,
   Poppins_100Thin,
@@ -31,12 +29,7 @@ export default function App() {
   if (!fontLoaded) {
     return null;
   }
-  WebBrowser.maybeCompleteAuthSession();
-  // const [userInfo,setUserInfo] = useState();
-  // const [request,response, promptAsync] = Google.useIdTokenAuthRequest({
-  //   iosClientId : "",
-  //   androidClientId : ""
-  // });
+
   return (
     <Navigation/>
   );
