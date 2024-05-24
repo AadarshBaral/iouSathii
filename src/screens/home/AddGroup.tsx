@@ -32,8 +32,11 @@ if (__DEV__) {
         errorWarn(...arg);
     };
 }
-const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupInputElement) => {
 
+
+
+
+const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupInputElement) => {
     const navigation = useNavigation();
     const dataArray: person[] = Array.from({ length: number }, (v, k) => ({
         id: `${k + 1}`, // Unique ID for each element

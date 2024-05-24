@@ -11,6 +11,7 @@ import { View } from "react-native";
 import { TabBar, TabBarIndicator } from "react-native-tab-view";
 import { Text } from "react-native";
 import { onboardingTabsMap } from "@/screens/onboarding/colorMap";
+import { StatusBar } from "expo-status-bar";
 const Stack = createNativeStackNavigator();
 
 
