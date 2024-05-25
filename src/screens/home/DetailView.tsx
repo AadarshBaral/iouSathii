@@ -80,7 +80,7 @@ const DetailView = () => {
             scrollEnabled={true}
             ItemSeparatorComponent={() => <View style={{ height:20 }} />}
             data={data}
-            renderItem={({ item }) => <DetailDueCard name={item.name} total={item.total} purpose={item.purpose} cardDecision={item.cardDecision as 'owe' | 'receive'}/>}
+            renderItem={({ item }) => <DetailDueCard name={item.name} total={item.total as any} purpose={item.purpose} cardDecision={item.cardDecision as 'owe' | 'receive'}/>}
             keyExtractor={item => item.name}
           />
 

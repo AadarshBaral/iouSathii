@@ -29,7 +29,6 @@ const BillsContextProvider: React.FC<BillsContextProviderProps> = ({ children })
             const bills = await AsyncStorage.getItem('bills');
             if (bills) {
                 setUserBills(JSON.parse(bills));
-                console.log("bills fetched from storage")
             }
         }
         fetchBills();
