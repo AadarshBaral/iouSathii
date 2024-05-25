@@ -4,14 +4,13 @@ import ScreenWrapper from '@/layout/SafreAreaInsets'
 import PageTitle from '@/components/ui/PageTitle'
 import TitleBar from '@/components/ui/TitleBar'
 import { set, useForm } from 'react-hook-form'
-import InputWithEye from '@/components/ui/InputWithEye'
+import Input from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { Picker } from '@react-native-picker/picker';
 import { Typography } from '@/components/ui/Typography'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native'
 import GroupContextProvider, { group, person, useGroupCtx } from '@/context/GroupContext'
-
 interface IGroupInputElement {
     number: number;
     control: any, //TODO Find control type
@@ -19,8 +18,6 @@ interface IGroupInputElement {
     groupName: string;
     handleSubmit: (newGroup: group) => void;
 }
-
-// Initial state setup using useState
 if (__DEV__) {
     const ignoreWarns = ["VirtualizedLists should never be nested inside plain ScrollViews"];
     const errorWarn = global.console.error;
@@ -34,7 +31,6 @@ if (__DEV__) {
     };
 }
 const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupInputElement) => {
-
     const navigation = useNavigation();
     const dataArray: person[] = Array.from({ length: number }, (v, k) => ({
         id: `${k + 1}`, // Unique ID for each element
@@ -42,18 +38,12 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupI
         total: 0
     }));
     const handleGroupSubmit = () => {
-
         handleSubmit({
             name: groupName,
             people: dataArray
         })
         navigation.navigate('index' as never)
     };
-
-
-
-
-
     return (
         <View>
             <Typography className='text-xl mt-2' label={`${number} People`} />
@@ -61,7 +51,7 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupI
                 data={dataArray}
                 renderItem={({ item }) => (
                     <View className='h-[200px] w-full bg-gray-200 rounded-xl mt-3 p-2 shdow-lg border-2 border-gray-300' >
-                        <InputWithEye
+                        <Input
                             label={`Person ${item.id}`}
                             control={control}
                             name={`person-${item.id}-name`}
@@ -71,7 +61,7 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupI
                             }}
                             autoCorrect={false}
                         />
-                        <InputWithEye
+                        <Input
                             label='Total'
                             control={control}
                             name={`person-${item.id}-total`}
@@ -94,11 +84,6 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupI
 
 const AddGroup = () => {
     const [groups, setGroups] = useGroupCtx();
-
-
-
-
-
     const navigation = useNavigation();
     useEffect(() => {
         navigation.setOptions({ headerShown: false });
@@ -129,7 +114,7 @@ const AddGroup = () => {
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View>
                         <TitleBar back title="Create Group" image={"person.jpg"} />
-                        <InputWithEye
+                        <Input
                             label="Enter group name"
                             control={control}
                             name="groupname"
@@ -140,7 +125,7 @@ const AddGroup = () => {
                             {error && <Text className='text-red-600 absolute bottom-[-20px] '>Error! select number</Text>}
                             <View className='w-[70%]'>
 
-                                <InputWithEye
+                                <Input
                                     className=''
                                     label="Enter number of People"
                                     control={control}

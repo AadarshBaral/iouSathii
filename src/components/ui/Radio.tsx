@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 
 const RadioButton = ({ options, selectedOption, onSelect, label }:any) => {
+    console.log(selectedOption)
     return (
         <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
             <Text style={{ marginRight: 10, fontSize: 16 }}>{label}</Text>
