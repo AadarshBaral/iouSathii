@@ -95,7 +95,7 @@ function Onboarding() {
         initialRouteName="onboard1"
     >
         <Tab.Group>
-            {/* @ts-ignore */}
+            {/* dont know why error */}
             <Tab.Screen name="onboard1" component={Onboard1} ></Tab.Screen>
             <Tab.Screen name="onboard2" component={Onboard2}></Tab.Screen>
             <Tab.Screen name="onboard3" component={Onboard3}></Tab.Screen>

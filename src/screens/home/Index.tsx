@@ -15,6 +15,7 @@ import ScreenWrapper from '@/layout/SafreAreaInsets';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import GroupContextProvider, { useGroupCtx } from '@/context/GroupContext';
+import { getError, isError, readFromStore } from '@/utils/storeUtils';
 
 if (__DEV__) {
   const ignoreWarns = ["VirtualizedLists should never be nested inside plain ScrollViews"];
@@ -80,10 +81,23 @@ const GroupInfo = [
 const Index = () => {
 
 
-  const [groups, _] = useGroupCtx();
+  const [groups, setGroups] = useGroupCtx();
 
   const navigation = useNavigation();
   console.log("in index")
+
+
+  useEffect(() => {
+    readFromStore("groups").then(res => {
+      if (isError(res)) {
+        console.log("Error reading from store ", getError(res))
+      } else {
+        setGroups(res.value);
+      }
+    })
+  }, [])
+
+
   // Load all groups from AsyncStorage
 
   return (

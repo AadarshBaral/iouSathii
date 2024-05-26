@@ -11,6 +11,7 @@ import { Typography } from '@/components/ui/Typography'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native'
 import GroupContextProvider, { group, person, useGroupCtx } from '@/context/GroupContext'
+import { getError, isError, writeToStore } from '@/utils/storeUtils'
 
 interface IGroupInputElement {
     number: number;
@@ -158,7 +159,16 @@ const AddGroup = () => {
                             </View>
                         </View>
                         {(!error && selectedNumber !== 0) && <GroupInputElement groupName={groupName} handleSubmit={(newGroup) => {
-                            setGroups([...groups, newGroup]);
+                            const newGroups = [...groups, newGroup]
+                            writeToStore("groups", newGroups).then(res => {
+                                if (isError(res)) {
+                                    console.log("Error while wrting group ", res.error);
+                                } else {
+
+                                }
+
+                            })
+                            setGroups(newGroups);
                         }} watch={watch} control={control} number={selectedNumber} />}
 
                     </View>
