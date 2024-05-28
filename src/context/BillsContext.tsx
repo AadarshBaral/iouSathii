@@ -22,17 +22,25 @@ const BillsContextProvider: React.FC<BillsContextProviderProps> = ({ children })
     const addBill = (newBill: UserBill) => {
         setUserBills((prevBills) => [...prevBills, newBill]);
     }
-    AsyncStorage.setItem('bills', JSON.stringify(allBills));
 
+    useEffect(() => {
+        const  setBills = async () => {
+            AsyncStorage.setItem('bills', JSON.stringify(allBills));
+            console.log("bills set")
+        }
+        setBills();
+    }, [allBills])
     useEffect(() => {
         const fetchBills = async () => {
             const bills = await AsyncStorage.getItem('bills');
             if (bills) {
+                console.log("bills", bills)
                 setUserBills(JSON.parse(bills));
             }
         }
         fetchBills();
     }, [])
+    // console.log("from context",allBills)
 
     return (
         <BillsContext.Provider value={{ allBills, addBill, total }}>

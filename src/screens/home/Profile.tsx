@@ -51,7 +51,7 @@ const Profile = () => {
   };
   const handleSignOut = () => {
     signOut(auth).then(() => {
-      AsyncStorage.clear();
+      AsyncStorage.removeItem('onboarding')
       console.log("signout success")
     }).catch((error) => {
       console.log("Error")
