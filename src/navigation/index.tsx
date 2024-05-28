@@ -5,30 +5,38 @@ import SplashScreen from '@/screens/home/splash'; // Ensure you have this compon
 import { FireAuth } from '@/config/fireConfig';
 import { useEffect, useState } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Navigation = () => {
+  const [onboarded, setOnboarded] = useState(null);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);  // State to handle loading
+
+  const getStorage = async () => {
+    const ob = await AsyncStorage.getItem('onboarding');
+    //@ts-ignore
+    setOnboarded(JSON.parse(ob));
+  };
+  useEffect(() => {
+    getStorage();
+  }, []);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(FireAuth, (user) => {
       setUser(user);
       setTimeout(() => {
-        setLoading(false);  // Set loading to false after 2 seconds
-      }, 2000);  // Delay of 2 seconds
+        setLoading(false);
+      }, 2000);
     });
-
-    return () => unsubscribe();  // Cleanup subscription on component unmount
+    return () => unsubscribe();
   }, []);
 
   if (loading) {
-    return <SplashScreen />;  // Display splash screen while loading
+    return <SplashScreen />;
   }
-
   return (
     <NavigationContainer>
-      {user ? <AfterAuth /> : <BeforeAuth />}
+      {user ? <AfterAuth /> : <BeforeAuth onboarded = {onboarded} />}
     </NavigationContainer>
   );
 };
-
 export default Navigation;

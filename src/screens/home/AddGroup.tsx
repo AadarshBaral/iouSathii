@@ -1,16 +1,13 @@
 import { View, Text, FlatList, ScrollView, KeyboardAvoidingView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import ScreenWrapper from '@/layout/SafreAreaInsets'
-import PageTitle from '@/components/ui/PageTitle'
 import TitleBar from '@/components/ui/TitleBar'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import Input from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
-import { Picker } from '@react-native-picker/picker';
 import { Typography } from '@/components/ui/Typography'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native'
-import GroupContextProvider, { group, person, useGroupCtx } from '@/context/GroupContext'
+import { group, person, useGroupCtx } from '@/context/GroupContext'
 interface IGroupInputElement {
     number: number;
     control: any, //TODO Find control type
@@ -42,7 +39,7 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupI
             name: groupName,
             people: dataArray
         })
-        navigation.navigate('index' as never)
+        navigation.navigate('HomeTabs' as never)
     };
     return (
         <View>

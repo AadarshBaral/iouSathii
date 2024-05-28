@@ -8,12 +8,13 @@ import { Typography } from "@/components/ui/Typography"
 import { Image } from "expo-image"
 import Input from "@/components/ui/Input"
 import { useNavigation } from "@react-navigation/native"
-import { FireAuth } from "@/config/fireConfig"
+import { FireAuth, db } from "@/config/fireConfig"
 // const vect2 = require("../../../../assets/Vector2.svg")
 import { updateProfile } from "firebase/auth"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import {z} from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
+import { addDoc, collection, serverTimestamp } from "firebase/firestore"
 const userSchema = z.object({
     username: z.string()
     .min(6, { message: "Atlest 6 characters" }), // Ensures username is a string and at least 6 characters long.
@@ -26,22 +27,43 @@ const userSchema = z.object({
   });
 type formFields = z.infer<typeof userSchema>
 
+export const generateAlphanumeric = ()=> {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (let i = 0; i < 8; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
 
 const Register = () => {
     const auth = FireAuth;
     const [isLoading, setLoading] = useState(false)
+    const profileRef = collection(db,'profiles');
+
+
+
     const { control, handleSubmit,setError, formState: { errors } } = useForm({resolver: zodResolver(userSchema)})
     const handleRegister = async (data: any) => {
         const { email, password, username } = data
         setLoading(true)
-        console.log(email, password, username)
-        console.log(username)
         try {
             const response = await createUserWithEmailAndPassword(auth, email, password)
             //@ts-ignore
             updateProfile(auth.currentUser, {
                 displayName: username,
             }).then(() => {
+                addDoc(profileRef,{
+                    id: generateAlphanumeric(),
+                    username: username,
+                    userId: response.user.uid,
+                    email: email,
+                    bio: 'No bio yet',
+                    qrImage : "",
+                    profileImage : "",
+                    createdAt: serverTimestamp()
+                })
                 console.log("Profile Updated")
             }).catch((error) => {
                 console.log("An error occoured", error)
