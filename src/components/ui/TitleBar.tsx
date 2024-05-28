@@ -1,10 +1,7 @@
 import { View, Text, Pressable } from 'react-native'
 import React from 'react'
-import Feather from '@expo/vector-icons/Feather';
 import { Typography } from '@/components/ui/Typography';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 interface ITitlebarProps {
     title: string;
@@ -33,8 +30,6 @@ const navigation = useNavigation();
                     </Pressable>
                 </View>
             </View>
-
     )
 }
-
 export default TitleBar

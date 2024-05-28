@@ -1,12 +1,14 @@
 import { View, Text, FlatList, ScrollView } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import TitleBar from '@/components/ui/TitleBar'
 import ScreenWrapper from '@/layout/SafreAreaInsets'
 import { Typography } from '@/components/ui/Typography'
 import { AntDesign } from '@expo/vector-icons';
 import DetailDueCard from '@/components/ui/DetailDueCard'
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { FireAuth, db } from '@/config/fireConfig'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 const data = [
   {
     name: 'Khaja In College',
@@ -15,56 +17,54 @@ const data = [
     purpose: "Khaja In College",
   },
   {
-    name: 'RUnnig In College',
-    total: '20000',
-    cardDecision: 'owe',
-    purpose: "Khaja In College",
-  },
-  {
-    name: 'Dancing In College',
+    name: 'Clothing in Bhatbhateni',
     total: '20000',
     cardDecision: 'receive',
     purpose: "Khaja In College",
-  },
-  {
-    name: 'Enjoy In College',
-    total: '20000',
-    cardDecision: 'receive',
-    purpose: "Khaja In College",
-  },
-  {
-    name: 'Travel In Collg',
-    total: '20000',
-    cardDecision: 'owe',
-    purpose: "Khaja In College",
-  },
-  {
-    name: 'Travel In Colleg',
-    total: '20000',
-    cardDecision: 'receive',
-    purpose: "Khaja In College",
-  },
-  {
-    name: 'Travel In Coege',
-    total: '20000',
-    cardDecision: 'owe',
-    purpose: "Khaja In College",
-  },
+  }
+
 ]
 
-const DetailView = () => {
+interface IBillsInterface {
+  anonymousUser: string;
+  currentUser: string;
+  groupId: string;
+  cardDecision: 'owe' | 'receive';
+  person: string;
+  purpose: string;
+  total: string;
+  date: string;
+}
 
+const DetailView = () => {
     const navigation = useNavigation();
+    const [bills,setBills] = useState<IBillsInterface >([] as never)
+    const params = useRoute();
+    const auth = FireAuth;
+    const currentUser = auth.currentUser;
+    const billsRef = collection(db, 'billRecords')
+    //@ts-ignore
+    const q1 = query(billsRef,where('currentUser', '==', currentUser?.uid ),where("person", "==", params.params?.data?.person))
+
+    useEffect(()=> {
+      const getBills = async () => {
+        const bills = await getDocs(q1);
+        const billsData = bills.docs.map(doc => doc.data())
+        setBills(billsData as any)
+      }
+      getBills();
+    },[])
     useEffect(() => {
         navigation.setOptions({ headerShown: false });
     }, [navigation]);
+    //@ts-ignore
+    console.log(params.params?.data.username ? params.params?.data.username :  params.params?.data.anonymousUser)
   return (
     <ScreenWrapper>
       <ScrollView showsVerticalScrollIndicator={false}>
       <View>
 
-        <TitleBar  back image='person.jpg' title='Detail View' />
-        <Typography variant={"h3"} label='Ramlal Karki' className='text-3xl ' />
+        <TitleBar  back image='person.jpg' title={ params.params?.data.username ? params.params?.data.username :  params.params?.data.anonymousUser} />
         <View className='flex flex-row justify-between items-center'>
         <Typography label='Pending' className='my-4 text-xl' />
         <View className='flex gap-3 flex-row items-center'>
@@ -74,16 +74,15 @@ const DetailView = () => {
         <Typography label='To Pay' className='text-sm' />
         </View>
         </View>
-
         <FlatList
             className='mt-1'
             scrollEnabled={true}
             ItemSeparatorComponent={() => <View style={{ height:20 }} />}
-            data={data}
-            renderItem={({ item }) => <DetailDueCard name={item.name} total={item.total as any} purpose={item.purpose} cardDecision={item.cardDecision as 'owe' | 'receive'}/>}
+            //@ts-ignore
+            data={bills as IBillsInterface}
+            renderItem={({ item }) => <DetailDueCard name={item.purpose} total={item.total as any} purpose={item.purpose} cardDecision={item.cardDecision as 'owe' | 'receive'}/>}
             keyExtractor={item => item.name}
           />
-
       </View>
       </ScrollView>
     </ScreenWrapper>

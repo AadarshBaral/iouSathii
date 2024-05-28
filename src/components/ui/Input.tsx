@@ -1,5 +1,5 @@
-import React, { ComponentProps, PropsWithRef, forwardRef, useEffect, useRef, useState } from "react";
-import { Pressable, TextInput, TextInputProps, Touchable, TouchableOpacity, View } from "react-native";
+import React, {  forwardRef,  useState } from "react";
+import { Pressable, TextInput, TextInputProps, View } from "react-native";
 import { Typography } from "./Typography";
 import { useController } from "react-hook-form";
 import { Entypo } from "@expo/vector-icons"
@@ -11,7 +11,6 @@ type Input2Props = TextInputProps & {
     name: string
     error?: string,
 }
-
 const Input = forwardRef<TextInput, Input2Props>((props, ref) => {
     const { label, control, name, error, secureTextEntry } = props;
     const { field } = useController({
@@ -39,7 +38,6 @@ const Input = forwardRef<TextInput, Input2Props>((props, ref) => {
                     )}
                 </Pressable>
             }
-
         </View>
     </View>
 });

@@ -14,13 +14,12 @@ import { FireAuth } from "@/config/fireConfig"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { zodResolver } from '@hookform/resolvers/zod'
 import {z} from 'zod'
+import AsyncStorage from "@react-native-async-storage/async-storage"
 const schema = z.object({
     email: z.string().email(),
     password: z.string().min(6, { message: 'Password must be at least 6 characters' })
 })
-
 type formFields = z.infer<typeof schema>
-
 const Login = () => {
     const auth = FireAuth
     const [isLoading, setLoading] = useState(false)
@@ -101,3 +100,5 @@ const Login = () => {
     )
 }
 export default Login
+
+

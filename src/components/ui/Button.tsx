@@ -1,5 +1,5 @@
 import {cn} from "@/utils/cn";
-import {GestureResponderEvent, Pressable, PressableProps, TouchableOpacity} from "react-native";
+import { Pressable, PressableProps} from "react-native";
 import {cva, type VariantProps} from "class-variance-authority";
 import {PropsWithChildren} from "react";
 
@@ -29,7 +29,7 @@ const buttonVariants = cva(
 );
 
 const Button = ({className, ...props}: ButtonProps) => {
-  const {children, variant, onPress, size, enableSound = true, ...rest} = props;
+  const {children, variant, onPress, size,...rest} = props;
   return (
     <Pressable
       className={cn(buttonVariants({variant, size, className}))}

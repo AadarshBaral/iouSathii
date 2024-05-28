@@ -9,6 +9,7 @@ module.exports = {
         textDark: "#1E2225"
 
       },
+
       fontFamily: {
         poppins_light: 'Poppins_300Light',
         poppins_regular: 'Poppins_400Regular',
