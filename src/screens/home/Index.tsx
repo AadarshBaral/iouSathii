@@ -15,6 +15,7 @@ import { FireAuth, db } from '@/config/fireConfig';
 import { User } from 'firebase/auth';
 import { useBillsContext } from '@/context/BillsContext';
 import TabBar from '@/components/ui/TabBar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 if (__DEV__) {
   const ignoreWarns = ["VirtualizedLists should never be nested inside plain ScrollViews"];
   const errorWarn = global.console.error;
@@ -61,7 +62,17 @@ const Index = () => {
   const [user, setUser] = useState<User | null>(null);
   const userCollection = collection(db, 'billRecords')
   const [userBills, setUserBills] = useState<UserBill[]>([]);
+
   const [total, setTotal] = useState<number>(0);
+  const storeData = async (value:any) => {
+    try {
+      await AsyncStorage.setItem('Bills', JSON.stringify(value));
+      console.log("bills stored")
+    } catch (e) {
+      // saving error
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     auth.onAuthStateChanged(user => {
@@ -73,6 +84,7 @@ const Index = () => {
         const billsData = data.docs.filter((doc) => (doc.data().currentUser === user?.uid))
         const bills = billsData.map(doc => doc.data())
         setUserBills(bills as UserBill[])
+        storeData(bills)
         const total = bills.reduce((acc, bill) => {
           if (bill.cardDecision === 'owe') {
             return acc - Number(bill.total)
@@ -84,13 +96,14 @@ const Index = () => {
       }
       getUserBills();
       setLoading(false);
+
     })
   }, [allBills])
   return (
     <ScreenWrapper>
       <TitleBar title="Home" image={"person.jpg"} />
       <Pressable onPress={() => navigation.navigate('addBill' as never)} className='absolute bottom-16  right-5 z-[20]' >
-        <View className='bg-slate-800 z-20 w-[70px] h-[70px] rounded-full flex justify-center items-center shadow-sm shadow-black'>
+        <View className='bg-[#1E2225] z-20 w-[70px] h-[70px] rounded-full flex justify-center items-center shadow-sm shadow-black'>
           <AntDesign name="plus" size={42} color="white" />
         </View>
       </Pressable>
@@ -98,7 +111,9 @@ const Index = () => {
       <ScrollView showsVerticalScrollIndicator={false} className='h-[500px] '>
         <View className='flex flex-row justify-between '>
           <Typography className='text-lg' variant={'h2'} label='Recent' />
+          <Pressable onPress={() => {navigation.navigate("ViewAll" as never)}}>
           <Typography className='text-lg mb-2' variant={'h2'} label='View All' />
+          </Pressable>
         </View>
         <View className='h-[250px]'>
           {loading ? <ActivityIndicator color="#3A3453" size='large' /> : <FlatList bounces={false}
@@ -120,7 +135,6 @@ const Index = () => {
             renderItem={({ item }) => <Pressable onPress={() => navigation.navigate('index' as never)}><GroupCard name={item.name} /></Pressable>}
             keyExtractor={(item, index) => index.toString()}
           />
-
         </View >
       </ScrollView>
 

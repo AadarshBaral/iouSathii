@@ -8,6 +8,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from
     "@react-navigation/native-stack";
 import HomeTabs from "./TabBarNav";
+import ViewAll from "@/screens/home/ViewAll";
 
 
 const Stack = createNativeStackNavigator();
@@ -29,6 +30,13 @@ const AfterAuth = () => {
             <Stack.Screen
                 name="Search"
                 component={Search}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name="ViewAll"
+                component={ViewAll}
                 options={{
                     headerShown: false,
                 }}
