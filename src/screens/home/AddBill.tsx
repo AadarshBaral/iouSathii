@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { TextInput, View } from 'react-native';
+import { Pressable, TextInput, View } from 'react-native';
 import { set, useForm } from 'react-hook-form';
 import Input from '@/components/ui/Input';
 import RadioButton from '@/components/ui/Radio';
@@ -100,21 +100,29 @@ const AddBill = () => {
         <ScreenWrapper className='relative ' >
             <TitleBar back image='person.jpg' title='Add Bill' />
             <View>
-                <Input
-                    label="Name of Person"
-                    control={control}
-                    name="name"
-                    defaultValue=''
-                    enterKeyHint="next"
-                    autoCorrect={false}
-                    //@ts-ignore
-                    value={params.params?.data.bio ? params.params?.data.username : watch('name')} // Set value to bio data if it exists
-                />
-                {errors.name && <Typography label={errors.name.message as string} className="text-red-500" variant={'p'} />}
-                <View className='flex flex-row gap-2 my-2'>
-                    <Typography className='text-xl' label='Or' />
-                    <Typography onPress={() => { navigation.navigate('Search' as never) }} label='Link A User' className='text-blue-500 text-xl' />
-                    {/* {params.data && <Typography label='user Found'/>} */}
+                <View className='flex flex-col gap-y-2 bg-[#e8f5ff]'>
+                    <Input
+                        label="Person Name"
+                        control={control}
+                        name="name"
+                        defaultValue=''
+                        enterKeyHint="next"
+                        autoCorrect={false}
+                        //@ts-ignore
+                        value={params.params?.data.bio ? params.params?.data.username : watch('name')} // Set value to bio data if it exists
+                    />
+                    {errors.name && <Typography label={errors.name.message as string} className="text-red-500" variant={'p'} />}
+                    <View className='flex flex-col items-center my-2'>
+                        <Typography className='text-xl' label='OR' />
+                        <Pressable onPress={() => {
+                            navigation.navigate('Search' as never)
+                        }}
+                            className='flex items-center text-[#2C4456] text-2xl bg-[#85cbff] w-full py-2 rounded-xl'
+                        >
+                            <Typography label='Link a user' className='text-black text-xl ' />
+                        </Pressable>
+                        {/* {params.data && <Typography label='user Found'/>} */}
+                    </View>
                 </View>
                 <Input
                     label="Total Money"

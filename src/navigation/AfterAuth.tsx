@@ -9,12 +9,14 @@ import { createNativeStackNavigator } from
     "@react-navigation/native-stack";
 import HomeTabs from "./TabBarNav";
 import ViewAll from "@/screens/home/ViewAll";
+import AntDesign from '@expo/vector-icons/AntDesign';
+
 
 
 const Stack = createNativeStackNavigator();
 const AfterAuth = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName="addBill">
             <Stack.Screen
                 name="HomeTabs"
                 component={HomeTabs}
