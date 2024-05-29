@@ -22,7 +22,6 @@ const BillsContextProvider: React.FC<BillsContextProviderProps> = ({ children })
     const addBill = (newBill: UserBill) => {
         setUserBills((prevBills) => [...prevBills, newBill]);
     }
-
     useEffect(() => {
         const  setBills = async () => {
             AsyncStorage.setItem('bills', JSON.stringify(allBills));

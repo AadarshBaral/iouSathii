@@ -1,6 +1,6 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { TextInput, View } from 'react-native';
-import { set, useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import {  View } from 'react-native';
+import { useForm } from 'react-hook-form';
 import Input from '@/components/ui/Input';
 import RadioButton from '@/components/ui/Radio';
 import { Button } from '@/components/ui/Button';
@@ -9,7 +9,7 @@ import ScreenWrapper from '@/layout/SafreAreaInsets';
 import TitleBar from '@/components/ui/TitleBar';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { FireAuth, db } from '@/config/fireConfig';
-import { addDoc, collection } from 'firebase/firestore';
+import { addDoc, collection, doc, documentId, getDoc } from 'firebase/firestore';
 import { useBillsContext } from '@/context/BillsContext';
 import { serverTimestamp } from 'firebase/firestore';
 import { z } from 'zod';
@@ -31,8 +31,6 @@ const schema = z.object({
     description: z.string()
         .min(1, { message: "Description must not be empty" }) // Ensures description is a non-empty string
         .max(500, { message: "Description must not exceed 500 characters" }), // Optional: limit the description to 500 characters
-
-
     type: z.enum(['owe', 'receive'], { message: "Invalid type selected" }),
 });
 const AddBill = () => {
@@ -48,7 +46,7 @@ const AddBill = () => {
         //@ts-ignore
         setValue('name', params.params?.data.username)
     }, [params])
-    console.log(params)
+
     useEffect(() => {
         navigation.setOptions({ headerShown: false });
     }, [navigation]);
@@ -72,6 +70,7 @@ const AddBill = () => {
     const onSubmit = async (data: any) => {
         //person is selected if user links a sathi
         const submissionData = {
+            billId : generateAlphanumeric(12),
             anonymousUser: data.name,
             cardDecision: data.type,
             currentUser: uid,
@@ -82,12 +81,10 @@ const AddBill = () => {
             total: data.totalMoney,
             date: serverTimestamp(),
         }
-        await addDoc(billsCollection, {
+       await addDoc(billsCollection, {
             ...submissionData
         }).then(() => {
-            console.log('Bill Added')
             addBill(submissionData as any)
-
             navigation.goBack()
         }).catch((e) => {
             console.log("Error", e)
@@ -95,6 +92,7 @@ const AddBill = () => {
             reset()
         }
         )
+
     };
     return (
         <ScreenWrapper className='relative ' >

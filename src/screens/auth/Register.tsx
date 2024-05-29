@@ -27,16 +27,15 @@ const userSchema = z.object({
   });
 type formFields = z.infer<typeof userSchema>
 
-export const generateAlphanumeric = ()=> {
+export const generateAlphanumeric = (length = 8) => {
     let result = '';
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const charactersLength = characters.length;
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < length; i++) {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
 }
-
 const Register = () => {
     const auth = FireAuth;
     const [isLoading, setLoading] = useState(false)
@@ -87,7 +86,9 @@ const Register = () => {
         <ScrollView className="h-full relative p-0 ">
             <SafeAreaView className="p-6 mt-10 h-screen flex flex-col">
                 <View className="flex flex-col gap-y-20">
-                    <PageTitle className="mt-20" label="Register " />
+                    <View className="">
+                    <PageTitle className="" label="Register " />
+                    </View>
                     <View className="flex flex-col pt">
                         <Input
                             label="Username"
