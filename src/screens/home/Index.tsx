@@ -10,7 +10,7 @@ import ScreenWrapper from '@/layout/SafreAreaInsets';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import { useGroupCtx } from '@/context/GroupContext';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { collection, getDocs, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { FireAuth, db } from '@/config/fireConfig';
 import { User } from 'firebase/auth';
 import { useBillsContext } from '@/context/BillsContext';
@@ -56,14 +56,16 @@ export interface UserBill {
 const Index = () => {
   const auth = FireAuth;
   const [groups, _] = useGroupCtx();
+  console.log("Groups", groups)
   const { allBills } = useBillsContext();
   const navigation = useNavigation();
   const [loading, setLoading] = useState(false);  // State to handle loading
   const [user, setUser] = useState<User | null>(null);
-  const userCollection = collection(db, 'billRecords')
+  const billCollection = collection(db, 'billRecords')
   const [userBills, setUserBills] = useState<UserBill[]>([]);
-
   const [total, setTotal] = useState<number>(0);
+  const currentUser = auth.currentUser;
+  // console.log()
   const storeData = async (value:any) => {
     try {
       await AsyncStorage.setItem('Bills', JSON.stringify(value));
@@ -72,33 +74,56 @@ const Index = () => {
       // saving error
     }
   };
-
+  const [docs, setDocs] = useState([]);
+  const q = query(billCollection, orderBy('date', 'desc'))
   useEffect(() => {
-    setLoading(true);
-    auth.onAuthStateChanged(user => {
-      setUser(user);
-      const getUserBills = async () => {
-        const q = query(userCollection, orderBy('date', 'desc'))
-        const data = await getDocs(q);
-        const [uid] = data.docs.map(doc => doc.data().currentUser)
-        const billsData = data.docs.filter((doc) => (doc.data().currentUser === user?.uid))
-        const bills = billsData.map(doc => doc.data())
-        setUserBills(bills as UserBill[])
-        storeData(bills)
-        const total = bills.reduce((acc, bill) => {
-          if (bill.cardDecision === 'owe') {
-            return acc - Number(bill.total)
-          } else {
-            return acc + Number(bill.total)
-          }
-        }, 0)
-        setTotal(total)
-      }
-      getUserBills();
-      setLoading(false);
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const documents = snapshot.docs.map(doc => doc.data());
+      const filteredByCurrentUser = documents.filter((doc) => (doc.currentUser === currentUser?.uid ))
+      console.log(filteredByCurrentUser)
+      // console.log(documents.forEach((doc) => console.log(doc.currentUser)))
+      // setDocs(documents as never);
+      setUserBills(filteredByCurrentUser as never)
+      const total = filteredByCurrentUser.reduce((acc, bill) => {
+                if (bill.cardDecision === 'owe') {
+                  return acc - Number(bill.total)
+                } else {
+                  return acc + Number(bill.total)
+                }
+              }, 0)
+              setTotal(total)
+      // Optional: log the fetched documents
+    });
+    // Cleanup function to unsubscribe from the listener when the component unmounts
+    return () => unsubscribe();
+  }, []);
+  // console.log("from home" ,userBills)
+  // useEffect(() => {
+  //   setLoading(true);
+  //   auth.onAuthStateChanged(user => {
+  //     setUser(user);
+  //     const getUserBills = async () => {
+  //       const q = query(userCollection, orderBy('date', 'desc'))
+  //       const data = await getDocs(q);
+  //       const [uid] = data.docs.map(doc => doc.data().currentUser)
+  //       const billsData = data.docs.filter((doc) => (doc.data().currentUser === user?.uid))
+  //       const bills = billsData.map(doc => doc.data())
+  //       setUserBills(bills as UserBill[])
+  //       storeData(bills)
+  //       const total = bills.reduce((acc, bill) => {
+  //         if (bill.cardDecision === 'owe') {
+  //           return acc - Number(bill.total)
+  //         } else {
+  //           return acc + Number(bill.total)
+  //         }
+  //       }, 0)
+  //       setTotal(total)
+  //     }
+  //     getUserBills();
+  //     setLoading(false);
 
-    })
-  }, [allBills])
+  //   })
+  // }, [allBills])
   return (
     <ScreenWrapper>
       <TitleBar title="Home" image={"person.jpg"} />
@@ -120,7 +145,7 @@ const Index = () => {
             ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
             data={userBills.slice(0, 3)}
             //@ts-ignore
-            renderItem={({ item }) => <Pressable onPress={() => navigation.navigate('dueDetail',{data:item})}><DueCard name={item.anonymousUser} total={item.total as any} cardDecision={item.cardDecision as "owe" | "receive"} /></Pressable>}
+            renderItem={({ item }) => <Pressable onPress={() => navigation.navigate('dueDetail',{data:item})}><DueCard person2 = {item.currentUser} person={item.person} name={item.anonymousUser} total={item.total as any} cardDecision={item.cardDecision as "owe" | "receive"} /></Pressable>}
             keyExtractor={item =>item.date }
           />}
         </View>
@@ -132,7 +157,7 @@ const Index = () => {
             bounces={false}
             ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
             data={groups}
-            renderItem={({ item }) => <Pressable onPress={() => navigation.navigate('index' as never)}><GroupCard name={item.name} /></Pressable>}
+            renderItem={({ item }) => <Pressable onPress={() => navigation.navigate('GroupConclusion' as never)}><GroupCard name={item.name} /></Pressable>}
             keyExtractor={(item, index) => index.toString()}
           />
         </View >

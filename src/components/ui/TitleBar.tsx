@@ -3,12 +3,13 @@ import React from 'react'
 import { Typography } from '@/components/ui/Typography';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import { Image } from 'expo-image';
 interface ITitlebarProps {
     title: string;
     image: string;
     back? : boolean;
 }
-const img = require(`../../../assets/splash.png`)
+const img = require(`../../../assets/person.jpg`)
 const TitleBar = ({ title, image, back }: ITitlebarProps) => {
 const navigation = useNavigation();
     return (
@@ -25,7 +26,7 @@ const navigation = useNavigation();
                     <Pressable onPressIn={()=>navigation.navigate('profile' as never)}>
 
                     <View className='bg-slate-300 w-14 h-14 rounded-full shadow-sm'>
-                        {/* <Image  source={img} className='h-14 w-14  object-cover rounded-full' /> */}
+                        <Image  source={img} className='h-14 w-14  object-cover rounded-full' />
                     </View>
                     </Pressable>
                 </View>

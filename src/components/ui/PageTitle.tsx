@@ -10,7 +10,7 @@ interface IPageTitleProps {
 const PageTitle = ({label,className, ...props}:IPageTitleProps) => {
   return (
     <View>
-      <Typography variant={'h1'} className={cn(`text-orange-600 text-5xl mt-6 pt-10`,className)} label={label} />
+      <Typography variant={'h1'} className={cn(`text-orange-600 text-5xl  pt-10 text-center`,className)} label={label} />
     </View>
   )
 }
