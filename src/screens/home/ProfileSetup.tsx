@@ -1,4 +1,4 @@
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign } from "@expo/vector-icons";
 import { Button } from "@/components/ui/Button";
@@ -6,11 +6,20 @@ import { Typography } from "@/components/ui/Typography";
 import TitleBar from "@/components/ui/TitleBar";
 import { useState } from "react";
 import {getDownloadURL, ref, uploadBytesResumable} from 'firebase/storage'
+import { storage } from "@/config/fireConfig";
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+
 export default function ProfileSetup() {
-    const [data,setdata] = useState()
     const [file,setFile] = useState(null)
 
-    return <SafeAreaView>
+    const uploadFile = () =>{
+        if ( file == null){
+            return
+        }
+
+    }
+
+return <SafeAreaView>
         <ScrollView className="flex flex-col gap-y-6 mt-4 mx-4 font-poppins_regular">
           <TitleBar back image="person.img" title="Profile Setup" />
             <View className="flex flex-col gap-y-2 ">

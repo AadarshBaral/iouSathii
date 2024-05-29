@@ -80,7 +80,6 @@ const Index = () => {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const documents = snapshot.docs.map(doc => doc.data());
       const filteredByCurrentUser = documents.filter((doc) => (doc.currentUser === currentUser?.uid ))
-      console.log(filteredByCurrentUser)
       // console.log(documents.forEach((doc) => console.log(doc.currentUser)))
       // setDocs(documents as never);
       setUserBills(filteredByCurrentUser as never)

@@ -1,31 +1,27 @@
 import { View, Text, FlatList, Pressable } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useBillsContext } from '@/context/BillsContext';
 import { FireAuth, db } from '@/config/fireConfig';
 import { useNavigation } from '@react-navigation/native';
-import { collection } from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { UserBill } from './Index';
-import { User } from 'firebase/auth';
 import DueCard from './DueCard';
 import TitleBar from '@/components/ui/TitleBar';
 import ScreenWrapper from '@/layout/SafreAreaInsets';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 const ViewAll = () => {
+    const auth = FireAuth;
     const navigation = useNavigation();
     const [userBills, setUserBills] = useState<UserBill[]>([]);
-    useEffect(()=>{
-        const fetchBills = async () => {
-         await AsyncStorage.getItem('Bills').then((data)=>{
-            if(data){
-                setUserBills(JSON.parse(data))
-            }
-            else{
-                console.log("no bills found")
-            }
-        })
-        }
-        fetchBills();
-    },[])
+    const billCollection = collection(db, 'billRecords')
+    const q = query(billCollection, orderBy('date', 'desc'))
+    const currentUser = auth.currentUser;
+    useEffect(() => {
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const documents = snapshot.docs.map(doc => doc.data());
+            const filteredByCurrentUser = documents.filter((doc) => (doc.currentUser === currentUser?.uid))
+            setUserBills(filteredByCurrentUser as never);
+        });
+        return () => unsubscribe();
+    }, []);
     console.log(userBills)
     return (
         <ScreenWrapper>
