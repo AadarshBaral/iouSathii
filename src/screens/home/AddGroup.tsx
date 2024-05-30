@@ -9,8 +9,8 @@ import { Typography } from '@/components/ui/Typography'
 import { useNavigation } from '@react-navigation/native'
 import { group, person, useGroupCtx } from '@/context/GroupContext'
 import { generateAlphanumeric } from '../auth/Register'
+import Input2 from '@/components/ui/InputWithBorder'
 interface IGroupInputElement {
-
     number: number;
     groupId: string;
     control: any, //TODO Find control type
@@ -30,8 +30,9 @@ if (__DEV__) {
         errorWarn(...arg);
     };
 }
-const GroupInputElement = ({ groupName, number, control, handleSubmit,groupId }: IGroupInputElement) => {
+const GroupInputElement = ({ groupName, number, control, handleSubmit, groupId }: IGroupInputElement) => {
     const navigation = useNavigation();
+    //@ts-ignore
     const dataArray: person[] = Array.from({ length: number }, (v, k) => ({
         id: `${k + 1}`, // Unique ID for each element
         name: `P${k + 1}`,// Title for each item
@@ -39,7 +40,7 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit,groupId }:
     }));
     const handleGroupSubmit = () => {
         handleSubmit({
-            groupId : groupId,
+            groupId: groupId,
             name: groupName,
             people: dataArray
         })
@@ -51,8 +52,9 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit,groupId }:
             <FlatList
                 data={dataArray}
                 renderItem={({ item }) => (
-                    <View className='h-[200px] w-full bg-gray-200 rounded-xl mt-3 p-2 shdow-lg border-2 border-gray-300' >
-                        <Input
+                    <View className='h-[250px] w-full bg-[#FFF4DF] rounded-xl mt-3 p-2 shdow-lg border-2 border-[#4b3e2711]' >
+                        <Input2
+                            border='golden'
                             label={`Person ${item.id}`}
                             control={control}
                             name={`person-${item.id}-name`}
@@ -63,14 +65,15 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit,groupId }:
                             }}
                             autoCorrect={false}
                         />
-                        <Input
+                        <Input2
+                            border='golden'
                             label='Total'
                             control={control}
                             name={`person-${item.id}-total`}
                             enterKeyHint="next"
                             inputMode='numeric'
                             onChangeText={(v) => {
-                                item.total = Number(v)
+                                item.total = v as string
                             }}
                             autoCorrect={false}
                         />
@@ -78,7 +81,7 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit,groupId }:
                 )}
                 keyExtractor={item => item.id}
             />
-            <Button onPress={handleGroupSubmit}><Typography className='text-xl text-white' label="Continue" /></Button>
+            <Button className='mt-3' onPress={handleGroupSubmit}><Typography className='text-xl text-white' label="Continue" /></Button>
         </View>
     )
 }
@@ -114,7 +117,8 @@ const AddGroup = () => {
                 <ScrollView showsVerticalScrollIndicator={false}>
                     <View>
                         <TitleBar back title="Create Group" image={"person.jpg"} />
-                        <Input
+                        <Input2
+                            border='default'
                             label="Enter group name"
                             control={control}
                             name="groupname"
@@ -125,7 +129,8 @@ const AddGroup = () => {
                             {error && <Text className='text-red-600 absolute bottom-[-20px] '>Error! select number</Text>}
                             <View className='w-[70%]'>
 
-                                <Input
+                                <Input2
+                                    border='default'
                                     className=''
                                     label="Enter number of People"
                                     control={control}
@@ -140,7 +145,7 @@ const AddGroup = () => {
                                 </Button>
                             </View>
                         </View>
-                        {(!error && selectedNumber !== 0) && <GroupInputElement groupId={generateAlphanumeric()}  groupName={groupName} handleSubmit={(newGroup) => {
+                        {(!error && selectedNumber !== 0) && <GroupInputElement groupId={generateAlphanumeric()} groupName={groupName} handleSubmit={(newGroup) => {
                             setGroups([...groups, newGroup]);
                         }} watch={watch} control={control} number={selectedNumber} />}
 
