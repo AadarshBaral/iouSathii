@@ -9,11 +9,6 @@ import TitleBar from '@/components/ui/TitleBar';
 import ScreenWrapper from '@/layout/SafreAreaInsets';
 import {
     LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
 } from "react-native-chart-kit";
 import { Typography } from '@/components/ui/Typography';
 const ViewAll = () => {
@@ -29,58 +24,60 @@ const ViewAll = () => {
             const documents = snapshot.docs.map(doc => doc.data());
             const filteredByCurrentUser = documents.filter((doc) => (doc.currentUser === currentUser?.uid))
             setUserBills(filteredByCurrentUser as never);
-            const extractedTotals = filteredByCurrentUser.map(doc => doc.total);
+            const extractedTotals = filteredByCurrentUser.map(doc => doc.total / 100);
             setTotals(extractedTotals);
         });
         return () => unsubscribe();
     }, []);
-    console.log(userBills)
-
     return (
         <ScreenWrapper>
             <TitleBar back title="All Dues" image='image.png' />
             <View className='my-4'>
                 <LineChart
                     data={{
-                        labels: userBills.map((_, index) => `Trans ${index + 1}`),
-                            datasets: [{ data: totals }]
+                        labels: [], // Add labels if necessary
+                        datasets: [{ data: totals }]
                     }}
-                    width={Dimensions.get("window").width - 20}
-                    height={200}
+                    width={Dimensions.get("window").width - 30} // Reduced width for better padding
+                    height={220} // Increased height for better visual proportion
                     withShadow={false}
                     withHorizontalLabels={true}
+
                     withVerticalLabels={true}
-
-
+                    yAxisLabel='रु'
                     yAxisInterval={1} // optional, defaults to 1
                     chartConfig={{
-                        propsForBackgroundLines: { stroke: "#00000000" },
-                        propsForLabels: { fill: 'black' },
+
                         backgroundGradientFrom: "#1E2225",
                         backgroundGradientFromOpacity: 1,
                         backgroundGradientTo: "#161719",
                         fillShadowGradientToOpacity: 0,
-                        decimalPlaces: 2, // optional, defaults to 2dp
-                        color: (opacity = 1) => `white`,
-                        labelColor: (opacity = 1) => `white`,
-
+                        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`, // Ensures white color with configurable opacity
+                        labelColor: (opacity = 1) => `pink`, // Label color with opacity handling
                         style: {
-
                             borderRadius: 16,
-
+                            paddingVertical: 10, // Added vertical padding
                         },
                         propsForDots: {
-                            r: "6",
+                            r: "4", // Reduced dot radius for subtlety
                             strokeWidth: "2",
-                            stroke: "#ccc",
-
+                            stroke: "#fff", // Changed dot stroke to white for better visibility
+                        },
+                        propsForBackgroundLines: {
+                            stroke: "#00000000" // Hiding background lines for a cleaner look
+                        },
+                        propsForVerticalLabels: {
+                            dx: 0,
+                            dy: -10
                         }
-                    }}
-                    bezier
-                    style={{
-                        marginRight: 10,
-                        borderRadius: 20,
 
+                    }}
+                    bezier // This can be toggled off for a linear chart
+                    style={{
+                        // Added vertical margin
+                        marginTop: -30,
+                        paddingTop: 30,
+                        borderRadius: 16,
                     }}
                 />
             </View>

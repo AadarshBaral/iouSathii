@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, forwardRef, useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Pressable, Text, TextInput, View } from 'react-native';
+import { KeyboardAvoidingView, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { set, useController, useForm } from 'react-hook-form';
 import Input from '@/components/ui/Input';
 import RadioButton from '@/components/ui/Radio';
@@ -41,7 +41,7 @@ const schema = z.object({
 export const AddBillInput = forwardRef<TextInput, TextInputProps & { control: any, name: string, label: string, border: string, }>((props, ref) => {
     const borderColors: Record<string, string> = {
     'default ' : 'border-black',
-    'golden' : 'border-[#bb8e3a]'
+    'golden' : 'border-[#FFBE42]'
     };
 
     const { control, name, label } = props;
@@ -129,9 +129,7 @@ const AddBill = () => {
 
     };
     return (
-        <KeyboardAvoidingView>
-
-
+<ScrollView>
         <ScreenWrapper className='relative mt-10' >
             <TitleBar back image='person.jpg' title='Add Bill' />
             <View>
@@ -222,7 +220,8 @@ const AddBill = () => {
                 </Button>
             </View>
         </ScreenWrapper>
-        </KeyboardAvoidingView>
+
+            </ScrollView>
     );
 };
 
