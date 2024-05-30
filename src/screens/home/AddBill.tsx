@@ -79,6 +79,7 @@ const AddBill = () => {
         params.params?.data.username && setLinkedUser(params.params?.data?.username)
     }, [params])
 
+
     useEffect(() => {
         navigation.setOptions({ headerShown: false });
     }, [navigation]);
@@ -113,7 +114,7 @@ const AddBill = () => {
             total: data.totalMoney,
             date: serverTimestamp(),
         }
-        await addDoc(billsCollection, {
+       await addDoc(billsCollection, {
             ...submissionData
         }).then(() => {
             addBill(submissionData as any)
@@ -124,6 +125,7 @@ const AddBill = () => {
             reset()
         }
         )
+
 
     };
     return (

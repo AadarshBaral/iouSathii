@@ -46,7 +46,9 @@ const Login = () => {
         <ScrollView className="h-full relative p-0">
             <SafeAreaView className="p-6 mt-10 h-screen flex flex-col ">
                 <View className="flex flex-col gap-y-20">
-                    <PageTitle className="" label="Login " />
+                <View className="">
+                    <PageTitle className="" label="Login" />
+                    </View>
                     <View className="flex flex-col">
                         <Input
                             label="Email"

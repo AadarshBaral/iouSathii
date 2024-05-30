@@ -8,8 +8,8 @@ import { createNativeStackNavigator } from
     "@react-navigation/native-stack";
 import HomeTabs from "./TabBarNav";
 import ViewAll from "@/screens/home/ViewAll";
-
-
+import GroupConclusion from "@/screens/home/GroupConclusion";
+import ProfileSetup from "@/screens/home/ProfileSetup";
 const Stack = createNativeStackNavigator();
 const AfterAuth = () => {
     return (
@@ -22,6 +22,20 @@ const AfterAuth = () => {
             <Stack.Screen
                 name="profile"
                 component={Profile}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name="ProfileSetup"
+                component={ProfileSetup}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name="GroupConclusion"
+                component={GroupConclusion}
                 options={{
                     headerShown: false,
                 }}

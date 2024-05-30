@@ -1,36 +1,90 @@
-import { View, Text, FlatList, Pressable } from 'react-native'
+import { View, Text, FlatList, Pressable, Dimensions } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { useBillsContext } from '@/context/BillsContext';
 import { FireAuth, db } from '@/config/fireConfig';
 import { useNavigation } from '@react-navigation/native';
-import { collection } from 'firebase/firestore';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { UserBill } from './Index';
-import { User } from 'firebase/auth';
 import DueCard from './DueCard';
 import TitleBar from '@/components/ui/TitleBar';
 import ScreenWrapper from '@/layout/SafreAreaInsets';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {
+    LineChart,
+    BarChart,
+    PieChart,
+    ProgressChart,
+    ContributionGraph,
+    StackedBarChart
+} from "react-native-chart-kit";
+import { Typography } from '@/components/ui/Typography';
 const ViewAll = () => {
+    const auth = FireAuth;
     const navigation = useNavigation();
     const [userBills, setUserBills] = useState<UserBill[]>([]);
-    useEffect(()=>{
-        const fetchBills = async () => {
-         await AsyncStorage.getItem('Bills').then((data)=>{
-            if(data){
-                setUserBills(JSON.parse(data))
-            }
-            else{
-                console.log("no bills found")
-            }
-        })
-        }
-        fetchBills();
-    },[])
+    const [totals, setTotals] = useState<number[]>([]);
+    const billCollection = collection(db, 'billRecords')
+    const q = query(billCollection, orderBy('date', 'desc'))
+    const currentUser = auth.currentUser;
+    useEffect(() => {
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const documents = snapshot.docs.map(doc => doc.data());
+            const filteredByCurrentUser = documents.filter((doc) => (doc.currentUser === currentUser?.uid))
+            setUserBills(filteredByCurrentUser as never);
+            const extractedTotals = filteredByCurrentUser.map(doc => doc.total);
+            setTotals(extractedTotals);
+        });
+        return () => unsubscribe();
+    }, []);
     console.log(userBills)
+
     return (
         <ScreenWrapper>
             <TitleBar back title="All Dues" image='image.png' />
-            <Text className='my-2 text-xl'>All pending dues</Text>
+            <View className='my-4'>
+                <LineChart
+                    data={{
+                        labels: userBills.map((_, index) => `Trans ${index + 1}`),
+                            datasets: [{ data: totals }]
+                    }}
+                    width={Dimensions.get("window").width - 20}
+                    height={200}
+                    withShadow={false}
+                    withHorizontalLabels={true}
+                    withVerticalLabels={true}
+
+
+                    yAxisInterval={1} // optional, defaults to 1
+                    chartConfig={{
+                        propsForBackgroundLines: { stroke: "#00000000" },
+                        propsForLabels: { fill: 'black' },
+                        backgroundGradientFrom: "#1E2225",
+                        backgroundGradientFromOpacity: 1,
+                        backgroundGradientTo: "#161719",
+                        fillShadowGradientToOpacity: 0,
+                        decimalPlaces: 2, // optional, defaults to 2dp
+                        color: (opacity = 1) => `white`,
+                        labelColor: (opacity = 1) => `white`,
+
+                        style: {
+
+                            borderRadius: 16,
+
+                        },
+                        propsForDots: {
+                            r: "6",
+                            strokeWidth: "2",
+                            stroke: "#ccc",
+
+                        }
+                    }}
+                    bezier
+                    style={{
+                        marginRight: 10,
+                        borderRadius: 20,
+
+                    }}
+                />
+            </View>
+            <Typography className='my-2 text-xl' label="All pending dues" />
             <View className=''>
                 <FlatList bounces={false}
                     showsHorizontalScrollIndicator={false}
@@ -41,6 +95,7 @@ const ViewAll = () => {
                     keyExtractor={item => item.date}
                 />
             </View>
+
         </ScreenWrapper>
     )
 }

@@ -8,8 +8,11 @@ import { Button } from '@/components/ui/Button'
 import { Typography } from '@/components/ui/Typography'
 import { useNavigation } from '@react-navigation/native'
 import { group, person, useGroupCtx } from '@/context/GroupContext'
+import { generateAlphanumeric } from '../auth/Register'
 interface IGroupInputElement {
+
     number: number;
+    groupId: string;
     control: any, //TODO Find control type
     watch: any;
     groupName: string;
@@ -27,7 +30,7 @@ if (__DEV__) {
         errorWarn(...arg);
     };
 }
-const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupInputElement) => {
+const GroupInputElement = ({ groupName, number, control, handleSubmit,groupId }: IGroupInputElement) => {
     const navigation = useNavigation();
     const dataArray: person[] = Array.from({ length: number }, (v, k) => ({
         id: `${k + 1}`, // Unique ID for each element
@@ -36,6 +39,7 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupI
     }));
     const handleGroupSubmit = () => {
         handleSubmit({
+            groupId : groupId,
             name: groupName,
             people: dataArray
         })
@@ -55,6 +59,7 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupI
                             enterKeyHint="next"
                             onChangeText={(v) => {
                                 item.name = v
+                                console.log(v)
                             }}
                             autoCorrect={false}
                         />
@@ -77,8 +82,6 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit }: IGroupI
         </View>
     )
 }
-
-
 const AddGroup = () => {
     const [groups, setGroups] = useGroupCtx();
     const navigation = useNavigation();
@@ -137,7 +140,7 @@ const AddGroup = () => {
                                 </Button>
                             </View>
                         </View>
-                        {(!error && selectedNumber !== 0) && <GroupInputElement groupName={groupName} handleSubmit={(newGroup) => {
+                        {(!error && selectedNumber !== 0) && <GroupInputElement groupId={generateAlphanumeric()}  groupName={groupName} handleSubmit={(newGroup) => {
                             setGroups([...groups, newGroup]);
                         }} watch={watch} control={control} number={selectedNumber} />}
 
@@ -149,4 +152,3 @@ const AddGroup = () => {
 }
 
 export default AddGroup
-

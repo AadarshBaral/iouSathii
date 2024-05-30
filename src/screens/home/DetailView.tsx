@@ -24,7 +24,6 @@ const data = [
   }
 
 ]
-
 interface IBillsInterface {
   anonymousUser: string;
   currentUser: string;
@@ -35,7 +34,6 @@ interface IBillsInterface {
   total: string;
   date: string;
 }
-
 const DetailView = () => {
     const navigation = useNavigation();
     const [bills,setBills] = useState<IBillsInterface >([] as never)
@@ -58,12 +56,12 @@ const DetailView = () => {
         navigation.setOptions({ headerShown: false });
     }, [navigation]);
     //@ts-ignore
-    console.log(params.params?.data.username ? params.params?.data.username :  params.params?.data.anonymousUser)
+    // console.log(params.params?.data.username ? params.params?.data.username :  params.params?.data.anonymousUser)
   return (
     <ScreenWrapper>
       <ScrollView showsVerticalScrollIndicator={false}>
       <View>
-
+        {/* @ts-ignore */}
         <TitleBar  back image='person.jpg' title={ params.params?.data.username ? params.params?.data.username :  params.params?.data.anonymousUser} />
         <View className='flex flex-row justify-between items-center'>
         <Typography label='Pending' className='my-4 text-xl' />
@@ -80,7 +78,7 @@ const DetailView = () => {
             ItemSeparatorComponent={() => <View style={{ height:20 }} />}
             //@ts-ignore
             data={bills as IBillsInterface}
-            renderItem={({ item }) => <DetailDueCard name={item.purpose} total={item.total as any} purpose={item.purpose} cardDecision={item.cardDecision as 'owe' | 'receive'}/>}
+            renderItem={({ item }) => <DetailDueCard id= {item.billId} name={item.purpose} total={item.total as any} purpose={item.purpose} cardDecision={item.cardDecision as 'owe' | 'receive'}/>}
             keyExtractor={item => item.name}
           />
       </View>
