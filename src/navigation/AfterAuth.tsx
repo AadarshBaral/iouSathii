@@ -4,19 +4,16 @@ import DetailView from "@/screens/home/DetailView";
 import Profile from "@/screens/home/Profile";
 import Search from "@/screens/home/Search";
 import SplashScreen from "@/screens/home/splash";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from
     "@react-navigation/native-stack";
 import HomeTabs from "./TabBarNav";
 import ViewAll from "@/screens/home/ViewAll";
-import AntDesign from '@expo/vector-icons/AntDesign';
-
 
 
 const Stack = createNativeStackNavigator();
 const AfterAuth = () => {
     return (
-        <Stack.Navigator initialRouteName="addBill">
+        <Stack.Navigator >
             <Stack.Screen
                 name="HomeTabs"
                 component={HomeTabs}
