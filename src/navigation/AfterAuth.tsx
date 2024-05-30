@@ -4,7 +4,6 @@ import DetailView from "@/screens/home/DetailView";
 import Profile from "@/screens/home/Profile";
 import Search from "@/screens/home/Search";
 import SplashScreen from "@/screens/home/splash";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from
     "@react-navigation/native-stack";
 import HomeTabs from "./TabBarNav";
@@ -14,7 +13,7 @@ import ProfileSetup from "@/screens/home/ProfileSetup";
 const Stack = createNativeStackNavigator();
 const AfterAuth = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator >
             <Stack.Screen
                 name="HomeTabs"
                 component={HomeTabs}

@@ -21,7 +21,7 @@ export const indicatorColor: Record<string, string> = {
   //person is the person who is assigned to the bill.
   // person2 is the person who issued the bill.
 const DueCard = ({name,total, cardDecision,person,person2}:IdueCardProps) => {
-    // const auth = FireAuth;
+    // const auth = Fir eAuth;
     // const currentUser = auth.currentUser?.uid;
     // person ==currentUser? cardDecision = 'owe' : cardDecision = 'receive'
     // console.log("From groupcard" ,person2)

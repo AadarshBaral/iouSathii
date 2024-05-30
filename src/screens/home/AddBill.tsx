@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import {  View } from 'react-native';
-import { useForm } from 'react-hook-form';
+import React, { PropsWithChildren, forwardRef, useEffect, useState } from 'react';
+import { KeyboardAvoidingView, Pressable, Text, TextInput, View } from 'react-native';
+import { set, useController, useForm } from 'react-hook-form';
 import Input from '@/components/ui/Input';
 import RadioButton from '@/components/ui/Radio';
 import { Button } from '@/components/ui/Button';
@@ -12,10 +12,15 @@ import { FireAuth, db } from '@/config/fireConfig';
 import { addDoc, collection, doc, documentId, getDoc } from 'firebase/firestore';
 import { useBillsContext } from '@/context/BillsContext';
 import { serverTimestamp } from 'firebase/firestore';
-import { z } from 'zod';
+import { record, z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ActivityIndicator } from 'react-native';
 import { generateAlphanumeric } from '../auth/Register';
+import { TextInputProps } from 'react-native';
+import { twMerge } from 'tailwind-merge';
+import { Image } from 'expo-image';
+import Input2 from '@/components/ui/InputWithBorder';
+const person = require("../../../assets/person.jpg");
 const schema = z.object({
     name: z.string()
         .min(1, { message: "Name must not be empty" }), // Validates that the name is a non-empty string
@@ -33,8 +38,33 @@ const schema = z.object({
         .max(500, { message: "Description must not exceed 500 characters" }), // Optional: limit the description to 500 characters
     type: z.enum(['owe', 'receive'], { message: "Invalid type selected" }),
 });
+export const AddBillInput = forwardRef<TextInput, TextInputProps & { control: any, name: string, label: string, border: string, }>((props, ref) => {
+    const borderColors: Record<string, string> = {
+    'default ' : 'border-black',
+    'golden' : 'border-[#bb8e3a]'
+    };
+
+    const { control, name, label } = props;
+    const { field } = useController({
+        control,
+        defaultValue: "",
+        name,
+    })
+
+    return (
+        <View className='m-2 w-full ml-0 my-4'>
+            <Typography label={label} className='text-lg' />
+            <View className='absolute w-[95%] -bottom-2 -left-1 rounded-xl aspect-[9/1] bg-[#d9d9d9] '>
+            </View>
+            <TextInput onChangeText={field.onChange} {...props} ref={ref} className={twMerge('rounded-xl py-2 text-xl px-2 w-full border-2 border-solid bg-[#f8f8f8] relative', props.className,borderColors[props.border])}>
+            </TextInput>
+        </View>
+    )
+})
+
 const AddBill = () => {
     const { allBills, addBill } = useBillsContext();
+    const [linkedUser, setLinkedUser] = useState<any>();
     const params = useRoute();
     const auth = FireAuth;
     const navigation = useNavigation();
@@ -45,7 +75,10 @@ const AddBill = () => {
         // setLinkedUser(params.params?.data)
         //@ts-ignore
         setValue('name', params.params?.data.username)
+        //@ts-ignore
+        params.params?.data.username && setLinkedUser(params.params?.data?.username)
     }, [params])
+
 
     useEffect(() => {
         navigation.setOptions({ headerShown: false });
@@ -70,7 +103,7 @@ const AddBill = () => {
     const onSubmit = async (data: any) => {
         //person is selected if user links a sathi
         const submissionData = {
-            billId : generateAlphanumeric(12),
+            billId: generateAlphanumeric(),
             anonymousUser: data.name,
             cardDecision: data.type,
             currentUser: uid,
@@ -93,12 +126,17 @@ const AddBill = () => {
         }
         )
 
+
     };
     return (
-        <ScreenWrapper className='relative ' >
+        <KeyboardAvoidingView>
+
+
+        <ScreenWrapper className='relative mt-10' >
             <TitleBar back image='person.jpg' title='Add Bill' />
             <View>
-                <Input
+                <Input2
+                    border={'default'}
                     label="Name of Person"
                     control={control}
                     name="name"
@@ -109,12 +147,37 @@ const AddBill = () => {
                     value={params.params?.data.bio ? params.params?.data.username : watch('name')} // Set value to bio data if it exists
                 />
                 {errors.name && <Typography label={errors.name.message as string} className="text-red-500" variant={'p'} />}
-                <View className='flex flex-row gap-2 my-2'>
-                    <Typography className='text-xl' label='Or' />
-                    <Typography onPress={() => { navigation.navigate('Search' as never) }} label='Link A User' className='text-blue-500 text-xl' />
-                    {/* {params.data && <Typography label='user Found'/>} */}
-                </View>
-                <Input
+                {
+                    linkedUser
+                        ? <View className='flex flex-col gap-y-1'>
+                            <Text className='text-[#5CC708] text-md'>Linked User</Text>
+                            <View className='flex flex-row gap-2 px-2' >
+                                <AddedUserThumbnail
+                                    goToProfile={() => { }}
+                                // removeUser={() => {
+                                //     setLinkedUser(undefined)
+                                //     setValue('name', '')
+                                // }}
+                                >
+                                    <View className='h-full w-full flex items-center justify-center'>
+                                        <Image source={person} className='h-full aspect-square rounded-full'></Image>
+                                    </View>
+                                </AddedUserThumbnail>
+                            </View>
+                        </View>
+                        : <View className='flex flex-col items-center gap-y-1'>
+                            <Typography className='text-xl' label='OR' />
+                            <Pressable onPress={() => {
+                                navigation.navigate('Search' as never)
+                            }}
+                                className='flex items-center text-[#2C4456] text-2xl bg-[#FFF4DF] w-full border-2 border-[#bb8e3a] py-2 rounded-xl'
+                            >
+                                <Typography label='Link a user' className='text-[#bb8e3a] text-xl ' />
+                            </Pressable>
+                        </View>
+                }
+                <Input2
+                    border={'default'}
                     label="Total Money"
                     control={control}
                     defaultValue=''
@@ -124,7 +187,8 @@ const AddBill = () => {
                     keyboardType='numeric'
                 />
                 {errors.totalMoney && <Typography label={errors.totalMoney.message as string} className="text-red-500" variant={'p'} />}
-                <Input
+                <Input2
+                    border={'default'}
                     label="Purpose"
                     control={control}
                     name="purpose"
@@ -133,7 +197,8 @@ const AddBill = () => {
                     autoCorrect={false}
                 />
                 {errors.purpose && <Typography label={errors.purpose.message as string} className="text-red-500" variant={'p'} />}
-                <Input
+                <Input2
+                    border={'default'}
                     label="Description"
                     control={control}
                     name="description"
@@ -152,12 +217,27 @@ const AddBill = () => {
                     onSelect={(value: any) => setValue('type', value)}
                 />
                 {errors.type && <Typography label={errors.type.message as string} className="text-red-500" variant={'p'} />}
-                <Button onPressIn={handleSubmit(onSubmit)} className="mt-4 bg-gray-500" variant="primary" size="default">
+                <Button onPressIn={handleSubmit(onSubmit)} className="mt-4 bg-[#3A3453]" variant="primary" size="default">
                     {isSubmitting ? <ActivityIndicator color={"#fff"} size={"large"} className="" /> : <Typography label="Add Bill" className="text-white text-lg" variant={'p'} />}
                 </Button>
             </View>
         </ScreenWrapper>
+        </KeyboardAvoidingView>
     );
 };
 
 export default AddBill;
+function AddedUserThumbnail(props: PropsWithChildren<{
+    goToProfile: () => void,
+    removeUser?: () => void,
+}>) {
+    const { children, removeUser, goToProfile } = props;
+    return (
+        <Pressable onPress={goToProfile} className='bg-slate-300 w-16 h-16 rounded-full shadow-sm'>
+            {children}
+            {/* <Pressable onPress={removeUser} className='absolute  top-0 right-0 bg-red-500 w-5 aspect-square rounded-full flex justify-center items-center'>
+                <Typography label='X' className='text-white text-md' />
+            </Pressable> */}
+        </Pressable>
+    )
+}

@@ -35,7 +35,7 @@ const Navigation = () => {
   }
   return (
     <NavigationContainer>
-      {user ? <AfterAuth /> : <BeforeAuth onboarded = {onboarded} />}
+      {user ? <AfterAuth /> : <BeforeAuth onboarded={onboarded} />}
     </NavigationContainer>
   );
 };
