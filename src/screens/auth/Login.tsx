@@ -15,6 +15,7 @@ import { signInWithEmailAndPassword } from "firebase/auth"
 import { zodResolver } from '@hookform/resolvers/zod'
 import {z} from 'zod'
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 const schema = z.object({
     email: z.string().email(),
     password: z.string().min(6, { message: 'Password must be at least 6 characters' })
@@ -43,7 +44,7 @@ const Login = () => {
 
     const passwordRef = useRef<TextInput>(null)
     return (
-        <ScrollView className="h-full relative p-0">
+        <KeyboardAwareScrollView className="h-full relative p-0">
             <SafeAreaView className="p-6 mt-10 h-screen flex flex-col ">
                 <View className="flex flex-col gap-y-20">
                 <View className="">
@@ -98,7 +99,7 @@ const Login = () => {
                 </View>
 
             </SafeAreaView>
-        </ScrollView >
+            </KeyboardAwareScrollView >
     )
 }
 export default Login

@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 import { group, person, useGroupCtx } from '@/context/GroupContext'
 import { generateAlphanumeric } from '../auth/Register'
 import Input2 from '@/components/ui/InputWithBorder'
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 interface IGroupInputElement {
     number: number;
     groupId: string;
@@ -47,6 +48,7 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit, groupId }
         navigation.navigate('HomeTabs' as never)
     };
     return (
+
         <View>
             <Typography className='text-xl mt-2' label={`${number} People`} />
             <FlatList
@@ -102,7 +104,7 @@ const AddGroup = () => {
             showError(true);
             console.log('Error: Input is not a number');
         } else {
-            if (parsedData <= 10) {
+            if (parsedData <= 15) {
                 setSelectedNumber(parsedData);
                 showError(false);
             }
@@ -112,47 +114,44 @@ const AddGroup = () => {
         }
     };
     return (
-        <ScreenWrapper>
-            <KeyboardAvoidingView>
-                <ScrollView showsVerticalScrollIndicator={false}>
-                    <View>
-                        <TitleBar back title="Create Group" image={"person.jpg"} />
-                        <Input2
-                            border='default'
-                            label="Enter group name"
-                            control={control}
-                            name="groupname"
-                            enterKeyHint="next"
-                            autoCorrect={false}
-                        />
-                        <View className='flex flex-row items-center gap-2 relative '>
-                            {error && <Text className='text-red-600 absolute bottom-[-20px] '>Error! select number</Text>}
-                            <View className='w-[70%]'>
+        <KeyboardAwareScrollView>
+            <ScreenWrapper>
+                <View>
+                    <TitleBar back title="Create Group" image={"person.jpg"} />
+                    <Input2
+                        border='default'
+                        label="Enter group name"
+                        control={control}
+                        name="groupname"
+                        enterKeyHint="next"
+                        autoCorrect={false}
+                    />
+                    <View className='flex flex-row items-center gap-2 relative '>
+                        {error && <Text className='text-red-600 absolute bottom-[-20px] '>Error! select number</Text>}
+                        <View className='w-[70%]'>
 
-                                <Input2
-                                    border='default'
-                                    className=''
-                                    label="Enter number of People"
-                                    control={control}
-                                    name="groupNumber"
-                                    enterKeyHint="next"
-                                    autoCorrect={false}
-                                />
-                            </View>
-                            <View className='w-[26%]'>
-                                <Button onPressIn={handleNumber} className='mt-8'>
-                                    <Text className='text-xl text-white text-center'>OK</Text>
-                                </Button>
-                            </View>
+                            <Input2
+                                border='default'
+                                className=''
+                                label="Number of People (1-15)"
+                                control={control}
+                                name="groupNumber"
+                                enterKeyHint="next"
+                                autoCorrect={false}
+                            />
                         </View>
-                        {(!error && selectedNumber !== 0) && <GroupInputElement groupId={generateAlphanumeric()} groupName={groupName} handleSubmit={(newGroup) => {
-                            setGroups([...groups, newGroup]);
-                        }} watch={watch} control={control} number={selectedNumber} />}
-
+                        <View className='w-[26%]'>
+                            <Button onPressIn={handleNumber} className='mt-8'>
+                                <Text className='text-xl text-white text-center'>OK</Text>
+                            </Button>
+                        </View>
                     </View>
-                </ScrollView>
-            </KeyboardAvoidingView>
-        </ScreenWrapper>
+                    {(!error && selectedNumber !== 0) && <GroupInputElement groupId={generateAlphanumeric()} groupName={groupName} handleSubmit={(newGroup) => {
+                        setGroups([...groups, newGroup]);
+                    }} watch={watch} control={control} number={selectedNumber} />}
+                </View>
+            </ScreenWrapper>
+        </KeyboardAwareScrollView>
     )
 }
 

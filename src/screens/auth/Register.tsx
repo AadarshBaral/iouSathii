@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form"
-import { View, Text, ScrollView, TextInput, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView, TextInput, ActivityIndicator, StatusBar } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import PageTitle from "@/components/ui/PageTitle"
 import { SafeAreaView } from "react-native-safe-area-context"
@@ -15,6 +15,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth"
 import {z} from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { addDoc, collection, serverTimestamp } from "firebase/firestore"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 const userSchema = z.object({
     username: z.string()
     .min(6, { message: "Atlest 6 characters" }), // Ensures username is a string and at least 6 characters long.
@@ -83,7 +84,7 @@ const Register = () => {
     const emailRef = useRef<TextInput>(null)
     const passwordRef = useRef<TextInput>(null)
     return (
-        <ScrollView className="h-full relative p-0 ">
+        <KeyboardAwareScrollView className="h-full relative p-0 ">
             <SafeAreaView className="p-6 mt-10 h-screen flex flex-col">
                 <View className="flex flex-col gap-y-20">
                     <View className="">
@@ -134,7 +135,7 @@ const Register = () => {
                 </View>
 
             </SafeAreaView>
-        </ScrollView>
+        </KeyboardAwareScrollView>
     )
 }
 

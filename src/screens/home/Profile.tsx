@@ -99,7 +99,7 @@ const Profile = () => {
         </View>
         <View className='flex flex-row items-center gap-4 '>
           <Typography variant={"h2"} className='text-textDark text-2xl ' label={currentUser ? currentUser.displayName as string : "Aadarsh"} />
-          <AntDesign onPress={() => { navigation.navigate("Search" as never) }} name="search1" size={32} color="black" />
+          {/* <AntDesign onPress={() => { navigation.navigate("Search" as never) }} name="search1" size={32} color="black" /> */}
         </View>
         <View className='h-44 w-44 bg-slate-400 rounded-full my-2 shadow-lg'>
           <Image source={image} className='h-full w-full  object-cover rounded-full ' />

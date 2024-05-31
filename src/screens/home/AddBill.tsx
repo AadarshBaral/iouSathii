@@ -20,6 +20,7 @@ import { TextInputProps } from 'react-native';
 import { twMerge } from 'tailwind-merge';
 import { Image } from 'expo-image';
 import Input2 from '@/components/ui/InputWithBorder';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 const person = require("../../../assets/person.jpg");
 const schema = z.object({
     name: z.string()
@@ -129,7 +130,9 @@ const AddBill = () => {
 
     };
     return (
-<ScrollView>
+<KeyboardAwareScrollView>
+
+
         <ScreenWrapper className='relative mt-10' >
             <TitleBar back image='person.jpg' title='Add Bill' />
             <View>
@@ -220,8 +223,8 @@ const AddBill = () => {
                 </Button>
             </View>
         </ScreenWrapper>
+        </KeyboardAwareScrollView>
 
-            </ScrollView>
     );
 };
 

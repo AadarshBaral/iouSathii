@@ -16,14 +16,14 @@ import { ActivityIndicator } from 'react-native';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Image } from 'expo-image';
-const schema = z.object({
-  search: z.string().min(8, { message: 'Atleast 8 characters.' })
-})
+// const schema = z.object({
+//   search: z.string().min(8, { message: 'At least 8 characters.' })
+// })
 const img = require(`../../../assets/person.jpg`)
 const Search = () => {
   const navigation = useNavigation();
   const { control, handleSubmit, formState: { errors, }, setError } = useForm(
-    { resolver: zodResolver(schema) }
+
   );
   const [user, setUser] = useState<any>(null)
   const profilesRef = collection(db, 'profiles')
@@ -59,7 +59,7 @@ const Search = () => {
               control={control}
               name="search"
               enterKeyHint="next"
-              onChangeText={()=>{setUser(null)}}
+              onChangeText={()=>{user!==null&&setUser(null)}}
               autoCorrect={false}
             />
           </View>
