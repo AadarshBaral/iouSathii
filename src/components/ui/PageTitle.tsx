@@ -8,6 +8,7 @@ interface IPageTitleProps {
     className? : string;
 }
 const PageTitle = ({label,className, ...props}:IPageTitleProps) => {
+
   return (
     <View>
       <Typography variant={'h1'} className={cn(`text-orange-600 text-5xl  pt-10 text-center`,className)} label={label} />

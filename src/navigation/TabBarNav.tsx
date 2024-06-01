@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign, Feather } from '@expo/vector-icons'; // Combined imports for cleaner code
 import Index from "@/screens/home/Index";
@@ -12,10 +12,12 @@ const HomeTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#fff', // Vivid tangerine or any color you prefer
+        tabBarActiveTintColor: '#ccc', // Vivid tangerine or any color you prefer
         tabBarShowLabel: false,
         tabBarInactiveTintColor: 'gray', // Define inactive color for better UX
         tabBarStyle: {
+
+          justifyContent:'center',
           backgroundColor: '#1E2225',
           margin: 15,
           borderRadius: 20,
@@ -33,7 +35,7 @@ const HomeTabs = () => {
         component={Index}
         options={{
           tabBarIcon: ({ color, size }) => ( // Use color and size for dynamic styling
-            <View className='mt-7 ' style={{ alignItems: "center", justifyContent: "center", height: 50 }}>
+            <View className='h-full mt-7'>
               <AntDesign name="home" size={32} color={color} />
             </View>
           ),
@@ -55,8 +57,8 @@ const HomeTabs = () => {
         component={Profile}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <View className='mt-7' style={{ alignItems: "center", justifyContent: "center", height: 50 }}>
-              <Feather name="user" size={32} color={color} />
+            <View className='h-full mt-7'>
+              <Feather  name="user" size={32} color={color} />
             </View>
           ),
         }}
