@@ -42,7 +42,7 @@ const DueCard = ({name,total, cardDecision,person,person2}:IdueCardProps) => {
         <View className='flex bg-[#DDE2E5] h-[70px] w-full rounded-2xl  padding-2 justify-between items-center flex-row p-4' >
             <View className='flex flex-row items-center gap-3 '>
                 <View className={cn(indicatorColor[color],'w-4 h-4 rounded-full')}></View>
-                <Typography variant={"h2"} className='font-bold text-textDark text-lg' label={name} />
+                <Typography variant={"h3"} className='font-bold text-textDark text-lg' label={name} />
             </View>
             <Typography variant={"h2"} className='font-bold' label={`Rs ${total+''}`}/>
         </View>
