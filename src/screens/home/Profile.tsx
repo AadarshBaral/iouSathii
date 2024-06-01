@@ -95,16 +95,17 @@ const Profile = () => {
       <View className='h-full flex items-center justify-center'>
         <View className='absolute top-0 left-0 flex flex-row w-full justify-between'>
           <Text onPress={() => navigation.goBack()} ><Ionicons name="arrow-back" size={32} color="black" /></Text>
+          <View className='flex flex-row items-center gap-4 '>
+          <Typography variant={"h2"} className='text-textDark text-2xl ' label={currentUser ? currentUser.displayName as string : "Aadarsh"} />
+          {/* <AntDesign onPress={() => { navigation.navigate("Search" as never) }} name="search1" size={32} color="black" /> */}
+        </View>
           <View className='flex flex-row gap-3 '>
             <Feather onPress={() => { navigation.navigate("ProfileSetup" as never) }} className='text-[#323232]' name="settings" size={32} color="#323232" />
             <MaterialIcons onPress={handleSignOut} className=' ' name="logout" size={32} color="#E6404A" />
           </View>
         </View>
-        <View className='flex flex-row items-center gap-4 '>
-          <Typography variant={"h2"} className='text-textDark text-2xl ' label={currentUser ? currentUser.displayName as string : "Aadarsh"} />
-          {/* <AntDesign onPress={() => { navigation.navigate("Search" as never) }} name="search1" size={32} color="black" /> */}
-        </View>
-        <View className='h-44 w-44 bg-slate-400 rounded-full my-2 shadow-lg'>
+
+        <View className='h-44 w-44 bg-slate-400 rounded-full my-2 mt-10 shadow-lg'>
           {/* @ts-ignorei */}
           {loading ? <ActivityIndicator color={"#4a4a4a"} size={"large"} className="top-20" /> : <Image source={profile ? profile?.profileImage: image} className='rounded-full h-full w-full object-cover' />}
         </View>
@@ -117,7 +118,7 @@ const Profile = () => {
         </View>
         <Button onPressIn={handleFollow} className={`${followers.isfollowed ? "bg-[#ccc]" : 'bg-[#E6404A]'} w-48 h-12 mb-2`}  ><Typography className='text-white text-center text-xl ' variant={'md'} label={followers.isfollowed ? "Unfollow" : "Follow"} /></Button>
         <View className='h-[2px] w-full bg-[#DADADA]'></View>
-        <View className='flex items-center p-2 m-2'>
+        <View className='flex items-center p-2 m-2 mb-12'>
           <Typography variant={"md"} className=' text-xl' label={currentUser ? "Pay " + currentUser.displayName as string : "User"} />
           <View className='h-52 w-52 bg-slate-400 rounded-md m-3 shadow-sm'>
             {/* @ts-ignore */}

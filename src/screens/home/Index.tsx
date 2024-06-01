@@ -90,16 +90,16 @@ const Index = () => {
     return () => unsubscribe();
   }, []);
   return (
-    <ScreenWrapper>
+    <ScreenWrapper >
       <TitleBar title="Home" image={"person.jpg"} />
-      <Pressable onPress={() => navigation.navigate('addBill' as never)} className='absolute bottom-16  right-5 z-[20]' >
-        <View className='bg-[#1E2225] z-20 w-[70px] h-[70px] rounded-full flex justify-center items-center shadow-sm shadow-black'>
-          <AntDesign name="plus" size={42} color="white" />
-        </View>
-      </Pressable>
 
       <MoneyCard total={total} />
       <ScrollView showsVerticalScrollIndicator={false} className='h-[500px] '>
+      {/* <Pressable onPress={() => navigation.navigate('addBill' as never)} className='absolute bottom-0  right-5 z-[20]' >
+        <View className='bg-[#1E2225] z-20 w-[70px] h-[70px] rounded-full flex justify-center items-center shadow-sm shadow-black'>
+          <AntDesign name="plus" size={42} color="white" />
+        </View>
+      </Pressable> */}
         <View className='flex flex-row justify-between '>
           <Typography className='text-lg' variant={'h2'} label='Recent' />
           <Pressable onPress={() => {navigation.navigate("ViewAll" as never)}}>
