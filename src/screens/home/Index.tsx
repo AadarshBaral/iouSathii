@@ -16,6 +16,8 @@ import { User } from 'firebase/auth';
 import { useBillsContext } from '@/context/BillsContext';
 import TabBar from '@/components/ui/TabBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Progress from '@/components/ui/Progress';
+import ProgressBar from '@/components/ui/Progress';
 if (__DEV__) {
   const ignoreWarns = ["VirtualizedLists should never be nested inside plain ScrollViews"];
   const errorWarn = global.console.error;
@@ -56,32 +58,25 @@ export interface UserBill {
 const Index = () => {
   const auth = FireAuth;
   const [groups, _] = useGroupCtx();
-  console.log("Groups", groups)
-  const { allBills } = useBillsContext();
   const navigation = useNavigation();
-  const [loading, setLoading] = useState(false);  // State to handle loading
-  const [user, setUser] = useState<User | null>(null);
+  const [loading] = useState(false);  // State to handle loading
   const billCollection = collection(db, 'billRecords')
   const [userBills, setUserBills] = useState<UserBill[]>([]);
   const [total, setTotal] = useState<number>(0);
   const currentUser = auth.currentUser;
-  // console.log()
   const storeData = async (value:any) => {
     try {
       await AsyncStorage.setItem('Bills', JSON.stringify(value));
       console.log("bills stored")
     } catch (e) {
-      // saving error
+      console.log("Error storing bills", e)
     }
   };
-  const [docs, setDocs] = useState([]);
   const q = query(billCollection, orderBy('date', 'desc'))
   useEffect(() => {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const documents = snapshot.docs.map(doc => doc.data());
       const filteredByCurrentUser = documents.filter((doc) => (doc.currentUser === currentUser?.uid ))
-      // console.log(documents.forEach((doc) => console.log(doc.currentUser)))
-      // setDocs(documents as never);
       setUserBills(filteredByCurrentUser as never)
       const total = filteredByCurrentUser.reduce((acc, bill) => {
                 if (bill.cardDecision === 'owe') {
@@ -91,38 +86,9 @@ const Index = () => {
                 }
               }, 0)
               setTotal(total)
-      // Optional: log the fetched documents
     });
-    // Cleanup function to unsubscribe from the listener when the component unmounts
     return () => unsubscribe();
   }, []);
-  // console.log("from home" ,userBills)
-  // useEffect(() => {
-  //   setLoading(true);
-  //   auth.onAuthStateChanged(user => {
-  //     setUser(user);
-  //     const getUserBills = async () => {
-  //       const q = query(userCollection, orderBy('date', 'desc'))
-  //       const data = await getDocs(q);
-  //       const [uid] = data.docs.map(doc => doc.data().currentUser)
-  //       const billsData = data.docs.filter((doc) => (doc.data().currentUser === user?.uid))
-  //       const bills = billsData.map(doc => doc.data())
-  //       setUserBills(bills as UserBill[])
-  //       storeData(bills)
-  //       const total = bills.reduce((acc, bill) => {
-  //         if (bill.cardDecision === 'owe') {
-  //           return acc - Number(bill.total)
-  //         } else {
-  //           return acc + Number(bill.total)
-  //         }
-  //       }, 0)
-  //       setTotal(total)
-  //     }
-  //     getUserBills();
-  //     setLoading(false);
-
-  //   })
-  // }, [allBills])
   return (
     <ScreenWrapper>
       <TitleBar title="Home" image={"person.jpg"} />
@@ -131,6 +97,7 @@ const Index = () => {
           <AntDesign name="plus" size={42} color="white" />
         </View>
       </Pressable>
+
       <MoneyCard total={total} />
       <ScrollView showsVerticalScrollIndicator={false} className='h-[500px] '>
         <View className='flex flex-row justify-between '>

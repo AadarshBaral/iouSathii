@@ -4,6 +4,7 @@ import { Typography } from '@/components/ui/Typography';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
+import { useBillsContext } from '@/context/BillsContext';
 interface ITitlebarProps {
     title: string;
     image: string;
@@ -11,6 +12,7 @@ interface ITitlebarProps {
 }
 const img = require(`../../../assets/person.jpg`)
 const TitleBar = ({ title, image, back }: ITitlebarProps) => {
+const {profile} = useBillsContext();
 const navigation = useNavigation();
     return (
             <View className='my-3'>
@@ -26,7 +28,8 @@ const navigation = useNavigation();
                     <Pressable onPressIn={()=>navigation.navigate('profile' as never)}>
 
                     <View className='bg-slate-300 w-14 h-14 rounded-full shadow-sm'>
-                        <Image  source={img} className='h-14 w-14  object-cover rounded-full' />
+                        {/* @ts-ignore */}
+                   <Image className='rounded-full h-full w-full object-cover' source={profile?.profileImage ? profile?.profileImage: img}  />
                     </View>
                     </Pressable>
                 </View>
