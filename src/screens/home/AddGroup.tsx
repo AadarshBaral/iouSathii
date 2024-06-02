@@ -11,6 +11,7 @@ import { group, person, useGroupCtx } from '@/context/GroupContext'
 import { generateAlphanumeric } from '../auth/Register'
 import Input2 from '@/components/ui/InputWithBorder'
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import Toast from 'react-native-toast-message'
 interface IGroupInputElement {
     number: number;
     groupId: string;
@@ -45,6 +46,10 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit, groupId }
             name: groupName,
             people: dataArray
         })
+        Toast.show({
+            type: 'success',
+            text1: 'Group added successfully🎉',
+        });
         navigation.navigate('HomeTabs' as never)
     };
     return (

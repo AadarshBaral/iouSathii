@@ -9,11 +9,12 @@ import { Button } from "@/components/ui/Button"
 import { Typography } from "@/components/ui/Typography"
 import Input from "@/components/ui/Input"
 import { useNavigation } from "@react-navigation/native"
+import Toast from 'react-native-toast-message';
 import { AntDesign } from '@expo/vector-icons';
 import { FireAuth } from "@/config/fireConfig"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { zodResolver } from '@hookform/resolvers/zod'
-import {z} from 'zod'
+import { z } from 'zod'
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 const schema = z.object({
@@ -24,15 +25,18 @@ type formFields = z.infer<typeof schema>
 const Login = () => {
     const auth = FireAuth
     const [isLoading, setLoading] = useState(false)
-    const { control, handleSubmit,setError, formState: { errors ,} } = useForm({resolver: zodResolver(schema)})
-    const handleRegister = async (data:any) => {
+    const { control, handleSubmit, setError, formState: { errors, } } = useForm({ resolver: zodResolver(schema) })
+    const handleRegister = async (data: any) => {
         setLoading(true)
         const { email, password } = data
         try {
             const response = await signInWithEmailAndPassword(auth, email, password);
-            console.log('Login Success', response)
+            Toast.show({
+                type: 'success',
+                text1: 'Login Success🎉',
+            });
         } catch (e) {
-            setError('email', {message: "Invalid Credentials"})
+            setError('email', { message: "Invalid Credentials" })
         } finally {
             setLoading(false)
         }
@@ -47,8 +51,8 @@ const Login = () => {
         <KeyboardAwareScrollView className="h-full relative p-0">
             <SafeAreaView className="p-6 mt-10 h-screen flex flex-col ">
                 <View className="flex flex-col gap-y-20">
-                <View className="">
-                    <PageTitle className="" label="Login" />
+                    <View className="">
+                        <PageTitle className="" label="Login" />
                     </View>
                     <View className="flex flex-col">
                         <Input
@@ -57,7 +61,7 @@ const Login = () => {
                             name="email"
                             enterKeyHint="next"
                             autoCorrect={false}
-                            error = {errors?.email?.message as string}
+                            error={errors?.email?.message as string}
                         />
                         {errors.email && <Typography label={errors.email.message as string} className="text-red-500" variant={'p'} />}
                         <Input
@@ -66,7 +70,7 @@ const Login = () => {
                             control={control}
                             name="password"
                             ref={passwordRef}
-                            error = {errors?.password?.message as string}
+                            error={errors?.password?.message as string}
                             enterKeyHint="done"
                         />
 
@@ -92,14 +96,14 @@ const Login = () => {
                         <View className="h-[2px] w-full bg-black" />
                     </View>
 
-                    <Button disabled={isLoading} onPress={()=>{console.log('in Progress')}} className="mt-4 flex flex-row justify-center" variant="primary" size="default">
+                    <Button disabled={isLoading} onPress={() => { console.log('in Progress') }} className="mt-4 flex flex-row justify-center" variant="primary" size="default">
                         <AntDesign className="text-center" name="google" size={28} color="white" />
                         <Typography label="Login With Google" className="text-white ml-2 text-lg text-center" variant={'p'} />
                     </Button>
                 </View>
 
             </SafeAreaView>
-            </KeyboardAwareScrollView >
+        </KeyboardAwareScrollView >
     )
 }
 export default Login

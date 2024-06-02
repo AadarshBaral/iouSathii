@@ -16,6 +16,7 @@ import {z} from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { addDoc, collection, serverTimestamp } from "firebase/firestore"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import Toast from "react-native-toast-message"
 const userSchema = z.object({
     username: z.string()
     .min(6, { message: "Atlest 6 characters" }), // Ensures username is a string and at least 6 characters long.
@@ -68,7 +69,10 @@ const Register = () => {
             }).catch((error) => {
                 console.log("An error occoured", error)
             });
-            console.log('Registration Success', response)
+            Toast.show({
+                type: 'success',
+                text1: 'Registration Success🎉',
+            });
         } catch (e) {
             setError('email', {message: "Email already exists"})
             console.log('Registration Failed', e)

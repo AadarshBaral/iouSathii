@@ -15,6 +15,7 @@ import {
 import { FireAuth, db } from "@/config/fireConfig";
 import { collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import ProgressBar from "@/components/ui/Progress";
+import Toast from "react-native-toast-message";
 
 export default function ProfileSetup() {
     const [permission, requestPermission] = ImagePicker.useCameraPermissions();
@@ -59,6 +60,10 @@ export default function ProfileSetup() {
                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                     if (progress === 100) {
                         setUploading({ state: false, value: 0 });
+                        Toast.show({
+                            type: 'success',
+                            text1: 'Image updated!🎉',
+                        });
                     } else {
                         setUploading({ state: true, value: progress });
                     }
@@ -90,6 +95,7 @@ export default function ProfileSetup() {
                     const userDoc = querySnapshot.docs[0];
                     await updateDoc(userDoc.ref, { [field === "profile" ? "profileImage" : "qrImage"]: imageUrl });
                     console.log(`${field === "profile" ? "Profile" : "QR"} image updated with URL:`, imageUrl);
+
                 } else {
                     console.log('No profile found for the user');
                 }

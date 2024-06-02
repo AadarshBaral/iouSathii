@@ -9,6 +9,8 @@ import TransactionCard from '@/components/ui/TransactionCard'
 
 const GroupConclusion = () => {
     const [groups, _] = useGroupCtx();
+
+    // console.log(groups[1].people)
   return (
     <ScreenWrapper>
         <TitleBar back image='person.png' title="Sikkim Travel" />
