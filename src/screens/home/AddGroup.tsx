@@ -40,12 +40,14 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit, groupId }
         total: 0
     }));
     const handleGroupSubmit = () => {
-        handleSubmit({
+
+        const newGroup: group = {
             groupId: groupId,
             name: groupName,
             people: dataArray
-        })
-        navigation.navigate('HomeTabs' as never)
+        }
+        handleSubmit(newGroup)
+        navigation.navigate({ name: 'GroupConclusion', params: { group: newGroup } } as never)
     };
     return (
 

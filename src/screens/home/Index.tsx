@@ -64,7 +64,7 @@ const Index = () => {
   const [userBills, setUserBills] = useState<UserBill[]>([]);
   const [total, setTotal] = useState<number>(0);
   const currentUser = auth.currentUser;
-  const storeData = async (value:any) => {
+  const storeData = async (value: any) => {
     try {
       await AsyncStorage.setItem('Bills', JSON.stringify(value));
       console.log("bills stored")
@@ -76,16 +76,16 @@ const Index = () => {
   useEffect(() => {
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const documents = snapshot.docs.map(doc => doc.data());
-      const filteredByCurrentUser = documents.filter((doc) => (doc.currentUser === currentUser?.uid ))
+      const filteredByCurrentUser = documents.filter((doc) => (doc.currentUser === currentUser?.uid))
       setUserBills(filteredByCurrentUser as never)
       const total = filteredByCurrentUser.reduce((acc, bill) => {
-                if (bill.cardDecision === 'owe') {
-                  return acc - Number(bill.total)
-                } else {
-                  return acc + Number(bill.total)
-                }
-              }, 0)
-              setTotal(total)
+        if (bill.cardDecision === 'owe') {
+          return acc - Number(bill.total)
+        } else {
+          return acc + Number(bill.total)
+        }
+      }, 0)
+      setTotal(total)
     });
     return () => unsubscribe();
   }, []);
@@ -95,15 +95,15 @@ const Index = () => {
 
       <MoneyCard total={total} />
       <ScrollView showsVerticalScrollIndicator={false} className='h-[500px] '>
-      {/* <Pressable onPress={() => navigation.navigate('addBill' as never)} className='absolute bottom-0  right-5 z-[20]' >
+        {/* <Pressable onPress={() => navigation.navigate('addBill' as never)} className='absolute bottom-0  right-5 z-[20]' >
         <View className='bg-[#1E2225] z-20 w-[70px] h-[70px] rounded-full flex justify-center items-center shadow-sm shadow-black'>
           <AntDesign name="plus" size={42} color="white" />
         </View>
       </Pressable> */}
         <View className='flex flex-row justify-between '>
           <Typography className='text-lg' variant={'h2'} label='Recent' />
-          <Pressable onPress={() => {navigation.navigate("ViewAll" as never)}}>
-          <Typography className='text-lg mb-2' variant={'h2'} label='View All' />
+          <Pressable onPress={() => { navigation.navigate("ViewAll" as never) }}>
+            <Typography className='text-lg mb-2' variant={'h2'} label='View All' />
           </Pressable>
         </View>
         <View className='h-[250px]'>
@@ -111,8 +111,8 @@ const Index = () => {
             ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
             data={userBills.slice(0, 3)}
             //@ts-ignore
-            renderItem={({ item }) => <Pressable onPress={() => navigation.navigate('dueDetail',{data:item})}><DueCard person2 = {item.currentUser} person={item.person} name={item.anonymousUser} total={item.total as any} cardDecision={item.cardDecision as "owe" | "receive"} /></Pressable>}
-            keyExtractor={item =>item.date }
+            renderItem={({ item }) => <Pressable onPress={() => navigation.navigate('dueDetail', { data: item })}><DueCard person2={item.currentUser} person={item.person} name={item.anonymousUser} total={item.total as any} cardDecision={item.cardDecision as "owe" | "receive"} /></Pressable>}
+            keyExtractor={item => item.date}
           />}
         </View>
         <Pressable onPress={() => navigation.navigate('addGroup' as never)}><GroupCard name="+Add a group" /></Pressable>
@@ -123,7 +123,7 @@ const Index = () => {
             bounces={false}
             ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
             data={groups}
-            renderItem={({ item }) => <Pressable onPress={() => navigation.navigate('GroupConclusion' as never)}><GroupCard name={item.name} /></Pressable>}
+            renderItem={({ item }) => <Pressable onPress={() => navigation.navigate({ name: 'GroupConclusion', params: { group: item } } as never)}><GroupCard name={item.name} /></Pressable>}
             keyExtractor={(item, index) => index.toString()}
           />
         </View >
