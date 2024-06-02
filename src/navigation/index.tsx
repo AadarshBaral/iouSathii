@@ -6,12 +6,12 @@ import { FireAuth } from '@/config/fireConfig';
 import { useEffect, useState } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Toast from 'react-native-toast-message';
+import toastConfig from '@/config/toastConfig';
 const Navigation = () => {
   const [onboarded, setOnboarded] = useState(null);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);  // State to handle loading
-
   const getStorage = async () => {
     const ob = await AsyncStorage.getItem('onboarding');
     //@ts-ignore
@@ -36,6 +36,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       {user ? <AfterAuth /> : <BeforeAuth onboarded={onboarded} />}
+      <Toast config={toastConfig}/>
     </NavigationContainer>
   );
 };

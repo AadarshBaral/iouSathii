@@ -21,6 +21,7 @@ import { twMerge } from 'tailwind-merge';
 import { Image } from 'expo-image';
 import Input2 from '@/components/ui/InputWithBorder';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import Toast from 'react-native-toast-message';
 const person = require("../../../assets/person.jpg");
 const schema = z.object({
     name: z.string()
@@ -119,6 +120,10 @@ const AddBill = () => {
             ...submissionData
         }).then(() => {
             addBill(submissionData as any)
+            Toast.show({
+                type: 'success',
+                text1: 'Bill added successfully🎉',
+            });
             navigation.goBack()
         }).catch((e) => {
             console.log("Error", e)
@@ -131,8 +136,6 @@ const AddBill = () => {
     };
     return (
 <KeyboardAwareScrollView>
-
-
         <ScreenWrapper className='relative mt-10' >
             <TitleBar back image='person.jpg' title='Add Bill' />
             <View>

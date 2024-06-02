@@ -59,7 +59,6 @@ const Search = () => {
               control={control}
               name="search"
               enterKeyHint="next"
-              onChangeText={()=>{user!==null&&setUser(null)}}
               autoCorrect={false}
             />
           </View>
