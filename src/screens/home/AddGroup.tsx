@@ -41,16 +41,18 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit, groupId }
         total: 0
     }));
     const handleGroupSubmit = () => {
-        handleSubmit({
+
+        const newGroup: group = {
             groupId: groupId,
             name: groupName,
             people: dataArray
-        })
+        }
+        handleSubmit(newGroup)
+        navigation.navigate({ name: 'GroupConclusion', params: { group: newGroup } } as never)
         Toast.show({
             type: 'success',
             text1: 'Group added successfully🎉',
         });
-        navigation.navigate('HomeTabs' as never)
     };
     return (
 
