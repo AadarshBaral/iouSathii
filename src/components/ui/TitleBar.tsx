@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable, StatusBar } from 'react-native'
 import React from 'react'
 import { Typography } from '@/components/ui/Typography';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -15,7 +15,8 @@ const TitleBar = ({ title, image, back }: ITitlebarProps) => {
 const {profile} = useBillsContext();
 const navigation = useNavigation();
     return (
-            <View className='my-3'>
+            <View className=''>
+                <StatusBar backgroundColor='transparent' barStyle='dark-content' translucent />
                 {/* Component */}
                 <View className='flex flex-row justify-between  '>
                     <View className='flex flex-row items-center gap-2'>
