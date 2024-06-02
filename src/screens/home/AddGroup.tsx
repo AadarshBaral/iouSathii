@@ -49,13 +49,10 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit, groupId }
         }
         handleSubmit(newGroup)
         navigation.navigate({ name: 'GroupConclusion', params: { group: newGroup } } as never)
-        })
         Toast.show({
             type: 'success',
             text1: 'Group added successfully🎉',
         });
-        navigation.navigate('HomeTabs' as never)
-
     };
     return (
 
