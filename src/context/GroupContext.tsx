@@ -1,5 +1,5 @@
-import React, { PropsWithChildren, createContext, useContext, useState, useEffect } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
 
 export type person = {
     id: string,
@@ -13,7 +13,7 @@ export type group = {
 }
 
 export const GrpContext = createContext<group[]>([]);
-export const SetGrpContext = createContext((newGroup: group[]) => {});
+export const SetGrpContext = createContext((newGroup: group[]) => { });
 
 export function useGroupCtx() {
     return [useContext(GrpContext), useContext(SetGrpContext)] as [group[], (newGroup: group[]) => void];

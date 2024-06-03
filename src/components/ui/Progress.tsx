@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Typography } from './Typography';
 const ProgressBar = ({ progress }: { progress: number }) => {
     const barWidth: number = 230;
@@ -7,10 +7,10 @@ const ProgressBar = ({ progress }: { progress: number }) => {
 
     return (
         <View className='w-[300px] h-[100px] bg-[#4e63c0] flex flex-col justify-evenly items-center shadow-sm shadow-[#999] rounded-xl'>
-            <Typography className='text-[#cfcfcf] text-lg'  label="Uploading Image"/>
+            <Typography className='text-[#cfcfcf] text-lg' label="Uploading Image" />
             <View className='self-start ml-9' style={[styles.progressBar, { width: progressWidth }]}>
             </View>
-            <Typography className='text-[#cfcfcf]'label={`${progress}%`} />
+            <Typography className='text-[#cfcfcf]' label={`${progress}%`} />
         </View>
     )
 }

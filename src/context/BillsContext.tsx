@@ -1,10 +1,9 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { UserBill } from '@/screens/home/Index';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { IProfileProps } from '@/screens/home/Profile';
 import { FireAuth, db } from '@/config/fireConfig';
+import { UserBill } from '@/screens/home/Index';
+import { IProfileProps } from '@/screens/home/Profile';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
-import { useNavigation } from '@react-navigation/native';
+import React, { ReactNode, createContext, useContext, useEffect, useState } from 'react';
 export const BillsContext = createContext<{
     allBills: UserBill[];
     addBill: (newBill: UserBill) => void;
@@ -30,12 +29,12 @@ const BillsContextProvider: React.FC<BillsContextProviderProps> = ({ children })
     const profilesRef = collection(db, 'profiles')
     const [allBills, setUserBills] = useState<UserBill[]>([]);
     const [total, setTotal] = useState<number>(0);
-    const [profile, setProfile] = useState<IProfileProps|null>(null);
+    const [profile, setProfile] = useState<IProfileProps | null>(null);
     useEffect(() => {
         const unsubscribeAuth = auth.onAuthStateChanged(user => {
             if (user) {
                 // We're sure the user is logged in and user.uid is available
-                const profilesRef = collection(db,'profiles'); // Make sure 'profiles' is the correct name of your collection
+                const profilesRef = collection(db, 'profiles'); // Make sure 'profiles' is the correct name of your collection
                 const q = query(profilesRef, where("userId", "==", user.uid));
 
                 const unsubscribeSnap = onSnapshot(q, (snapshot) => {
@@ -66,7 +65,7 @@ const BillsContextProvider: React.FC<BillsContextProviderProps> = ({ children })
         setUserBills((prevBills) => [...prevBills, newBill]);
     }
     useEffect(() => {
-        const  setBills = async () => {
+        const setBills = async () => {
             AsyncStorage.setItem('bills', JSON.stringify(allBills));
             console.log("bills set")
         }
@@ -85,7 +84,7 @@ const BillsContextProvider: React.FC<BillsContextProviderProps> = ({ children })
     // console.log("from context",allBills)
 
     return (
-        <BillsContext.Provider value={{ allBills, addBill, total,profile }}>
+        <BillsContext.Provider value={{ allBills, addBill, total, profile }}>
             {children}
         </BillsContext.Provider>
     );

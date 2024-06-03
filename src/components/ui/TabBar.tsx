@@ -1,7 +1,7 @@
-import { View, Pressable } from 'react-native'
-import React from 'react'
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { Pressable, View } from 'react-native';
 const TabBar = () => {
     const navigation = useNavigation();
     return (

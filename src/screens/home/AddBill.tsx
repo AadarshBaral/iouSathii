@@ -1,27 +1,23 @@
-import React, { PropsWithChildren, forwardRef, useEffect, useState } from 'react';
-import { KeyboardAvoidingView, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
-import { set, useController, useForm } from 'react-hook-form';
-import Input from '@/components/ui/Input';
-import RadioButton from '@/components/ui/Radio';
 import { Button } from '@/components/ui/Button';
-import { Typography } from '@/components/ui/Typography';
-import ScreenWrapper from '@/layout/SafreAreaInsets';
-import TitleBar from '@/components/ui/TitleBar';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { FireAuth, db } from '@/config/fireConfig';
-import { addDoc, collection, doc, documentId, getDoc } from 'firebase/firestore';
-import { useBillsContext } from '@/context/BillsContext';
-import { serverTimestamp } from 'firebase/firestore';
-import { record, z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ActivityIndicator } from 'react-native';
-import { generateAlphanumeric } from '../auth/Register';
-import { TextInputProps } from 'react-native';
-import { twMerge } from 'tailwind-merge';
-import { Image } from 'expo-image';
 import Input2 from '@/components/ui/InputWithBorder';
+import RadioButton from '@/components/ui/Radio';
+import TitleBar from '@/components/ui/TitleBar';
+import { Typography } from '@/components/ui/Typography';
+import { FireAuth, db } from '@/config/fireConfig';
+import { useBillsContext } from '@/context/BillsContext';
+import ScreenWrapper from '@/layout/SafreAreaInsets';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { Image } from 'expo-image';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import React, { PropsWithChildren, forwardRef, useEffect, useState } from 'react';
+import { useController, useForm } from 'react-hook-form';
+import { ActivityIndicator, Pressable, Text, TextInput, TextInputProps, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Toast from 'react-native-toast-message';
+import { twMerge } from 'tailwind-merge';
+import { z } from 'zod';
+import { generateAlphanumeric } from '../auth/Register';
 const person = require("../../../assets/person.jpg");
 const schema = z.object({
     name: z.string()
@@ -42,8 +38,8 @@ const schema = z.object({
 });
 export const AddBillInput = forwardRef<TextInput, TextInputProps & { control: any, name: string, label: string, border: string, }>((props, ref) => {
     const borderColors: Record<string, string> = {
-    'default ' : 'border-black',
-    'golden' : 'border-[#FFBE42]'
+        'default ': 'border-black',
+        'golden': 'border-[#FFBE42]'
     };
 
     const { control, name, label } = props;
@@ -58,7 +54,7 @@ export const AddBillInput = forwardRef<TextInput, TextInputProps & { control: an
             <Typography label={label} className='text-lg' />
             <View className='absolute w-[95%] -bottom-2 -left-1 rounded-xl aspect-[9/1] bg-[#d9d9d9] '>
             </View>
-            <TextInput onChangeText={field.onChange} {...props} ref={ref} className={twMerge('rounded-xl py-2 text-xl px-2 w-full border-2 border-solid bg-[#f8f8f8] relative', props.className,borderColors[props.border])}>
+            <TextInput onChangeText={field.onChange} {...props} ref={ref} className={twMerge('rounded-xl py-2 text-xl px-2 w-full border-2 border-solid bg-[#f8f8f8] relative', props.className, borderColors[props.border])}>
             </TextInput>
         </View>
     )
@@ -116,7 +112,7 @@ const AddBill = () => {
             total: data.totalMoney,
             date: serverTimestamp(),
         }
-       await addDoc(billsCollection, {
+        await addDoc(billsCollection, {
             ...submissionData
         }).then(() => {
             addBill(submissionData as any)
@@ -135,97 +131,97 @@ const AddBill = () => {
 
     };
     return (
-<KeyboardAwareScrollView>
-        <ScreenWrapper className='relative mt-10' >
-            <TitleBar back image='person.jpg' title='Add Bill' />
-            <View>
-                <Input2
-                    border={'default'}
-                    label="Name of Person"
-                    control={control}
-                    name="name"
-                    defaultValue=''
-                    enterKeyHint="next"
-                    autoCorrect={false}
-                    //@ts-ignore
-                    value={params.params?.data.bio ? params.params?.data.username : watch('name')} // Set value to bio data if it exists
-                />
-                {errors.name && <Typography label={errors.name.message as string} className="text-red-500" variant={'p'} />}
-                {
-                    linkedUser
-                        ? <View className='flex flex-col gap-y-1'>
-                            <Text className='text-[#5CC708] text-md'>Linked User</Text>
-                            <View className='flex flex-row gap-2 px-2' >
-                                <AddedUserThumbnail
-                                    goToProfile={() => { }}
-                                // removeUser={() => {
-                                //     setLinkedUser(undefined)
-                                //     setValue('name', '')
-                                // }}
-                                >
-                                    <View className='h-full w-full flex items-center justify-center'>
-                                        <Image source={person} className='h-full aspect-square rounded-full'></Image>
-                                    </View>
-                                </AddedUserThumbnail>
+        <KeyboardAwareScrollView>
+            <ScreenWrapper className='relative mt-10' >
+                <TitleBar back image='person.jpg' title='Add Bill' />
+                <View>
+                    <Input2
+                        border={'default'}
+                        label="Name of Person"
+                        control={control}
+                        name="name"
+                        defaultValue=''
+                        enterKeyHint="next"
+                        autoCorrect={false}
+                        //@ts-ignore
+                        value={params.params?.data.bio ? params.params?.data.username : watch('name')} // Set value to bio data if it exists
+                    />
+                    {errors.name && <Typography label={errors.name.message as string} className="text-red-500" variant={'p'} />}
+                    {
+                        linkedUser
+                            ? <View className='flex flex-col gap-y-1'>
+                                <Text className='text-[#5CC708] text-md'>Linked User</Text>
+                                <View className='flex flex-row gap-2 px-2' >
+                                    <AddedUserThumbnail
+                                        goToProfile={() => { }}
+                                    // removeUser={() => {
+                                    //     setLinkedUser(undefined)
+                                    //     setValue('name', '')
+                                    // }}
+                                    >
+                                        <View className='h-full w-full flex items-center justify-center'>
+                                            <Image source={person} className='h-full aspect-square rounded-full'></Image>
+                                        </View>
+                                    </AddedUserThumbnail>
+                                </View>
                             </View>
-                        </View>
-                        : <View className='flex flex-col items-center gap-y-1'>
-                            <Typography className='text-xl' label='OR' />
-                            <Pressable onPress={() => {
-                                navigation.navigate('Search' as never)
-                            }}
-                                className='flex items-center text-[#2C4456] text-2xl bg-[#FFF4DF] w-full border-2 border-[#bb8e3a] py-2 rounded-xl'
-                            >
-                                <Typography label='Link a user' className='text-[#bb8e3a] text-xl ' />
-                            </Pressable>
-                        </View>
-                }
-                <Input2
-                    border={'default'}
-                    label="Total Money"
-                    control={control}
-                    defaultValue=''
-                    name="totalMoney"
-                    enterKeyHint="next"
-                    autoCorrect={false}
-                    keyboardType='numeric'
-                />
-                {errors.totalMoney && <Typography label={errors.totalMoney.message as string} className="text-red-500" variant={'p'} />}
-                <Input2
-                    border={'default'}
-                    label="Purpose"
-                    control={control}
-                    name="purpose"
-                    defaultValue=''
-                    enterKeyHint="next"
-                    autoCorrect={false}
-                />
-                {errors.purpose && <Typography label={errors.purpose.message as string} className="text-red-500" variant={'p'} />}
-                <Input2
-                    border={'default'}
-                    label="Description"
-                    control={control}
-                    name="description"
-                    defaultValue=''
-                    enterKeyHint="done"
-                    autoCorrect={false}
-                />
-                {errors.description && <Typography label={errors.description.message as string} className="text-red-500" variant={'p'} />}
-                <RadioButton
-                    label="Type"
-                    options={[
-                        { label: 'To pay', value: 'owe' },
-                        { label: 'To get', value: 'receive' }
-                    ]}
-                    selectedOption={type}
-                    onSelect={(value: any) => setValue('type', value)}
-                />
-                {errors.type && <Typography label={errors.type.message as string} className="text-red-500" variant={'p'} />}
-                <Button onPressIn={handleSubmit(onSubmit)} className="mt-4 bg-[#3A3453]" variant="primary" size="default">
-                    {isSubmitting ? <ActivityIndicator color={"#fff"} size={"large"} className="" /> : <Typography label="Add Bill" className="text-white text-lg" variant={'p'} />}
-                </Button>
-            </View>
-        </ScreenWrapper>
+                            : <View className='flex flex-col items-center gap-y-1'>
+                                <Typography className='text-xl' label='OR' />
+                                <Pressable onPress={() => {
+                                    navigation.navigate('Search' as never)
+                                }}
+                                    className='flex items-center text-[#2C4456] text-2xl bg-[#FFF4DF] w-full border-2 border-[#bb8e3a] py-2 rounded-xl'
+                                >
+                                    <Typography label='Link a user' className='text-[#bb8e3a] text-xl ' />
+                                </Pressable>
+                            </View>
+                    }
+                    <Input2
+                        border={'default'}
+                        label="Total Money"
+                        control={control}
+                        defaultValue=''
+                        name="totalMoney"
+                        enterKeyHint="next"
+                        autoCorrect={false}
+                        keyboardType='numeric'
+                    />
+                    {errors.totalMoney && <Typography label={errors.totalMoney.message as string} className="text-red-500" variant={'p'} />}
+                    <Input2
+                        border={'default'}
+                        label="Purpose"
+                        control={control}
+                        name="purpose"
+                        defaultValue=''
+                        enterKeyHint="next"
+                        autoCorrect={false}
+                    />
+                    {errors.purpose && <Typography label={errors.purpose.message as string} className="text-red-500" variant={'p'} />}
+                    <Input2
+                        border={'default'}
+                        label="Description"
+                        control={control}
+                        name="description"
+                        defaultValue=''
+                        enterKeyHint="done"
+                        autoCorrect={false}
+                    />
+                    {errors.description && <Typography label={errors.description.message as string} className="text-red-500" variant={'p'} />}
+                    <RadioButton
+                        label="Type"
+                        options={[
+                            { label: 'To pay', value: 'owe' },
+                            { label: 'To get', value: 'receive' }
+                        ]}
+                        selectedOption={type}
+                        onSelect={(value: any) => setValue('type', value)}
+                    />
+                    {errors.type && <Typography label={errors.type.message as string} className="text-red-500" variant={'p'} />}
+                    <Button onPressIn={handleSubmit(onSubmit)} className="mt-4 bg-[#3A3453]" variant="primary" size="default">
+                        {isSubmitting ? <ActivityIndicator color={"#fff"} size={"large"} className="" /> : <Typography label="Add Bill" className="text-white text-lg" variant={'p'} />}
+                    </Button>
+                </View>
+            </ScreenWrapper>
         </KeyboardAwareScrollView>
 
     );

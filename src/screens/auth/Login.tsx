@@ -1,27 +1,22 @@
-// 1060811855340-u3blp7to0l0ekni5svo5khgji5ufvavs.apps.googleusercontent.com
-
-import { set, useForm } from "react-hook-form"
-import { View, Text, ScrollView, TextInput, ActivityIndicator, Platform } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
-import PageTitle from "@/components/ui/PageTitle"
-import { SafeAreaView } from "react-native-safe-area-context"
 import { Button } from "@/components/ui/Button"
-import { Typography } from "@/components/ui/Typography"
 import Input from "@/components/ui/Input"
-import { useNavigation } from "@react-navigation/native"
-import Toast from 'react-native-toast-message';
-import { AntDesign } from '@expo/vector-icons';
+import PageTitle from "@/components/ui/PageTitle"
+import { Typography } from "@/components/ui/Typography"
 import { FireAuth } from "@/config/fireConfig"
-import { signInWithEmailAndPassword } from "firebase/auth"
 import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useNavigation } from "@react-navigation/native"
+import { signInWithEmailAndPassword } from "firebase/auth"
+import React, { useEffect, useRef, useState } from 'react'
+import { useForm } from "react-hook-form"
+import { ActivityIndicator, TextInput, View } from 'react-native'
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import { SafeAreaView } from "react-native-safe-area-context"
+import Toast from 'react-native-toast-message'
+import { z } from 'zod'
 const schema = z.object({
     email: z.string().email(),
     password: z.string().min(6, { message: 'Password must be at least 6 characters' })
 })
-type formFields = z.infer<typeof schema>
 const Login = () => {
     const auth = FireAuth
     const [isLoading, setLoading] = useState(false)
@@ -90,16 +85,16 @@ const Login = () => {
                             <Typography variant={'p'} onPress={() => navigation.navigate('Register' as never)} className="text-lg text-purple-500 " label="Register" />
                         </View>
                     </View>
-                    <View className="flex flex-row justify-center gap-2 items-center px-24">
+                    {/* <View className="flex flex-row justify-center gap-2 items-center px-24">
                         <View className="h-[2px] w-full bg-black" />
                         <Typography variant={'p'} label="Or"></Typography>
                         <View className="h-[2px] w-full bg-black" />
-                    </View>
+                    </View> */}
 
-                    <Button disabled={isLoading} onPress={() => { console.log('in Progress') }} className="mt-4 flex flex-row justify-center" variant="primary" size="default">
+                    {/* <Button disabled={isLoading} onPress={() => { console.log('in Progress') }} className="mt-4 flex flex-row justify-center" variant="primary" size="default">
                         <AntDesign className="text-center" name="google" size={28} color="white" />
                         <Typography label="Login With Google" className="text-white ml-2 text-lg text-center" variant={'p'} />
-                    </Button>
+                    </Button> */}
                 </View>
 
             </SafeAreaView>

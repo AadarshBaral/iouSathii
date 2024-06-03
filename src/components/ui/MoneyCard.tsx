@@ -1,9 +1,9 @@
-import { Pressable, View } from 'react-native'
-import React from 'react'
-import { Typography } from './Typography'
 import { cn } from '@/utils/cn';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
+import React from 'react';
+import { Pressable, View } from 'react-native';
+import { Typography } from './Typography';
 export interface IMoneyCardProps {
   total: number;
   // cardDecision : "owe" | "receive";
@@ -32,7 +32,7 @@ const MoneyCard = ({ total, group }: IMoneyCardProps) => {
         <View className='flex flex-row gap-4 mx-2 items-center'>
 
           <Typography variant={'h3'} label="Rs" className='text-white text-4xl leading-[60px]' />
-          <Typography variant={'h3'} label={Math.abs(total) + ''} className='text-6xl leading-[70px] text-white ' />
+          <Typography style={{ fontFamily: 'Poppins_600SemiBold' }} label={Math.abs(total) + ''} className='text-6xl leading-[70px] text-white ' />
         </View>
         <Typography className='text-gray-400 text-xl absolute right-3 bottom-[32%] translate-y-[-50%]' label="NPR" />
       </View>

@@ -1,15 +1,14 @@
 import AddBill from "@/screens/home/AddBill";
 import AddGroup from "@/screens/home/AddGroup";
 import DetailView from "@/screens/home/DetailView";
-import Profile from "@/screens/home/Profile";
-import Search from "@/screens/home/Search";
-import SplashScreen from "@/screens/home/splash";
-import { createNativeStackNavigator } from
-    "@react-navigation/native-stack";
-import HomeTabs from "./TabBarNav";
-import ViewAll from "@/screens/home/ViewAll";
 import GroupConclusion from "@/screens/home/GroupConclusion";
+import Profile from "@/screens/home/Profile";
 import ProfileSetup from "@/screens/home/ProfileSetup";
+import Search from "@/screens/home/Search";
+import ViewAll from "@/screens/home/ViewAll";
+import SplashScreen from "@/screens/home/splash";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeTabs from "./TabBarNav";
 const Stack = createNativeStackNavigator();
 const AfterAuth = () => {
     return (

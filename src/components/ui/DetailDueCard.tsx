@@ -1,13 +1,12 @@
-import { View, Text, Pressable, Alert } from 'react-native'
-import React from 'react'
-import { Typography } from '@/components/ui/Typography'
-import { AntDesign } from '@expo/vector-icons';
+import { Typography } from '@/components/ui/Typography';
+import { db } from '@/config/fireConfig';
 import { IdueCardProps } from '@/screens/home/DueCard';
 import { cn } from '@/utils/cn';
-import { Entypo } from '@expo/vector-icons';
-import { collection, deleteDoc, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
-import { db } from '@/config/fireConfig';
+import { AntDesign, Entypo } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { collection, deleteDoc, doc, getDocs, query, where } from 'firebase/firestore';
+import React from 'react';
+import { Alert, Pressable, Text, View } from 'react-native';
 
 export const indicatorColor: Record<string, string> = {
   orange: 'text-orange',
@@ -61,15 +60,15 @@ const DetailDueCard = ({ name, purpose, total, cardDecision, onDelete, id }: Idu
           <Entypo className='' name="chevron-small-down" size={24} color="#565656" />
         </Text>
         <View>
-          <Typography variant={'h3'} label={name as string} className='text-xl ' />
+          <Typography style={{ fontFamily: "Poppins_500Medium" }} variant={'h3'} label={name as string} className='text-xl ' />
           <Typography label={name as string} className='text-xm text-gray-700' />
         </View>
         <Typography variant={'h2'} label={`Rs ${total}`} className={cn(indicatorColor[color])} />
       </View>
-      <View className='flex flex-row gap-3 absolute right-0 bottom-5 mb-2 mr-2 rounded-md '>
+      <View className='flex flex-row gap-3 absolute right-0 bottom-2 mb-0 mr-2 rounded-md '>
         <Pressable onPress={() => deleteBill(id as string)}>
-          <View className=' p-1 rounded-md bg-[#d2f5ca]' >
-            <AntDesign name="check" size={20} color="black" />
+          <View className=' p-2 rounded-md bg-[#ffab9f]' >
+            <AntDesign name="delete" size={20} color="red" />
           </View>
         </Pressable>
       </View></>

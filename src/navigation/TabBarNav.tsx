@@ -1,10 +1,9 @@
-import React from 'react';
-import { Platform, View } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { AntDesign, Feather } from '@expo/vector-icons'; // Combined imports for cleaner code
 import Index from "@/screens/home/Index";
 import Profile from "@/screens/home/Profile";
-import AddBill from '@/screens/home/AddBill';
+import { AntDesign, Feather } from '@expo/vector-icons'; // Combined imports for cleaner code
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import React from 'react';
+import { View } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,8 +15,7 @@ const HomeTabs = () => {
         tabBarShowLabel: false,
         tabBarInactiveTintColor: 'gray', // Define inactive color for better UX
         tabBarStyle: {
-
-          justifyContent:'center',
+          justifyContent: 'center',
           backgroundColor: '#1E2225',
           margin: 15,
           borderRadius: 20,
@@ -58,7 +56,7 @@ const HomeTabs = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             <View className='h-full mt-7'>
-              <Feather  name="user" size={32} color={color} />
+              <Feather name="user" size={32} color={color} />
             </View>
           ),
         }}

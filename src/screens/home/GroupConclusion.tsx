@@ -1,12 +1,12 @@
-import { View, Text, FlatList } from 'react-native'
-import React from 'react'
-import ScreenWrapper from '@/layout/SafreAreaInsets'
-import TitleBar from '@/components/ui/TitleBar'
-import { group, person, useGroupCtx } from '@/context/GroupContext'
-import { Typography } from '@/components/ui/Typography'
 import MoneyCard from '@/components/ui/MoneyCard'
+import TitleBar from '@/components/ui/TitleBar'
 import TransactionCard from '@/components/ui/TransactionCard'
+import { Typography } from '@/components/ui/Typography'
+import { group, person, useGroupCtx } from '@/context/GroupContext'
+import ScreenWrapper from '@/layout/SafreAreaInsets'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import React from 'react'
+import { FlatList, Text, View } from 'react-native'
 
 const GroupConclusion = (props: NativeStackScreenProps<{
   group: group

@@ -3,9 +3,9 @@ module.exports = {
   content: ["./App.{js,jsx,ts,tsx}", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      colors:{
+      colors: {
 
-        orange:'#BF6736',
+        orange: '#BF6736',
         textDark: "#1E2225"
 
       },

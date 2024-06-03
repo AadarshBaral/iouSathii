@@ -1,11 +1,11 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
-const RadioButton = ({ options, selectedOption, onSelect, label }:any) => {
+const RadioButton = ({ options, selectedOption, onSelect, label }: any) => {
     return (
         <View style={{ marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
             <Text style={{ marginRight: 10, fontSize: 16 }}>{label}</Text>
-            {options.map((option:any) => (
+            {options.map((option: any) => (
                 <View key={option.value} style={{ flexDirection: 'row', alignItems: 'center', marginRight: 20 }}>
                     <TouchableOpacity
                         onPress={() => onSelect(option.value)}

@@ -1,11 +1,11 @@
-import { View, FlatList, Pressable, Dimensions } from 'react-native'
-import React, { useEffect, useRef, useState } from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { Typography } from '@/components/ui/Typography'
 import { Button } from '@/components/ui/Button'
-import OnboardingComponent from './OnboardingComponent'
-import { useNavigation } from '@react-navigation/native'
+import { Typography } from '@/components/ui/Typography'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/native'
+import React, { useEffect, useRef, useState } from 'react'
+import { Dimensions, FlatList, Pressable, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import OnboardingComponent from './OnboardingComponent'
 const scr1 = require('../../../../assets/scr1.svg')
 const scr2 = require('../../../../assets/scr2.svg')
 const scr3 = require('../../../../assets/scr3.svg')
@@ -44,14 +44,14 @@ const bgColors: Record<string, string> = {
 const Onboarding = () => {
     const [onboarded, setOnboarded] = useState(null);
     useEffect(() => {
-      getStorage();
+        getStorage();
     }, []);
     const getStorage = async () => {
-      const ob = await AsyncStorage.getItem('onboarding');
-      //@ts-ignore
-      if (ob) {
-        navigation.navigate("Login" as never);
-      }
+        const ob = await AsyncStorage.getItem('onboarding');
+        //@ts-ignore
+        if (ob) {
+            navigation.navigate("Login" as never);
+        }
     };
     const handleBoarding = async () => {
         await AsyncStorage.setItem('onboarding', 'true');

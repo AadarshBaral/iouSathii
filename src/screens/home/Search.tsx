@@ -1,21 +1,15 @@
-import { View, Text } from 'react-native'
-import React, { useState } from 'react'
-import Input from '@/components/ui/Input'
-import { useForm } from 'react-hook-form';
-import { Typography } from '@/components/ui/Typography';
 import { Button } from '@/components/ui/Button';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import TitleBar from '@/components/ui/TitleBar';
-import { collection, getDoc, getDocs, query, where } from 'firebase/firestore';
-import { FireAuth, db } from '@/config/fireConfig';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-import { useNavigation } from '@react-navigation/native';
-import { getAuth } from 'firebase/auth';
 import Input2 from '@/components/ui/InputWithBorder';
-import { ActivityIndicator } from 'react-native';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import TitleBar from '@/components/ui/TitleBar';
+import { Typography } from '@/components/ui/Typography';
+import { db } from '@/config/fireConfig';
+import { useNavigation } from '@react-navigation/native';
 import { Image } from 'expo-image';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import React, { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { ActivityIndicator, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 // const schema = z.object({
 //   search: z.string().min(8, { message: 'At least 8 characters.' })
 // })
@@ -42,8 +36,8 @@ const Search = () => {
       setLoading(false)
     }
   }
-  const handleSearch=()=>{
-     //@ts-ignore
+  const handleSearch = () => {
+    //@ts-ignore
     navigation.navigate("addBill", { data: user, cameFrom: 'Search' })
   }
   return (
@@ -71,18 +65,18 @@ const Search = () => {
         {errors.search && <Typography label={errors.search.message as string} className="text-red-500" variant={'p'} />}
         <View>
           {user && (<View>
-            <Typography label='User Found' className='text-[#0FB900] my-2'/>
+            <Typography label='User Found' className='text-[#0FB900] my-2' />
             <View className=' rounded-full shadow-sm flex  flex-row gap-3 items-center'>
-            <Image source={img} className='h-20 w-20  object-cover rounded-full' />
-            <View>
-              <Typography className='text-[#00256E] text-xl' label={user?.username} />
-              <Typography className='text-[#7D7D7D]' label={user?.id} />
+              <Image source={img} className='h-20 w-20  object-cover rounded-full' />
+              <View>
+                <Typography className='text-[#00256E] text-xl' label={user?.username} />
+                <Typography className='text-[#7D7D7D]' label={user?.id} />
+              </View>
             </View>
-          </View>
-          <Button onPress={handleSearch} className='mt-6 '><Typography className='text-xl text-white' label='Continue'/></Button>
+            <Button onPress={handleSearch} className='mt-6 '><Typography className='text-xl text-white' label='Continue' /></Button>
           </View>
 
-        )}
+          )}
         </View>
       </View>
     </SafeAreaView>
