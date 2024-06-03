@@ -93,7 +93,7 @@ const GroupConclusion = (props: NativeStackScreenProps<{
   // console.log(overPayers, underPayers);
   return (
     <ScreenWrapper>
-      <TitleBar back image='person.png' title={group.name} />
+      <TitleBar home image='person.png' title={group.name} />
       <View>
         <View>
           <MoneyCard group total={

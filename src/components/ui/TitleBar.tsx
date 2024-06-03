@@ -9,9 +9,10 @@ interface ITitlebarProps {
     title: string;
     image: string;
     back?: boolean;
+    home?: boolean;
 }
 const img = require(`../../../assets/person.jpg`)
-const TitleBar = ({ title, image, back }: ITitlebarProps) => {
+const TitleBar = ({ title, image, back, home }: ITitlebarProps) => {
     const { profile } = useBillsContext();
     const navigation = useNavigation();
     return (
@@ -24,6 +25,9 @@ const TitleBar = ({ title, image, back }: ITitlebarProps) => {
                         <Ionicons name="arrow-back" size={32} color="black" />
                     </Text>
                     }
+                    {home && <Text onPress={() => navigation.navigate('HomeTabs' as never)}>
+                        <Ionicons name="arrow-back" size={32} color="black" /></Text>}
+
                     <Typography label={title} className='text-2xl' variant={"p"} />
                 </View>
                 <Pressable onPressIn={() => navigation.navigate('profile' as never)}>

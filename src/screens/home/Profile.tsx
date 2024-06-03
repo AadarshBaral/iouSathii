@@ -73,7 +73,7 @@ const Profile = () => {
         </View>
         <View className='h-44 w-44 bg-slate-400 rounded-full my-2 mt-10 shadow-lg'>
           {/* @ts-ignorei */}
-          {loading ? <ActivityIndicator color={"#4a4a4a"} size={"large"} className="top-20" /> : <Image source={profile ? profile?.profileImage : image} className='rounded-full h-full w-full object-cover' />}
+          {loading ? <ActivityIndicator color={"#4a4a4a"} size={"large"} className="top-20" /> : <Image source={profile.profileImage ? profile?.profileImage : image} className='rounded-full h-full w-full object-cover' />}
         </View>
         {/* <Image source={currentUser?.profileImage}/> */}
         {/* @ts-ignore */}

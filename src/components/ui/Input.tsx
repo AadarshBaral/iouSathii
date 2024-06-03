@@ -23,7 +23,7 @@ const Input = forwardRef<TextInput, Input2Props>((props, ref) => {
     return <View className="flex flex-col mt-2 ">
         <Typography variant={'p'} className="text-[16px] text-gray-800" label={label}></Typography>
         <View className={`flex flex-row mt-2  rounded-xl ${error ? "border-red-400 " : "border-gray-300"} border-2  `}>
-            <TextInput ref={ref} {...props} className={`${secureTextEntry ? 'w-[90%] rounded-l-xl' : 'w-full rounded-xl'}  p-3 px-3 text-xl text-gray-800 bg-gray-200 `} secureTextEntry={showPassword} onChangeText={field.onChange} />
+            <TextInput autoCapitalize="none" ref={ref} {...props} className={`${secureTextEntry ? 'w-[90%] rounded-l-xl' : 'w-full rounded-xl'}  p-3 px-3 text-xl text-gray-800 bg-gray-200 leading-[25px]`} secureTextEntry={showPassword} onChangeText={field.onChange} />
             {secureTextEntry &&
                 <Pressable className="w-[10%] flex items-center justify-center bg-gray-200  rounded-r-xl pr-2" onPress={(e) => {
                     e.stopPropagation()

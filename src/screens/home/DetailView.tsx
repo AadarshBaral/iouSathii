@@ -61,7 +61,7 @@ const DetailView = () => {
             ItemSeparatorComponent={() => <View style={{ height: 20 }} />}
             //@ts-ignore
             data={bills as IBillsInterface}
-            renderItem={({ item }) => <DetailDueCard id={item.billId} name={item.purpose} total={item.total as any} purpose={item.purpose} cardDecision={item.cardDecision as 'owe' | 'receive'} />}
+            renderItem={({ item }) => <DetailDueCard id={item.billId} name={item.person} total={item.total as any} purpose={item.purpose} cardDecision={item.cardDecision as 'owe' | 'receive'} />}
             keyExtractor={item => item.name}
           />
         </View>
