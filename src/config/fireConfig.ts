@@ -1,14 +1,10 @@
-import { initializeApp } from "firebase/app";
-import {GoogleAuthProvider, initializeAuth,getReactNativePersistence } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { Timestamp } from 'firebase/firestore'
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
-import { getStorage } from "firebase/storage";
+import { initializeApp } from "firebase/app";
+import { GoogleAuthProvider, getReactNativePersistence, initializeAuth } from "firebase/auth";
+import { Timestamp, getFirestore } from "firebase/firestore";
 import {
-  ref,
-  uploadBytesResumable,
-  getDownloadURL,
-  listAll,
+  getDownloadURL, getStorage, listAll, ref,
+  uploadBytesResumable
 } from "firebase/storage";
 const firebaseConfig = {
   apiKey: "AIzaSyAKThMdv5mG-OkaJrG8hlxNM0cEyEV9OVY",
@@ -33,7 +29,7 @@ const listFiles = async () => {
   const listResp = await listAll(listRef);
   return listResp.items;
 };
-const uploadToFirebase = async (uri:string, name:string, onProgress:any) => {
+const uploadToFirebase = async (uri: string, name: string, onProgress: any) => {
   const fetchResponse = await fetch(uri);
   const theBlob = await fetchResponse.blob();
   const imageRef = ref(getStorage(), `images/${name}`);
@@ -61,4 +57,5 @@ const uploadToFirebase = async (uri:string, name:string, onProgress:any) => {
     );
   });
 };
-export { uploadToFirebase, listFiles };
+export { listFiles, uploadToFirebase };
+

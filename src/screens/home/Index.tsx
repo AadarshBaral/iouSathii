@@ -1,23 +1,17 @@
 
-import { View, ScrollView, FlatList, Pressable, ActivityIndicator } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { Typography } from '@/components/ui/Typography';
-import TitleBar from '@/components/ui/TitleBar';
 import MoneyCard from '@/components/ui/MoneyCard';
+import TitleBar from '@/components/ui/TitleBar';
+import { Typography } from '@/components/ui/Typography';
+import { FireAuth, db } from '@/config/fireConfig';
+import { useGroupCtx } from '@/context/GroupContext';
+import ScreenWrapper from '@/layout/SafreAreaInsets';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, Pressable, ScrollView, View } from 'react-native';
 import DueCard from './DueCard';
 import GroupCard from './GroupCard';
-import ScreenWrapper from '@/layout/SafreAreaInsets';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import { useNavigation } from '@react-navigation/native';
-import { useGroupCtx } from '@/context/GroupContext';
-import { collection, getDocs, onSnapshot, orderBy, query } from 'firebase/firestore';
-import { FireAuth, db } from '@/config/fireConfig';
-import { User } from 'firebase/auth';
-import { useBillsContext } from '@/context/BillsContext';
-import TabBar from '@/components/ui/TabBar';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Progress from '@/components/ui/Progress';
-import ProgressBar from '@/components/ui/Progress';
 if (__DEV__) {
   const ignoreWarns = ["VirtualizedLists should never be nested inside plain ScrollViews"];
   const errorWarn = global.console.error;
@@ -30,21 +24,7 @@ if (__DEV__) {
     errorWarn(...arg);
   };
 }
-const DueInfo = [
-  {
-    userId: 1,
-    anonymousUser: "Davidson",
-    currentUser: "lskfjlkj2123",
-    groupId: 123,
-    owed: "true",
-    person: "Samuel Smith",
-    purpose: "Travel",
-    name: 'Ramlal Karki',
-    total: '20000',
-    cardDecision: 'receive'
-  },
 
-]
 export interface UserBill {
   anonymousUser: string;
   currentUser: string;

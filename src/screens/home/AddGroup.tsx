@@ -1,17 +1,16 @@
-import { View, Text, FlatList, ScrollView, KeyboardAvoidingView } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import ScreenWrapper from '@/layout/SafreAreaInsets'
-import TitleBar from '@/components/ui/TitleBar'
-import { useForm } from 'react-hook-form'
-import Input from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
-import { Typography } from '@/components/ui/Typography'
-import { useNavigation } from '@react-navigation/native'
-import { group, person, useGroupCtx } from '@/context/GroupContext'
-import { generateAlphanumeric } from '../auth/Register'
 import Input2 from '@/components/ui/InputWithBorder'
+import TitleBar from '@/components/ui/TitleBar'
+import { Typography } from '@/components/ui/Typography'
+import { group, person, useGroupCtx } from '@/context/GroupContext'
+import ScreenWrapper from '@/layout/SafreAreaInsets'
+import { useNavigation } from '@react-navigation/native'
+import React, { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { FlatList, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 import Toast from 'react-native-toast-message'
+import { generateAlphanumeric } from '../auth/Register'
 interface IGroupInputElement {
     number: number;
     groupId: string;

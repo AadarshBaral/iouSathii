@@ -1,13 +1,13 @@
+import { FireAuth } from '@/config/fireConfig';
+import toastConfig from '@/config/toastConfig';
+import SplashScreen from '@/screens/home/splash'; // Ensure you have this component
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
+import { User, onAuthStateChanged } from 'firebase/auth';
+import { useEffect, useState } from 'react';
+import Toast from 'react-native-toast-message';
 import AfterAuth from './AfterAuth';
 import BeforeAuth from './BeforeAuth';
-import SplashScreen from '@/screens/home/splash'; // Ensure you have this component
-import { FireAuth } from '@/config/fireConfig';
-import { useEffect, useState } from 'react';
-import { User, onAuthStateChanged } from 'firebase/auth';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Toast from 'react-native-toast-message';
-import toastConfig from '@/config/toastConfig';
 const Navigation = () => {
   const [onboarded, setOnboarded] = useState(null);
   const [user, setUser] = useState<User | null>(null);
@@ -36,7 +36,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       {user ? <AfterAuth /> : <BeforeAuth onboarded={onboarded} />}
-      <Toast config={toastConfig}/>
+      <Toast config={toastConfig} />
     </NavigationContainer>
   );
 };

@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
-import { Pressable, ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { AntDesign } from "@expo/vector-icons";
 import { Button } from "@/components/ui/Button";
-import { Typography } from "@/components/ui/Typography";
+import ProgressBar from "@/components/ui/Progress";
 import TitleBar from "@/components/ui/TitleBar";
+import { Typography } from "@/components/ui/Typography";
+import { FireAuth, db } from "@/config/fireConfig";
+import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from 'expo-image-picker';
+import { collection, getDocs, query, updateDoc, where } from "firebase/firestore";
 import {
+    getDownloadURL,
     getStorage,
     ref,
     uploadBytesResumable,
-    getDownloadURL,
 } from "firebase/storage";
-import { FireAuth, db } from "@/config/fireConfig";
-import { collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
-import ProgressBar from "@/components/ui/Progress";
+import { useEffect, useState } from "react";
+import { Pressable, StatusBar, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 
 export default function ProfileSetup() {
@@ -45,7 +45,7 @@ export default function ProfileSetup() {
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4, 3],
-            quality: 1,
+            quality: 0.01,
         });
 
         if (!result.canceled) {

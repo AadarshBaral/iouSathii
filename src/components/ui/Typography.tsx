@@ -1,5 +1,5 @@
-import {cn} from "@/utils/cn";
-import {VariantProps, cva} from "class-variance-authority";
+import { cn } from "@/utils/cn";
+import { VariantProps, cva } from "class-variance-authority";
 import { Text, TextProps } from "react-native";
 
 const typographyVariants = cva("text-textDark tracking-wider", {
@@ -7,19 +7,19 @@ const typographyVariants = cva("text-textDark tracking-wider", {
   variants: {
     variant: {
       default: "font-poppins_regular",
-      h1: "font-bold text-4xl font-poppins_bold",
-      h2: "text-3xl font-bold font-poppins_semibold",
-      h3: "text-2xl, font-bold font-poppins_semibold",
+      h1: "font-bold text-4xl font-poppins_semiBold",
+      h2: "text-3xl font-poppins_mdeium",
+      h3: "text-2xl, font-poppins_regular",
       md: "text-lg font-poppins_medium",
       p: "text-sm font-poppins_regular",
-    },    size: {
-      default: "text-sm ",
+    }, size: {
+      default: "text-sm  font-poppins_medium",
       base: "text-base",
       lg: "text-lg",
       xl: "text-xl",
       "2xl": "text-2xl",
       "3xl": "text-3xl",
-      "4xl": "text-4xl",
+      "4xl": "text-4xl font-bold",
       "5xl": "text-5xl",
       "6xl": "text-6xl",
       "8xl": "text-8xl",
@@ -36,10 +36,10 @@ const typographyVariants = cva("text-textDark tracking-wider", {
 interface TypographyProps extends TextProps, VariantProps<typeof typographyVariants> {
   label: string;
 }
-const Typography = ({label, variant, size, className, ...props}: TypographyProps) => {
+const Typography = ({ label, variant, size, className, ...props }: TypographyProps) => {
   return (
     <Text
-      className={cn(typographyVariants({variant, size, className}))}
+      className={cn(typographyVariants({ variant, size, className }))}
       {...props}
       allowFontScaling={false}
     >
@@ -48,4 +48,5 @@ const Typography = ({label, variant, size, className, ...props}: TypographyProps
   );
 };
 
-export {Typography, typographyVariants};
+export { Typography, typographyVariants };
+

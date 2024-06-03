@@ -1,6 +1,7 @@
+import BillsContextProvider from '@/context/BillsContext';
+import GroupContextProvider from '@/context/GroupContext';
 import Navigation from '@/navigation';
 import {
-  useFonts,
   Poppins_100Thin,
   Poppins_300Light,
   Poppins_400Regular,
@@ -10,11 +11,8 @@ import {
   Poppins_700Bold,
   Poppins_800ExtraBold,
   Poppins_900Black,
+  useFonts,
 } from '@expo-google-fonts/poppins';
-import { useState } from 'react';
-import { ANDROID } from 'nativewind/dist/utils/selector';
-import GroupContextProvider from '@/context/GroupContext';
-import BillsContextProvider from '@/context/BillsContext';
 export default function App() {
   const [fontLoaded] = useFonts({
     Poppins_100Thin,

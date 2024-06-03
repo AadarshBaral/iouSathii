@@ -1,14 +1,12 @@
-import {cn} from "@/utils/cn";
-import { Pressable, PressableProps} from "react-native";
-import {cva, type VariantProps} from "class-variance-authority";
-import {PropsWithChildren} from "react";
-
+import { cn } from "@/utils/cn";
+import { cva, type VariantProps } from "class-variance-authority";
+import { PropsWithChildren } from "react";
+import { Pressable, PressableProps } from "react-native";
 interface ButtonProps
   extends PropsWithChildren<PressableProps>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   enableSound?: boolean;
 }
-
 const buttonVariants = cva(
   "inline-flex justify-center items-center rounded-xl  transition-all duration-200  active:border-[1px] ",
   {
@@ -27,12 +25,11 @@ const buttonVariants = cva(
     },
   },
 );
-
-const Button = ({className, ...props}: ButtonProps) => {
-  const {children, variant, onPress, size,...rest} = props;
+const Button = ({ className, ...props }: ButtonProps) => {
+  const { children, variant, onPress, size, ...rest } = props;
   return (
     <Pressable
-      className={cn(buttonVariants({variant, size, className}))}
+      className={cn(buttonVariants({ variant, size, className }))}
       onPress={onPress}
       {...rest}
     >
@@ -40,7 +37,6 @@ const Button = ({className, ...props}: ButtonProps) => {
     </Pressable>
   );
 };
-
-export {Button, buttonVariants};
+export { Button, buttonVariants };
 
 

@@ -1,16 +1,16 @@
-import { View, Text, FlatList, Pressable, Dimensions } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import TitleBar from '@/components/ui/TitleBar';
+import { Typography } from '@/components/ui/Typography';
 import { FireAuth, db } from '@/config/fireConfig';
+import ScreenWrapper from '@/layout/SafreAreaInsets';
 import { useNavigation } from '@react-navigation/native';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
-import { UserBill } from './Index';
-import DueCard from './DueCard';
-import TitleBar from '@/components/ui/TitleBar';
-import ScreenWrapper from '@/layout/SafreAreaInsets';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, FlatList, Pressable, View } from 'react-native';
 import {
     LineChart,
 } from "react-native-chart-kit";
-import { Typography } from '@/components/ui/Typography';
+import DueCard from './DueCard';
+import { UserBill } from './Index';
 const ViewAll = () => {
     const auth = FireAuth;
     const navigation = useNavigation();
