@@ -1,17 +1,13 @@
 import MoneyCard from '@/components/ui/MoneyCard'
-import TitleBar from '@/components/ui/TitleBar'
 import TransactionCard from '@/components/ui/TransactionCard'
-import { Typography } from '@/components/ui/Typography'
+import { useBillsContext } from '@/context/BillsContext'
 import { group, person, useGroupCtx } from '@/context/GroupContext'
-import ScreenWrapper from '@/layout/SafreAreaInsets'
+import AntDesign from '@expo/vector-icons/AntDesign'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
+import { Image } from 'expo-image'
 import React from 'react'
 import { FlatList, Pressable, ScrollView, StatusBar, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import AntDesign from '@expo/vector-icons/AntDesign'
-import { Image } from 'expo-image'
-import { useBillsContext } from '@/context/BillsContext'
-import { twMerge } from 'tailwind-merge'
 
 
 // function NewTransactionCard({ personFrom, personTo, total, className }: { personFrom: string, personTo: string, total: string, className?: string }) {
@@ -120,10 +116,10 @@ const GroupConclusion = (props: NativeStackScreenProps<{
       overPayers[0].percent -= toPayPercent;
     }
     transactions.push({ from, to, total })
-    console.log(transactions)
+    // console.log(transactions)
   }
 
-  console.log(transactions)
+  // console.log(transactions)
 
   return (
     <SafeAreaView className='bg-white h-full'>
@@ -175,11 +171,11 @@ const GroupConclusion = (props: NativeStackScreenProps<{
             className='mt-2 px-2'
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => {
-              return <View className='flex flex-row justify-between items-center my-2 bg-[#f5f5f5] py-2 px-2 rounded-lg border border-[#DBDBDB]'>
-                <Text className='font-poppins_regular text-xl'>
+              return <View className='flex flex-row justify-between items-center my-2 bg-[#f5f5f5] p-5 rounded-lg border border-[#DBDBDB]'>
+                <Text className='font-poppins_regular text-lg'>
                   {item.name}
                 </Text>
-                <Text className='font-poppins_bold text-xl text-[#505C6E]'>
+                <Text className=' text-md text-[#505C6E]'>
                   Rs {item.total}
                 </Text>
               </View>
