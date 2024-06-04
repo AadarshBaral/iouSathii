@@ -1,14 +1,15 @@
+import { Typography } from '@/components/ui/Typography'
 import { FireAuth, db } from '@/config/fireConfig'
 import { useBillsContext } from '@/context/BillsContext'
+import AntDesign from "@expo/vector-icons/AntDesign"
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import { Image } from 'expo-image'
 import { User, signOut } from 'firebase/auth'
 import { collection } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
-import { ActivityIndicator, Pressable, StatusBar, Text, View } from 'react-native'
+import { Pressable, StatusBar, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import AntDesign from "@expo/vector-icons/AntDesign"
 
 const image = require("../../../assets/person.jpg")
 const qr = require("../../../assets/frame.png")
@@ -74,22 +75,18 @@ const Profile = () => {
           <Text className='font-poppins_semibold text-xl'>
             {currentUser?.displayName}
           </Text>
-          <View className='my-4'>
+          <View className='my-4 '>
             {/* @ts-ignore */}
-            <Image source={profile?.profileImage ? profile.profileImage : image} className='h-52 aspect-square rounded-full border-4 border-solid border-gray-600'></Image>
+            <Image source={profile?.profileImage ? profile.profileImage : image} className='h-52 aspect-square rounded-full shadow-lg'></Image>
           </View>
-          <Text className='mb-8 font-poppins_semibold text-xl'>
-            {/* @ts-ignore */}
-            User ID: {profile?.id}
-          </Text>
+          {/* @ts-ignore */}
+          <Typography label={`User ID: ${profile?.id}`} className='mb-8 text-xl' />
         </View>
         <View className='flex flex-col items-center mt-8'>
-          <Text className='font-poppins_semibold text-red-400 text-xl'>
-            Scan to Pay {currentUser?.displayName}
-          </Text>
-          <View className='my-4'>
+          <Typography label={`Scan to Pay ${currentUser?.displayName}`} className=' text-red-400 text-xl' />
+          <View className='my-4 rounded-xl'>
             {/* @ts-ignore */}
-            <Image source={profile?.qrImage ? profile.qrImage : qr} className='h-64 aspect-square'>
+            <Image source={profile?.qrImage ? profile.qrImage : qr} className='h-64 aspect-square rounded-2xl'>
             </Image>
           </View>
         </View>
