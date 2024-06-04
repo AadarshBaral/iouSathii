@@ -17,7 +17,7 @@ import {
     uploadBytesResumable,
 } from "firebase/storage";
 import { useEffect, useState } from "react";
-import { Dimensions, Pressable, StatusBar, StyleSheet, Text, View } from "react-native";
+import { Alert, Dimensions, Pressable, StatusBar, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
 import { IProfileProps } from "./Profile";
@@ -44,12 +44,24 @@ export default function ProfileSetup() {
         })();
     }, []);
     const handleSignOut = async () => {
-        await AsyncStorage.removeItem('groups')
-        signOut(auth).then(() => {
-            console.log("signout success")
-        }).catch((error) => {
-            console.log("Error")
-        });
+        Alert.alert('Logging Out', 'Are you sure you want to logout of the app?', [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {
+                text: 'OK', onPress: async () => {
+                    await AsyncStorage.removeItem('groups')
+                    signOut(auth).then(() => {
+                        console.log("signout success")
+                    }).catch((error) => {
+                        console.log("Error")
+                    });
+                }
+            },
+        ]);
+
     }
     const handleImagePick = async (field: string) => {
 
@@ -134,7 +146,7 @@ export default function ProfileSetup() {
                     <View >
                         <Text>Permission Not Granted - {permission?.status}</Text>
                         <StatusBar />
-                        <Button onPress={requestPermission}><Typography label="Permission" /></Button>
+                        <Button onPress={requestPermission}><Typography label="Grant Permission" className="text-xl text-white" /></Button>
                     </View>
                 )
                 }
@@ -144,7 +156,7 @@ export default function ProfileSetup() {
 
                 <View className="flex flex-col justify-center items-center  ">
 
-                    <View className='h-44 w-44  rounded-full  shadow-lg flex justify-center items-center  gap-4'>
+                    <View className='h-52 w-52 aspect-square  rounded-full  shadow-lg flex justify-center items-center  gap-4'>
                         {/* @ts-ignore */}
                         {<Image source={profile?.profileImage ? profile?.profileImage : image} className='rounded-full h-full w-full object-cover' />}
                     </View>

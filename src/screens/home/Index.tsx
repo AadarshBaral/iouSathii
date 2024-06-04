@@ -5,6 +5,7 @@ import { Typography } from '@/components/ui/Typography';
 import { FireAuth, db } from '@/config/fireConfig';
 import { useGroupCtx } from '@/context/GroupContext';
 import ScreenWrapper from '@/layout/SafreAreaInsets';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
@@ -72,7 +73,6 @@ const Index = () => {
   return (
     <ScreenWrapper >
       <TitleBar title="Home" image={"person.jpg"} />
-
       <MoneyCard total={total} />
       <ScrollView showsVerticalScrollIndicator={false} className='h-[500px] '>
         {/* <Pressable onPress={() => navigation.navigate('addBill' as never)} className='absolute bottom-0  right-5 z-[20]' >
@@ -87,6 +87,17 @@ const Index = () => {
           </Pressable>
         </View>
         <View className='h-[250px]'>
+          {userBills.length === 0 && (
+            <View className='bg-gray-200 rounded-xl flex justify-center items-center h-[230px]  '>
+              <Typography className='text-lg text-gray-500' variant={'h2'} label='No recent transactions' />
+              <Pressable onPress={() => navigation.navigate("addBill" as never)} >
+
+                <View className=' rounded-full p-4'>
+                  <AntDesign name="plus" size={42} color="#969696" />
+                </View>
+              </Pressable>
+            </View>
+          )}
           {loading ? <ActivityIndicator color="#3A3453" size='large' /> : <FlatList bounces={false}
             ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
             data={userBills.slice(0, 3)}
@@ -98,6 +109,7 @@ const Index = () => {
         <Pressable onPress={() => navigation.navigate('addGroup' as never)}><GroupCard name="+Add a group" /></Pressable>
         <Typography className='text-lg' variant={'h2'} label='Groups' />
         <View >
+
           <FlatList
             className='mt-1'
             bounces={false}

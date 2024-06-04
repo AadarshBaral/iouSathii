@@ -10,7 +10,7 @@ const UploadingProgress = ({ progress }: { progress: number }) => {
             <Typography className='text-[#cfcfcf] text-lg' label="Uploading Image" />
             <View className='self-start ml-20' style={[styles.progressBar, { width: progressWidth }]}>
             </View>
-            <Typography className='text-[#cfcfcf]' label={`${progress}%`} />
+            <Typography className='text-[#cfcfcf]' label={`${progress.toFixed(2)}%`} />
 
         </View>
     )

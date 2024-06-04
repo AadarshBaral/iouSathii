@@ -3,7 +3,7 @@ import { Typography } from '@/components/ui/Typography'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useRef, useState } from 'react'
-import { Dimensions, FlatList, Pressable, View } from 'react-native'
+import { Dimensions, FlatList, Pressable, StatusBar, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import OnboardingComponent from './OnboardingComponent'
 const scr1 = require('../../../../assets/scr1.svg')
@@ -14,24 +14,24 @@ const width = Dimensions.get('window').width
 const onBoardingItems = [
     {
         id: 1,
-        title: 'Record the person you owe money to .',
+        title: 'Record the person you owe money to.',
         subTitle: '(Or yourself if you owe them)',
         image: scr1
     },
     {
         id: 2,
         title: 'Split Bills',
-        subTitle: "Easily split money between your grop members and know your share",
+        subTitle: "Easily split money between your group members and know your share",
         image: scr2
     },
     {
         id: 3,
-        title: 'We will do the math for you .',
+        title: 'We will do the math for you.',
         image: scr3
     },
     {
         id: 4,
-        title: 'And help you handle your money better .',
+        title: 'And help you handle your money better.',
         image: scr4
     }
 ]
@@ -89,6 +89,7 @@ const Onboarding = () => {
     };
     return (
         <SafeAreaView className='flex  h-[100vh] items-center relative'>
+            <StatusBar backgroundColor='transparent' barStyle='light-content' translucent />
             <View className={`absolute z-[-1] top-[-500px] right-100 h-[1000px] w-[1000px] rounded-full ${bgColors[currentIndex]}`}></View>
             {currentIndex !== onBoardingItems.length - 1 && (
                 <Pressable onPress={handleSkip} className='absolute right-7 top-16 z-10  rounded-xl p-2' >

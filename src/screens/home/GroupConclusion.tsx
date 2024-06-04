@@ -1,12 +1,11 @@
 import MoneyCard from '@/components/ui/MoneyCard'
+import TitleBar from '@/components/ui/TitleBar'
 import TransactionCard from '@/components/ui/TransactionCard'
 import { useBillsContext } from '@/context/BillsContext'
 import { group, person, useGroupCtx } from '@/context/GroupContext'
-import AntDesign from '@expo/vector-icons/AntDesign'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { Image } from 'expo-image'
 import React from 'react'
-import { FlatList, Pressable, ScrollView, StatusBar, Text, View } from 'react-native'
+import { FlatList, ScrollView, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 
@@ -123,23 +122,9 @@ const GroupConclusion = (props: NativeStackScreenProps<{
 
   return (
     <SafeAreaView className='bg-white h-full'>
-      <StatusBar></StatusBar>
       <ScrollView>
-        <View className='flex flex-row justify-between items-center px-4 py-2'>
-          <View className='flex flex-row gap-4 items-center'>
-            <Pressable onPress={() => {
-              navigation.goBack()
-            }}>
-              <AntDesign name='arrowleft' size={32} color='black' />
-            </Pressable>
-            <Text className='font-poppins_medium text-3xl'>
-              {group.name}
-            </Text>
-          </View>
-          <View>
-            {/* @ts-ignore */}
-            <Image source={profile?.profileImage} className='h-14 aspect-square rounded-full'></Image>
-          </View>
+        <View className='m-2'>
+          <TitleBar home image='person.jpg' title={group.name} />
         </View>
         <View className='mt-4'>
           <View className='px-4'>
