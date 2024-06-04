@@ -2,7 +2,6 @@ import Index from "@/screens/home/Index";
 import Profile from "@/screens/home/Profile";
 import { AntDesign, Feather } from '@expo/vector-icons'; // Combined imports for cleaner code
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import React from 'react';
 import { View } from "react-native";
 
 const Tab = createBottomTabNavigator();

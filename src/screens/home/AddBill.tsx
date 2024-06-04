@@ -131,7 +131,7 @@ const AddBill = () => {
 
     };
     return (
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
             <ScreenWrapper className='relative mt-10' >
                 <TitleBar back image='person.jpg' title='Add Bill' />
                 <View>

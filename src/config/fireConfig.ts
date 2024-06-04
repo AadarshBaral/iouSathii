@@ -6,15 +6,27 @@ import {
   getDownloadURL, getStorage, listAll, ref,
   uploadBytesResumable
 } from "firebase/storage";
+
+import { EXPO_PUBLIC_API_KEY, EXPO_PUBLIC_APP_ID, EXPO_PUBLIC_AUTH_DOMAIN, EXPO_PUBLIC_MEASUREMENT_ID, EXPO_PUBLIC_MESSAGING_SENDER_ID, EXPO_PUBLIC_PROJECT_ID, EXPO_PUBLIC_STORAGE_BUCKET } from "@env";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAKThMdv5mG-OkaJrG8hlxNM0cEyEV9OVY",
-  authDomain: "fir-test-d91ff.firebaseapp.com",
-  projectId: "fir-test-d91ff",
-  storageBucket: "fir-test-d91ff.appspot.com",
-  messagingSenderId: "780080449796",
-  appId: "1:780080449796:web:5b7159238f54e2c03ee851",
-  measurementId: "G-JNZ7ZV4PXE"
+  apiKey: EXPO_PUBLIC_API_KEY,
+  authDomain: EXPO_PUBLIC_AUTH_DOMAIN,
+  projectId: EXPO_PUBLIC_PROJECT_ID,
+  storageBucket: EXPO_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: EXPO_PUBLIC_MESSAGING_SENDER_ID,
+  appId: EXPO_PUBLIC_APP_ID,
+  measurementId: EXPO_PUBLIC_MEASUREMENT_ID
 };
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAKThMdv5mG-OkaJrG8hlxNM0cEyEV9OVY",
+//   authDomain: "fir-test-d91ff.firebaseapp.com",
+//   projectId: "fir-test-d91ff",
+//   storageBucket: "fir-test-d91ff.appspot.com",
+//   messagingSenderId: "780080449796",
+//   appId: "1:780080449796:web:5b7159238f54e2c03ee851",
+//   measurementId: "G-JNZ7ZV4PXE"
+// };
 export const serverStamp = Timestamp
 const app = initializeApp(firebaseConfig);
 export const FireAuth = initializeAuth(app, {

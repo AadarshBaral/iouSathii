@@ -120,7 +120,7 @@ const AddGroup = () => {
         }
     };
     return (
-        <KeyboardAwareScrollView>
+        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
             <ScreenWrapper>
                 <View>
                     <TitleBar back title="Create Group" image={"person.jpg"} />

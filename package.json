@@ -13,11 +13,8 @@
     "@expo/webpack-config": "^19.0.1",
     "@hookform/resolvers": "^3.4.2",
     "@react-native-async-storage/async-storage": "^1.23.1",
-    "@react-native-community/blur": "^4.4.0",
     "@react-native-firebase/app": "^20.0.0",
     "@react-native-firebase/auth": "^20.0.0",
-    "@react-native-google-signin/google-signin": "^12.0.0",
-    "@react-native-picker/picker": "^2.7.6",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
@@ -27,7 +24,6 @@
     "eas-cli": "^9.1.0",
     "expo": "~51.0.8",
     "expo-auth-session": "^5.5.2",
-    "expo-blur": "~13.0.2",
     "expo-crypto": "^13.0.2",
     "expo-font": "^12.0.5",
     "expo-image": "^1.12.9",
@@ -35,7 +31,6 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "^3.0.4",
     "expo-vector-icons": "^10.0.1",
-    "expo-web-browser": "^13.0.3",
     "firebase": "^10.12.1",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
@@ -56,7 +51,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "react-native-dotenv": "^3.4.11"
   },
   "private": true,
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"

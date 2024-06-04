@@ -4,7 +4,7 @@
     "slug": "IOUSathi",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/sathii.png",
     "userInterfaceStyle": "light",
     "plugins": [
       [
@@ -16,7 +16,7 @@
       ]
     ],
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/sathii.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -25,14 +25,23 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/sathii.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.IOUSathi"
+      "package": "com.anonymous.IOUSathi",
+      "versionCode": 1,
+      "permissions": [
+        "android.permission.READ_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/sathii.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b61e1abd-fc57-462f-8747-ae5969e374a9"
+      },
+      "scheme": "IOUSathi"
     }
-  },
-  "scheme": "IOUSathi"
+  }
 }

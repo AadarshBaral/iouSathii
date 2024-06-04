@@ -43,7 +43,7 @@ const Login = () => {
 
     const passwordRef = useRef<TextInput>(null)
     return (
-        <KeyboardAwareScrollView className="h-full relative p-0">
+        <KeyboardAwareScrollView className="h-full relative p-0" keyboardShouldPersistTaps="always">
             <SafeAreaView className="p-6 mt-10 h-screen flex flex-col ">
                 <View className="flex flex-col gap-y-20">
                     <View className="">
