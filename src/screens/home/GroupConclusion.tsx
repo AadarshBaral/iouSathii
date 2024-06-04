@@ -6,20 +6,64 @@ import { group, person, useGroupCtx } from '@/context/GroupContext'
 import ScreenWrapper from '@/layout/SafreAreaInsets'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import React from 'react'
-import { FlatList, Text, View } from 'react-native'
+import { FlatList, Pressable, ScrollView, StatusBar, Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import AntDesign from '@expo/vector-icons/AntDesign'
+import { Image } from 'expo-image'
+import { useBillsContext } from '@/context/BillsContext'
+import { twMerge } from 'tailwind-merge'
+
+
+// function NewTransactionCard({ personFrom, personTo, total, className }: { personFrom: string, personTo: string, total: string, className?: string }) {
+//   total = total.replace(/\.?0+$/, "")
+
+//   return (
+//     <View className={twMerge("rounded-lg  bg-[#dde2e5] flex flex-row justify-between mx-4 my-2 px-4 items-center", className)}>
+//       <Text className='text-xl font-poppins_regular'>
+//         {personFrom}
+//       </Text>
+//       <View className='py-2 flex flex-row'>
+//         <View className='flex items-center h-full w-32 bg-[#95ff93] border-y-2 border-l-2 border-r-0 border-white'>
+//           <Text className='text-xl font-poppins_regular px-4'>{total}</Text>
+//         </View>
+//         <View style={
+//           {
+//             width: 0,
+//             height: 0,
+//             backgroundColor: "transparent",
+//             borderStyle: "solid",
+//             borderLeftWidth: 20,
+//             borderRightWidth: 20,
+//             borderBottomWidth: 30,
+//             borderLeftColor: "green",
+//             borderRightColor: "blue",
+//             borderBottomColor: "red",
+//             transform: [{ rotate: "90deg" }],
+//           }
+//         } className='w-4 bg-[#95ff93]'></View>
+//       </View>
+//       <Text className='text-xl font-poppins_regular'>
+//         {personTo}
+//       </Text>
+//     </View>
+//   )
+// }
+
+
 
 const GroupConclusion = (props: NativeStackScreenProps<{
   group: group
 }>) => {
+  const { navigation } = props
   const [groups, _] = useGroupCtx();
   //@ts-ignore
   const group = props.route.params.group as group
-
+  const { profile } = useBillsContext();
   if (group === undefined) {
     return <Text>No Group Passed</Text>
   }
-
-  const totalPerPerson = group.people.reduce((acc, person) => acc + Number(person.total), 0) / group.people.length;
+  const total = group.people.reduce((acc, person) => acc + Number(person.total), 0);
+  const totalPerPerson = total / group.people.length;
 
   type personAndPercent = {
     person: person,
@@ -79,48 +123,71 @@ const GroupConclusion = (props: NativeStackScreenProps<{
     console.log(transactions)
   }
 
-  // underPayers.forEach(underPayer => {
-  //   const from = underPayer.person;
-  //   const to = overPayers[0].person;
-  //   const toPayPercent = Math.min(underPayer.percent, overPayers[0].percent)
-  //   const total = toPayPercent * totalOverpayed;
-  //   transactions.push({ from, to, total })
-  // })
-
-
-
   console.log(transactions)
-  // console.log(overPayers, underPayers);
+
   return (
-    <ScreenWrapper>
-      <TitleBar home image='person.png' title={group.name} />
-      <View>
-        <View>
-          <MoneyCard group total={
-            group.people.reduce((acc, person) => acc + Number(person.total), 0)
-          } />
-          <Typography variant={"p"} className='font-bold text-textDark text-lg my-2' label='All transactions' />
-          <View className='flex h-auto  justify-between'>
-            <FlatList
-              data={transactions}
-              keyExtractor={(item, index) => index.toString()}
-              renderItem={({ item }) => {
-                return <TransactionCard personFrom={item.from.name} personTo={item.to.name} total={item.total.toFixed(3).toString()} />
-              }}
-            >
-            </FlatList>
-
-
-
-            {/* <TransactionCard personFrom='Ramesh' personTo='Rajesh' total='122' />
-            <TransactionCard personFrom='Ashish' personTo='Ganesh' total='301' />
-            <TransactionCard personFrom='Amish' personTo='Anamol' total='122' /> */}
-
-
+    <SafeAreaView className='bg-white h-full'>
+      <StatusBar></StatusBar>
+      <ScrollView>
+        <View className='flex flex-row justify-between items-center px-4 py-2'>
+          <View className='flex flex-row gap-4 items-center'>
+            <Pressable onPress={() => {
+              navigation.goBack()
+            }}>
+              <AntDesign name='arrowleft' size={32} color='black' />
+            </Pressable>
+            <Text className='font-poppins_medium text-3xl'>
+              {group.name}
+            </Text>
+          </View>
+          <View>
+            {/* @ts-ignore */}
+            <Image source={profile?.profileImage} className='h-14 aspect-square rounded-full'></Image>
           </View>
         </View>
-      </View>
-    </ScreenWrapper>
+        <View className='mt-4'>
+          <View className='px-4'>
+            <MoneyCard total={Number(total.toFixed(2))} group={true}>
+            </MoneyCard>
+          </View>
+        </View>
+        <View className='flex flex-col px-4'>
+          <Text className='text-xl font-poppins_medium'>
+            All Transactions
+          </Text>
+          <FlatList
+            data={transactions}
+            keyExtractor={(item, index) => index.toString()}
+            className='mt-4'
+            renderItem={({ item }) => {
+              return <View className='my-2'>
+                <TransactionCard personFrom={item.from.name} personTo={item.to.name} total={item.total.toFixed(2)} />
+              </View>
+            }}
+          />
+        </View>
+        <View className='flex flex-col px-4 mt-4'>
+          <Text className='text-xl font-poppins_semibold'>
+            Details
+          </Text>
+          <FlatList
+            data={group.people}
+            className='mt-2 px-2'
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => {
+              return <View className='flex flex-row justify-between items-center my-2 bg-[#f5f5f5] py-2 px-2 rounded-lg border border-[#DBDBDB]'>
+                <Text className='font-poppins_regular text-xl'>
+                  {item.name}
+                </Text>
+                <Text className='font-poppins_bold text-xl text-[#505C6E]'>
+                  Rs {item.total}
+                </Text>
+              </View>
+            }}
+          />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   )
 }
 
