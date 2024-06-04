@@ -10,9 +10,10 @@ interface ITitlebarProps {
     image: string;
     back?: boolean;
     home?: boolean;
+    profileImageProp?: boolean;
 }
 const img = require(`../../../assets/person.jpg`)
-const TitleBar = ({ title, image, back, home }: ITitlebarProps) => {
+const TitleBar = ({ title, image, back, home, profileImageProp }: ITitlebarProps) => {
     const { profile } = useBillsContext();
     const navigation = useNavigation();
     return (
@@ -31,11 +32,11 @@ const TitleBar = ({ title, image, back, home }: ITitlebarProps) => {
                     <Typography label={title} className='text-2xl' variant={"p"} />
                 </View>
                 <Pressable onPressIn={() => navigation.navigate('profile' as never)}>
-
-                    <View className='bg-slate-300 w-14 h-14 rounded-full shadow-sm'>
+                    {profileImageProp !== false && <View className='bg-slate-300 w-14 h-14 rounded-full shadow-sm'>
                         {/* @ts-ignore */}
                         <Image className='rounded-full h-full w-full object-cover' source={profile?.profileImage ? profile?.profileImage : img} />
-                    </View>
+                    </View>}
+
                 </Pressable>
             </View>
         </View>
