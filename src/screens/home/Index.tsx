@@ -74,12 +74,7 @@ const Index = () => {
     <ScreenWrapper >
       <TitleBar title="Home" image={"person.jpg"} />
       <MoneyCard total={total} />
-      <ScrollView showsVerticalScrollIndicator={false} className='h-[500px] '>
-        {/* <Pressable onPress={() => navigation.navigate('addBill' as never)} className='absolute bottom-0  right-5 z-[20]' >
-        <View className='bg-[#1E2225] z-20 w-[70px] h-[70px] rounded-full flex justify-center items-center shadow-sm shadow-black'>
-          <AntDesign name="plus" size={42} color="white" />
-        </View>
-      </Pressable> */}
+      <ScrollView className='h-[500px]' showsVerticalScrollIndicator={false} >
         <View className='flex flex-row justify-between '>
           <Typography className='text-lg' variant={'h2'} label='Recent' />
           <Pressable onPress={() => { navigation.navigate("ViewAll" as never) }}>
@@ -108,17 +103,14 @@ const Index = () => {
         </View>
         <Pressable onPress={() => navigation.navigate('addGroup' as never)}><GroupCard name="+Add a group" /></Pressable>
         <Typography className='text-lg' variant={'h2'} label='Groups' />
-        <View >
-
-          <FlatList
-            className='mt-1'
-            bounces={false}
-            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-            data={groups}
-            renderItem={({ item }) => <Pressable onPress={() => navigation.navigate({ name: 'GroupConclusion', params: { group: item } } as never)}><GroupCard name={item.name} /></Pressable>}
-            keyExtractor={(item, index) => index.toString()}
-          />
-        </View >
+        <FlatList
+          className='mt-1 '
+          bounces={false}
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+          data={groups}
+          renderItem={({ item }) => <Pressable onPress={() => navigation.navigate({ name: 'GroupConclusion', params: { group: item } } as never)}><GroupCard name={item.name} /></Pressable>}
+          keyExtractor={(item, index) => index.toString()}
+        />
       </ScrollView>
 
     </ScreenWrapper>

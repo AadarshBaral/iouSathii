@@ -75,14 +75,14 @@ const Profile = () => {
           <Text className='font-poppins_semibold text-xl'>
             {currentUser?.displayName}
           </Text>
-          <View className='my-4 '>
+          <View className='my-4 shadow-lg'>
             {/* @ts-ignore */}
-            <Image source={profile?.profileImage ? profile.profileImage : image} className='h-52 aspect-square rounded-full shadow-lg'></Image>
+            <Image source={profile?.profileImage ? profile.profileImage : image} className='h-52 aspect-square rounded-full shadow-lg '></Image>
           </View>
           {/* @ts-ignore */}
           <Typography label={`User ID: ${profile?.id}`} className='mb-8 text-xl' />
         </View>
-        <View className='flex flex-col items-center mt-8'>
+        <View className='flex flex-col items-center mt-8 shadow-lg'>
           <Typography label={`Scan to Pay ${currentUser?.displayName}`} className=' text-red-400 text-xl' />
           <View className='my-4 rounded-xl'>
             {/* @ts-ignore */}

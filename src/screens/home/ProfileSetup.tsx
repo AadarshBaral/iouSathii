@@ -5,7 +5,6 @@ import UploadingProgress from "@/components/ui/UploadingProgress";
 import { FireAuth, db } from "@/config/fireConfig";
 import { useBillsContext } from "@/context/BillsContext";
 import { AntDesign, FontAwesome, MaterialIcons } from '@expo/vector-icons';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Image } from "expo-image";
 import * as ImagePicker from 'expo-image-picker';
 import { signOut } from "firebase/auth";
@@ -52,7 +51,6 @@ export default function ProfileSetup() {
             },
             {
                 text: 'OK', onPress: async () => {
-                    await AsyncStorage.removeItem('groups')
                     signOut(auth).then(() => {
                         console.log("signout success")
                     }).catch((error) => {
@@ -142,7 +140,6 @@ export default function ProfileSetup() {
             </View>}
             <View className="flex flex-col gap-y-6 mt-4 mx-4 font-poppins_regular">
                 {permission?.status !== ImagePicker.PermissionStatus.GRANTED && (
-
                     <View >
                         <Text>Permission Not Granted - {permission?.status}</Text>
                         <StatusBar />
@@ -156,7 +153,7 @@ export default function ProfileSetup() {
 
                 <View className="flex flex-col justify-center items-center  ">
 
-                    <View className='h-52 w-52 aspect-square  rounded-full  shadow-lg flex justify-center items-center  gap-4'>
+                    <View className='h-52 w-52 aspect-square shadow-lg rounded-full  flex justify-center items-center  gap-4'>
                         {/* @ts-ignore */}
                         {<Image source={profile?.profileImage ? profile?.profileImage : image} className='rounded-full h-full w-full object-cover' />}
                     </View>
