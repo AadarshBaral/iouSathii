@@ -76,7 +76,7 @@ const Profile = () => {
           </Text>
           <View className='my-4 shadow-lg'>
             {/* @ts-ignore */}
-            <Image source={profile?.profileImage ? profile.profileImage : image} className='h-52 aspect-square rounded-full shadow-lg '></Image>
+            <Image source={profile ? profile.profileImage : image} className='h-52 aspect-square rounded-full shadow-lg '></Image>
           </View>
           {/* @ts-ignore */}
           <Typography label={`User ID: ${profile?.id}`} className='mb-8 text-xl' />

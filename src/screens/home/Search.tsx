@@ -22,6 +22,7 @@ const Search = () => {
   const [user, setUser] = useState<any>(null)
   const profilesRef = collection(db, 'profiles')
   const [loading, setLoading] = useState(false)
+  const [profileImage, setProfileImage] = useState('')
   const onSearch = async (data: any) => {
     setLoading(true)
     const q = query(profilesRef, where("id", "==", data.search))
@@ -33,6 +34,7 @@ const Search = () => {
     }
     else {
       setUser(userData.docs[0].data());
+      setProfileImage(userData.docs[0].data().profileImage)
       setLoading(false)
     }
   }
@@ -40,6 +42,7 @@ const Search = () => {
     //@ts-ignore
     navigation.navigate("addBill", { data: user, cameFrom: 'Search' })
   }
+  // console.log(user.profileImage)
   return (
     <SafeAreaView className='p-6'>
       <TitleBar back image='123' title="Search" />
@@ -67,7 +70,7 @@ const Search = () => {
           {user && (<View>
             <Typography label='User Found' className='text-[#0FB900] my-2' />
             <View className=' rounded-full shadow-sm flex  flex-row gap-3 items-center'>
-              <Image source={img} className='h-20 w-20  object-cover rounded-full' />
+              <Image source={profileImage !== "" ? profileImage : img} className='h-20 w-20 object-cover rounded-full' />
               <View>
                 <Typography className='text-[#00256E] text-xl' label={user?.username} />
                 <Typography className='text-[#7D7D7D]' label={user?.id} />
