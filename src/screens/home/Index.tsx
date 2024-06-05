@@ -4,13 +4,13 @@ import TitleBar from '@/components/ui/TitleBar';
 import { Typography } from '@/components/ui/Typography';
 import { FireAuth, db } from '@/config/fireConfig';
 import { useGroupCtx } from '@/context/GroupContext';
-import ScreenWrapper from '@/layout/SafreAreaInsets';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Pressable, ScrollView, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import DueCard from './DueCard';
 import GroupCard from './GroupCard';
 if (__DEV__) {
@@ -71,7 +71,7 @@ const Index = () => {
     return () => unsubscribe();
   }, []);
   return (
-    <ScreenWrapper >
+    <SafeAreaView className='p-4'>
       <TitleBar title="Home" image={"person.jpg"} />
       <MoneyCard total={total} />
       <ScrollView className='h-[500px]' showsVerticalScrollIndicator={false} >
@@ -113,7 +113,7 @@ const Index = () => {
         />
       </ScrollView>
 
-    </ScreenWrapper>
+    </SafeAreaView>
   )
 }
 export default Index

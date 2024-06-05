@@ -8,7 +8,7 @@ import { Image } from 'expo-image'
 import { User, signOut } from 'firebase/auth'
 import { collection } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
-import { Pressable, StatusBar, Text, View } from 'react-native'
+import { Pressable, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const image = require("../../../assets/person.jpg")
@@ -56,9 +56,8 @@ const Profile = () => {
     });
   }
   return (
-    <SafeAreaView>
-      <StatusBar></StatusBar>
-      <View className='flex flex-row justify-between px-4 py-2'>
+    <SafeAreaView className='p-4'>
+      <View className='flex flex-row justify-between'>
         <Pressable onPress={() => {
           navigation.goBack()
         }}>

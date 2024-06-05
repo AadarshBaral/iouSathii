@@ -3,12 +3,12 @@ import Input2 from '@/components/ui/InputWithBorder'
 import TitleBar from '@/components/ui/TitleBar'
 import { Typography } from '@/components/ui/Typography'
 import { group, person, useGroupCtx } from '@/context/GroupContext'
-import ScreenWrapper from '@/layout/SafreAreaInsets'
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FlatList, Text, View } from 'react-native'
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
+import { SafeAreaView } from 'react-native-safe-area-context'
 import Toast from 'react-native-toast-message'
 import { generateAlphanumeric } from '../auth/Register'
 interface IGroupInputElement {
@@ -52,6 +52,7 @@ const GroupInputElement = ({ groupName, number, control, handleSubmit, groupId }
             type: 'success',
             text1: 'Group added successfully🎉',
         });
+
     };
     return (
 
@@ -102,7 +103,7 @@ const AddGroup = () => {
     const [selectedNumber, setSelectedNumber] = useState(0);
     const [groupName, setGroupName] = useState("");
     const [error, showError] = useState(false)
-    const { control, handleSubmit, formState: { errors }, register, watch } = useForm()
+    const { control, handleSubmit, formState: { errors }, register, watch, reset } = useForm()
     const handleNumber = (data: any) => {
         const parsedData = parseInt(watch("groupNumber"));
         setGroupName(watch("groupname"))
@@ -120,44 +121,44 @@ const AddGroup = () => {
         }
     };
     return (
-        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
-            <ScreenWrapper>
-                <View>
-                    <TitleBar back title="Create Group" image={"person.jpg"} />
-                    <Input2
-                        border='default'
-                        label="Enter group name"
-                        control={control}
-                        name="groupname"
-                        enterKeyHint="next"
-                        autoCorrect={false}
-                    />
-                    <View className='flex flex-row items-center gap-2 relative '>
-                        {error && <Text className='text-red-600 absolute bottom-[-20px] '>Error! select number</Text>}
-                        <View className='w-[70%]'>
 
-                            <Input2
-                                border='default'
-                                className=''
-                                label="Number of People (1-15)"
-                                control={control}
-                                name="groupNumber"
-                                enterKeyHint="next"
-                                autoCorrect={false}
-                            />
-                        </View>
-                        <View className='w-[26%]'>
-                            <Button onPressIn={handleNumber} className='mt-8'>
-                                <Text className='text-xl text-white text-center'>OK</Text>
-                            </Button>
-                        </View>
+        <SafeAreaView className='p-4'>
+            <KeyboardAwareScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps="always">
+                <TitleBar back title="Create Group" image={"person.jpg"} />
+                <Input2
+                    border='default'
+                    label="Enter group name"
+                    control={control}
+                    name="groupname"
+                    enterKeyHint="next"
+                    autoCorrect={false}
+                />
+                <View className='flex flex-row items-center gap-2 relative '>
+                    {error && <Text className='text-red-600 absolute bottom-[-20px] '>Error! select number</Text>}
+                    <View className='w-[70%]'>
+
+                        <Input2
+                            border='default'
+                            className=''
+                            label="Number of People (1-15)"
+                            control={control}
+                            name="groupNumber"
+                            enterKeyHint="next"
+                            autoCorrect={false}
+                        />
                     </View>
-                    {(!error && selectedNumber !== 0) && <GroupInputElement groupId={generateAlphanumeric()} groupName={groupName} handleSubmit={(newGroup) => {
-                        setGroups([...groups, newGroup]);
-                    }} watch={watch} control={control} number={selectedNumber} />}
+                    <View className='w-[26%]'>
+                        <Button onPressIn={handleNumber} className='mt-8'>
+                            <Text className='text-xl text-white text-center'>OK</Text>
+                        </Button>
+                    </View>
                 </View>
-            </ScreenWrapper>
-        </KeyboardAwareScrollView>
+                {(!error && selectedNumber !== 0) && <GroupInputElement groupId={generateAlphanumeric()} groupName={groupName} handleSubmit={(newGroup) => {
+                    setGroups([...groups, newGroup]);
+                }} watch={watch} control={control} number={selectedNumber} />}
+            </KeyboardAwareScrollView>
+        </SafeAreaView>
+
     )
 }
 

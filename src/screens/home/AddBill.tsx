@@ -5,7 +5,6 @@ import TitleBar from '@/components/ui/TitleBar';
 import { Typography } from '@/components/ui/Typography';
 import { FireAuth, db } from '@/config/fireConfig';
 import { useBillsContext } from '@/context/BillsContext';
-import ScreenWrapper from '@/layout/SafreAreaInsets';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Image } from 'expo-image';
@@ -14,6 +13,7 @@ import React, { PropsWithChildren, forwardRef, useEffect, useState } from 'react
 import { useController, useForm } from 'react-hook-form';
 import { ActivityIndicator, Pressable, Text, TextInput, TextInputProps, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Toast from 'react-native-toast-message';
 import { twMerge } from 'tailwind-merge';
 import { z } from 'zod';
@@ -131,8 +131,8 @@ const AddBill = () => {
 
     };
     return (
-        <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
-            <ScreenWrapper className='relative mt-10' >
+        <SafeAreaView className='p-4'>
+            <KeyboardAwareScrollView keyboardShouldPersistTaps="always">
                 <TitleBar back image='person.jpg' title='Add Bill' />
                 <View>
                     <Input2
@@ -221,9 +221,9 @@ const AddBill = () => {
                         {isSubmitting ? <ActivityIndicator color={"#fff"} size={"large"} className="" /> : <Typography label="Add Bill" className="text-white text-lg" variant={'p'} />}
                     </Button>
                 </View>
-            </ScreenWrapper>
-        </KeyboardAwareScrollView>
 
+            </KeyboardAwareScrollView >
+        </SafeAreaView>
     );
 };
 

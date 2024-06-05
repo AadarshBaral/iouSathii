@@ -134,11 +134,12 @@ export default function ProfileSetup() {
         }
     };
     return (
-        <SafeAreaView>
+        <SafeAreaView className="p-4">
+            <TitleBar back image="person.img" title="Settings" profileImageProp={false} />
             {uploading.state && <View className="absolute bottom-[-100px] z-10  w-full " >
                 <UploadingProgress progress={uploading.value} />
             </View>}
-            <View className="flex flex-col gap-y-6 mt-4 mx-4 font-poppins_regular">
+            <View className="flex flex-col gap-y-6  font-poppins_regular">
                 {permission?.status !== ImagePicker.PermissionStatus.GRANTED && (
                     <View >
                         <Text>Permission Not Granted - {permission?.status}</Text>
@@ -147,7 +148,7 @@ export default function ProfileSetup() {
                     </View>
                 )
                 }
-                <TitleBar back image="person.img" title="Settings" profileImageProp={false} />
+
                 <View className="flex flex-col gap-y-2 ">
                 </View>
 
@@ -161,7 +162,7 @@ export default function ProfileSetup() {
                     <View className='h-[2px] mt-10 w-full bg-[#DADADA]'></View>
                 </View>
 
-                <View className="m-6 pt-6 flex gap-1">
+                <View className=" flex gap-1">
 
 
                     <View className="flex flex-row items-center gap-4">
