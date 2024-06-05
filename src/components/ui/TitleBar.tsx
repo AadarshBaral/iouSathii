@@ -28,7 +28,6 @@ const TitleBar = ({ title, image, back, home, profileImageProp }: ITitlebarProps
                     }
                     {home && <Text onPress={() => navigation.navigate('HomeTabs' as never)}>
                         <Ionicons name="arrow-back" size={32} color="black" /></Text>}
-
                     <Typography label={title} className='text-2xl' variant={"p"} />
                 </View>
                 <Pressable onPressIn={() => navigation.navigate('profile' as never)}>
@@ -36,7 +35,6 @@ const TitleBar = ({ title, image, back, home, profileImageProp }: ITitlebarProps
                         {/* @ts-ignore */}
                         <Image className='rounded-full h-full w-full object-cover' source={profile?.profileImage ? profile?.profileImage : img} />
                     </View>}
-
                 </Pressable>
             </View>
         </View>

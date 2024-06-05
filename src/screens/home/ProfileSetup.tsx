@@ -5,7 +5,6 @@ import UploadingProgress from "@/components/ui/UploadingProgress";
 import { FireAuth, db } from "@/config/fireConfig";
 import { useBillsContext } from "@/context/BillsContext";
 import { AntDesign, FontAwesome, MaterialIcons } from '@expo/vector-icons';
-import { Image } from "expo-image";
 import * as ImagePicker from 'expo-image-picker';
 import { signOut } from "firebase/auth";
 import { collection, getDocs, query, updateDoc, where } from "firebase/firestore";
@@ -135,7 +134,7 @@ export default function ProfileSetup() {
     };
     return (
         <SafeAreaView className="p-4">
-            <TitleBar back image="person.img" title="Settings" profileImageProp={false} />
+            <TitleBar back image="person.img" title="Settings" />
             {uploading.state && <View className="absolute bottom-[-100px] z-10  w-full " >
                 <UploadingProgress progress={uploading.value} />
             </View>}
@@ -151,16 +150,15 @@ export default function ProfileSetup() {
 
                 <View className="flex flex-col gap-y-2 ">
                 </View>
-
-                <View className="flex flex-col justify-center items-center  ">
+                {/* <View className="flex flex-col justify-center items-center  ">
 
                     <View className='h-52 w-52 aspect-square shadow-lg rounded-full  flex justify-center items-center  gap-4'>
-                        {/* @ts-ignore */}
+
                         {<Image source={profile?.profileImage ? profile?.profileImage : image} className='rounded-full h-full w-full object-cover' />}
                     </View>
                     <Typography className="text-xl mt-8" label={currentUser?.displayName as string} />
                     <View className='h-[2px] mt-10 w-full bg-[#DADADA]'></View>
-                </View>
+                </View> */}
 
                 <View className=" flex gap-1">
 

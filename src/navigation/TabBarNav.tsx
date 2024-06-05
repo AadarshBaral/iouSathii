@@ -38,17 +38,7 @@ const HomeTabs = () => {
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="addBill"
-        component={AddBill}
-        options={{
-          tabBarIcon: ({ color, size }) => ( // Use color and size for dynamic styling
-            <View className='mt-7 rounded-full absolute w-20 h-20 bg-[#1E2225]' style={{ alignItems: "center", justifyContent: "center" }}>
-             <AntDesign name="plus" size={42} color={color} />
-            </View>
-          ),
-        }}
-      /> */}
+
       <Tab.Screen
         name="Profile"
         component={Profile}
@@ -60,6 +50,17 @@ const HomeTabs = () => {
           ),
         }}
       />
+      {/* <Tab.Screen
+        name="addBill"
+        component={ProfileSetup}
+        options={{
+          tabBarIcon: ({ color, size }) => ( // Use color and size for dynamic styling
+            <View className='h-full mt-7'>
+              <AntDesign name="setting" size={32} color={color} />
+            </View>
+          ),
+        }}
+      /> */}
     </Tab.Navigator>
   );
 };
